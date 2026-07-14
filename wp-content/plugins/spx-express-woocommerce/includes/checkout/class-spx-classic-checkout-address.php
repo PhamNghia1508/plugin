@@ -64,6 +64,12 @@ final class SPX_Classic_Checkout_Address {
 		// Mode guard.
 		if ( class_exists( 'SPX_Checkout_Mode_Detector' ) && ! SPX_Checkout_Mode_Detector::is_classic() ) { return; }
 
+		// Render whenever the field SHOULD be visible (needs shipping and SPX is
+		// available in the matched zone). The narrower "required" state (SPX is
+		// the chosen method, hence validation must enforce a selection) is a
+		// separate concern kept on the same element for JS/validation to read.
+		if ( ! SPX_Checkout_Eligibility::current_checkout_should_render_field() ) { return; }
+
 		$service  = new SPX_Checkout_Address_Service();
 		$selected = self::prefill( $service );
 		$required = SPX_Checkout_Eligibility::current_checkout_requires_selection();
@@ -72,9 +78,8 @@ final class SPX_Classic_Checkout_Address {
 		$display_text = self::build_display_text( $selected, $service );
 		$placeholder  = '' === $display_text;
 
-		echo '<div id="spx-location-control" class="spx-checkout-field spx-location-control"'
-			. ' data-spx-required="' . esc_attr( $required ? '1' : '0' ) . '"'
-			. ' style="' . ( $required ? '' : 'display:none' ) . '">';
+		echo '<div id="spx-location-control" class="spx-checkout-field spx-location-control form-row form-row-wide"'
+			. ' data-spx-required="' . esc_attr( $required ? '1' : '0' ) . '">';
 
 		// Label.
 		echo '<label class="spx-location-control__label" for="spx-location-display">';
