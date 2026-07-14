@@ -59,6 +59,7 @@ final class SPX_Plugin {
 			'includes/checkout/class-spx-checkout-address-snapshot.php',
 			'includes/checkout/class-spx-checkout-address-rest-controller.php',
 			'includes/checkout/class-spx-classic-checkout-address.php',
+			'includes/checkout/class-spx-vn-checkout-profile.php',
 			'includes/checkout/class-spx-blocks-checkout-integration.php',
 			'includes/checkout/class-spx-blocks-checkout-address.php',
 			'includes/checkout/class-spx-shipping-destination-resolver.php',
@@ -96,6 +97,7 @@ final class SPX_Plugin {
 		SPX_Checkout_Address_REST_Controller::init();
 		// Mode-aware checkout: only one adapter per request.
 		SPX_Classic_Checkout_Address::init();
+		SPX_VN_Checkout_Profile::init();
 		SPX_Blocks_Checkout_Address::init();
 		SPX_Checkout_Mode_Detector::admin_compatibility_notice();
 		SPX_Shipping_Method::init_audit_persistence();

@@ -7,7 +7,7 @@ Tài liệu này dành cho **chủ shop**. Bản hiện tại là **Release Cand
 - Khuyến nghị bật **HPOS** (High-Performance Order Storage). Production yêu cầu site chạy **HTTPS**.
 
 ## 2. Cài plugin
-Tải file `spx-express-woocommerce-0.9.0-rc.9.zip` lên qua **Plugins → Add New → Upload Plugin**, hoặc giải nén vào `wp-content/plugins/`.
+Tải file `spx-express-woocommerce-0.9.0-rc.10.zip` lên qua **Plugins → Add New → Upload Plugin**, hoặc giải nén vào `wp-content/plugins/`.
 
 ### 2.1 Tương thích Checkout
 Plugin **đã xác minh với WooCommerce Classic Checkout và Checkout Blocks chuẩn**. Với custom theme hoặc plugin Checkout tùy biến, cần smoke test trên staging trước khi mở bán: kiểm tra một field "Khu vực" hiển thị đúng, dòng phí SPX chỉ xuất hiện một lần, và phương thức thanh toán không bị reset khi thay đổi địa chỉ.

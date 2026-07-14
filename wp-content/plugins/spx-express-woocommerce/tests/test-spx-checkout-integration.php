@@ -423,6 +423,11 @@ foreach ( preg_split( '/\R/', $css ) as $line ) {
 		0 !== strpos( $trimmed, '.spx-checkout-field' )
 		&& 0 !== strpos( $trimmed, '.spx-checkout-notice' )
 		&& 0 !== strpos( $trimmed, '.spx-location-control' )
+		&& 0 !== strpos( $trimmed, '.spx-vn-checkout' )
+		// Compound selectors on WooCommerce wrappers that we deliberately
+		// tagged with our own marker classes (`.form-row.spx-vn-*`) are
+		// namespace-safe: they only ever match rows where we added the class.
+		&& 0 !== strpos( $trimmed, '.form-row.spx-vn-' )
 	) {
 		$css_scope_clean = false;
 		echo "  Unscoped SPX checkout selector found: {$trimmed}\n";

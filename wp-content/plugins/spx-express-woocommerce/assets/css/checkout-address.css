@@ -258,3 +258,19 @@
 		font-size: 16px; /* prevents iOS zoom */
 	}
 }
+
+/* Vietnam Checkout profile — scoped by the plugin's own marker classes.
+   `.spx-vn-hidden-field` is only ever emitted by SPX_VN_Checkout_Profile
+   on WooCommerce field wrappers we deliberately hide, so this selector
+   never collides with theme/plugin CSS. WooCommerce still processes the
+   field server-side; only the UI is suppressed. */
+/* `!important` is justified: WooCommerce/theme cascade applies competing
+   display rules on `.form-row.address-field` etc. that would otherwise
+   keep our hidden fields visible. This selector only matches our own
+   marker class, so it cannot leak into theme or plugin styles. */
+.form-row.spx-vn-hidden-field {
+	display: none !important;
+}
+.form-row.spx-vn-field {
+	margin-bottom: 1rem;
+}

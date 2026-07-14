@@ -1,5 +1,19 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.10 — Vietnam Checkout profile
+
+- **`SPX_VN_Checkout_Profile`** (opt-in via filter `spx_vn_checkout_profile_enabled`, default true): tối ưu Classic Checkout cho khách Việt Nam.
+  - Thay 2 ô "Tên / Họ" bằng **một field "Họ tên *"** (billing_full_name); tự split thành first_name/last_name khi persist vào WC_Order để tương thích admin/email/label. Family-name-first split (chuẩn tên Việt).
+  - Ẩn khỏi UI: **Country / Company / City / State / Postcode / Address 2** (fields vẫn có trong form, giá trị vẫn submit — chỉ UI được ẩn qua `.form-row.spx-vn-hidden-field`).
+  - Country **auto-VN** qua `default_checkout_billing_country`.
+  - Locale VN: **phone required**, postcode/city/state không required — fix nhãn "Số điện thoại (tuỳ chọn)" → "Số điện thoại *" và bỏ lỗi "Mã bưu điện không hợp lệ".
+  - Email **optional** cho guest; label + placeholder tiếng Việt.
+  - Địa chỉ (`billing_address_1`) relabel "Địa chỉ" với placeholder "Số nhà, tên đường, thôn/xóm…".
+  - Order comments relabel "Ghi chú đơn hàng".
+- CSS: 1 dòng `!important` scoped duy nhất trên `.form-row.spx-vn-hidden-field` (justification: WooCommerce/theme cascade override — chỉ match wrapper mang class marker riêng của plugin).
+- Test: 31-assertion `test-spx-vn-checkout-profile.php` (RED→GREEN). Full suite **61/61 PASS** trên PHP 7.4 + 8.2.
+- Không thay đổi Enablement Gate, marker, Payment Resolver, atomic Create lock, hoặc safety controls khác. Không có API SPX Production nào được gọi trong bản này.
+
 ## 0.9.0-rc.9 — Fix: "Khu vực" field visible on first Checkout load
 
 - **Fix (P0)**: field "Khu vực" trước đây bị render `display:none` trên Classic Checkout khi khách chưa chọn phương thức vận chuyển SPX — nhưng phương thức lại chỉ hiện sau khi có địa chỉ SPX. Kết quả: khách không bao giờ thấy được field để chọn Tỉnh/Huyện/Xã, Checkout báo "không có tùy chọn vận chuyển".
