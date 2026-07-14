@@ -19,7 +19,7 @@ foreach ( array( 'Ã', 'Ä', 'áº', 'á»', 'Â' ) as $bad ) {
 foreach ( array( 'Gate 6F-A', 'Gate 6F-B', 'Phase 6G-A', 'WEBHOOK BLOCKED BY DOCUMENTATION', 'fail-closed' ) as $jargon ) {
 	spx_copy_assert( false === stripos( $source, $jargon ), 'technical phase/gate jargon is absent: ' . $jargon );
 }
-foreach ( array( 'Môi trường', 'Mã đơn nội bộ', 'Liên kết theo dõi', 'Trạng thái tạo vận đơn', 'Tỉnh/Thành phố', 'Quận/Huyện', 'Phường/Xã', 'Mức độ sẵn sàng Production', 'Các mục cần hoàn thiện', 'Thử nghiệm (Sandbox)' ) as $label ) {
+foreach ( array( 'Môi trường', 'Mã đơn nội bộ', 'Liên kết theo dõi', 'Trạng thái tạo vận đơn', 'Tỉnh/Thành phố', 'Quận/Huyện', 'Phường/Xã', 'Mức độ sẵn sàng Production', 'Các mục cần hoàn thiện' ) as $label ) {
 	spx_copy_assert( false !== strpos( $source, $label ), 'Vietnamese UI contains ' . $label );
 }
 foreach ( array( 'Đã áp dụng', 'Không cần thay đổi', 'Đã tắt trong cấu hình', 'Đã xử lý trước đó', 'Trạng thái được bảo vệ', 'Giữ thay đổi thủ công', 'Có lỗi khi xử lý' ) as $label ) {

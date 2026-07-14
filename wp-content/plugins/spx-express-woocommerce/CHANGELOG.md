@@ -1,5 +1,13 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.5 — Production UI polish (Sandbox purge)
+
+- Loại các nhãn "Sandbox" khỏi giao diện vận hành Production: action tạo vận đơn, metabox đơn hàng, tab tracking, notice tab phí, cảnh báo phí thử nghiệm.
+- Nhãn "Môi trường" trong metabox và trang vận đơn nay tự động phản ánh env thật (Production/Thử nghiệm/Chưa xác định) theo dữ liệu đơn.
+- Cảnh báo "hệ số 1000 thử nghiệm" chỉ hiển thị khi đơn hàng thực sự dùng đường phí thử nghiệm; đường Production (multiplier 1) không hiển thị cảnh báo.
+- Thẻ Tổng quan "Phí giao hàng" hiển thị "Phí do SPX tính" khi đã xác minh; "Phí dự phòng của shop" khi chưa. Bỏ nhãn "đang thử nghiệm".
+- Không thay đổi Production Enablement Gate, marker, hoặc bất kỳ safety control nào. Không có API Production nào được gọi trong bản này.
+
 ## 0.9.0-rc.4 — Non-destructive Checkout Integration & Pilot Readiness
 
 - Thêm **SPX_Checkout_Mode_Detector** tự động phát hiện Classic Checkout, Checkout Blocks hoặc Unsupported mode; mỗi request chỉ chạy 1 adapter phù hợp.

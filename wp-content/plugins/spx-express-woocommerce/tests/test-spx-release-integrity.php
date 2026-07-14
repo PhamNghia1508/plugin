@@ -42,13 +42,13 @@ $changelog  = spx_integrity_read( $root . '/CHANGELOG.md' );
 $pot        = spx_integrity_read( $root . '/languages/spx-express-woocommerce.pot' );
 $po         = spx_integrity_read( $root . '/languages/spx-express-woocommerce-vi.po' );
 
-spx_integrity_check( 1 === preg_match( '/^[ \t]*\*[ \t]+Version:[ \t]+0\.9\.0-rc\.4[ \t]*$/m', $main ), 'plugin header is 0.9.0-rc.4' );
-spx_integrity_check( false !== strpos( $main, "define( 'SPX_WC_VERSION', '0.9.0-rc.4' );" ), 'runtime version is 0.9.0-rc.4' );
-spx_integrity_check( false !== strpos( $blocks, "version: '0.9.0-rc.4'" ), 'Blocks integration version is 0.9.0-rc.4' );
-spx_integrity_check( false !== strpos( $readme, '`0.9.0-rc.4`' ), 'README version is 0.9.0-rc.4' );
-spx_integrity_check( false !== strpos( $guide, 'spx-express-woocommerce-0.9.0-rc.4.zip' ), 'Vietnamese guide uses the rc.4 package name' );
-spx_integrity_check( false !== strpos( $changelog, '## 0.9.0-rc.4' ), 'changelog starts the rc.4 release record' );
-spx_integrity_check( false !== strpos( $pot, '0.9.0-rc.4' ) && false !== strpos( $po, '0.9.0-rc.4' ), 'translation catalog headers use rc.4' );
+spx_integrity_check( 1 === preg_match( '/^[ \t]*\*[ \t]+Version:[ \t]+0\.9\.0-rc\.5[ \t]*$/m', $main ), 'plugin header is 0.9.0-rc.5' );
+spx_integrity_check( false !== strpos( $main, "define( 'SPX_WC_VERSION', '0.9.0-rc.5' );" ), 'runtime version is 0.9.0-rc.5' );
+spx_integrity_check( false !== strpos( $blocks, "version: '0.9.0-rc.5'" ), 'Blocks integration version is 0.9.0-rc.5' );
+spx_integrity_check( false !== strpos( $readme, '`0.9.0-rc.5`' ), 'README version is 0.9.0-rc.5' );
+spx_integrity_check( false !== strpos( $guide, 'spx-express-woocommerce-0.9.0-rc.5.zip' ), 'Vietnamese guide uses the rc.4 package name' );
+spx_integrity_check( false !== strpos( $changelog, '## 0.9.0-rc.5' ), 'changelog starts the rc.4 release record' );
+spx_integrity_check( false !== strpos( $pot, '0.9.0-rc.5' ) && false !== strpos( $po, '0.9.0-rc.5' ), 'translation catalog headers use rc.4' );
 spx_integrity_check( false === strpos( $blocks, "category: 'woocommerce'" ), 'Blocks frontend metadata does not use the editor-only WooCommerce category' );
 
 $text_extensions = array( 'php', 'js', 'css', 'md', 'po', 'pot' );

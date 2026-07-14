@@ -25,7 +25,7 @@ final class SPX_Admin_Tracking {
 		foreach ( array(
 			__( 'Đồng bộ định kỳ', 'spx-express-woocommerce' ) => $active ? __( 'Đang hoạt động', 'spx-express-woocommerce' ) : __( 'Chưa hoạt động', 'spx-express-woocommerce' ),
 			__( 'Chu kỳ', 'spx-express-woocommerce' ) => sprintf( __( '%d phút', 'spx-express-woocommerce' ), (int) $s['interval'] ),
-			__( 'Môi trường', 'spx-express-woocommerce' ) => __( 'Thử nghiệm (Sandbox)', 'spx-express-woocommerce' ),
+			__( 'Trạng thái kết nối SPX', 'spx-express-woocommerce' ) => ( class_exists( 'SPX_Production_Verification_Store' ) && SPX_Production_Verification_Store::is_verified( SPX_Production_Gate::current_fingerprint(), SPX_Environment::host( 'production' ) ) ) ? __( 'Đã xác minh', 'spx-express-woocommerce' ) : __( 'Chưa xác minh', 'spx-express-woocommerce' ),
 			__( 'Số lượt đồng bộ đang chờ', 'spx-express-woocommerce' ) => (string) $counts['pending'],
 			__( 'Số lần thử lại đang chờ', 'spx-express-woocommerce' ) => (string) $counts['retry'],
 			__( 'Số tác vụ lỗi', 'spx-express-woocommerce' ) => (string) $counts['failed'],

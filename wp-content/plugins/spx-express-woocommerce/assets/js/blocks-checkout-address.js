@@ -204,7 +204,7 @@
 	var metadata = {
 		apiVersion: 3,
 		name: 'spx-express/shipping-address',
-		version: '0.9.0-rc.4',
+		version: '0.9.0-rc.5',
 		title: 'Địa chỉ giao hàng SPX',
 		description: 'Chọn hierarchy giao hàng SPX từ dataset local.',
 		parent: [ 'woocommerce/checkout-shipping-address-block' ],

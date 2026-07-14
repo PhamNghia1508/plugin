@@ -69,7 +69,7 @@ final class SPX_Admin_Order_Metabox {
 		echo '<div class="spx-order-summary__grid">';
 		self::summary_item( __( 'Mã vận đơn', 'spx-express-woocommerce' ), $tracking );
 		self::summary_item( __( 'Trạng thái', 'spx-express-woocommerce' ), $status ?: __( 'Chưa có trạng thái', 'spx-express-woocommerce' ) );
-		self::summary_item( __( 'Môi trường', 'spx-express-woocommerce' ), 'production' === $environment ? __( 'Production', 'spx-express-woocommerce' ) : __( 'Thử nghiệm (Sandbox)', 'spx-express-woocommerce' ) );
+		self::summary_item( __( 'Môi trường', 'spx-express-woocommerce' ), 'production' === $environment ? __( 'Production', 'spx-express-woocommerce' ) : __( 'Thử nghiệm', 'spx-express-woocommerce' ) );
 		self::summary_item( __( 'Ngày tạo', 'spx-express-woocommerce' ), (string) $order->get_meta( '_spx_shipment_created_at', true ) );
 		self::summary_item( __( 'Đồng bộ gần nhất', 'spx-express-woocommerce' ), (string) $order->get_meta( '_spx_last_sync_at', true ) );
 		$link = (string) $order->get_meta( '_spx_tracking_link', true );
@@ -189,13 +189,14 @@ final class SPX_Admin_Order_Metabox {
 		$source = (string) $order->get_meta( '_spx_rate_source', true );
 		$quoted = (string) $order->get_meta( '_spx_rate_quoted_at', true );
 		echo '<section class="spx-order-section spx-rate-summary" aria-labelledby="spx-order-rate-title"><div class="spx-section-heading"><h3 id="spx-order-rate-title">' . esc_html__( 'Phí vận chuyển', 'spx-express-woocommerce' ) . '</h3>';
-		if ( 'spx_dynamic' === $source ) { echo SPX_Admin_Settings_Page::status_badge( '', __( 'Sandbox thử nghiệm', 'spx-express-woocommerce' ), 'warning' ); }
+		$is_experimental = 'spx_dynamic' === $source && (string) $order->get_meta( '_spx_rate_multiplier', true ) === '1000';
+		if ( $is_experimental ) { echo SPX_Admin_Settings_Page::status_badge( '', __( 'Phí thử nghiệm', 'spx-express-woocommerce' ), 'warning' ); }
 		echo '</div><div class="spx-order-summary__grid">';
 		echo '<div class="spx-summary-item"><span>' . esc_html__( 'Phí WooCommerce đang áp dụng', 'spx-express-woocommerce' ) . '</span><strong>' . wp_kses_post( wc_price( $order->get_shipping_total() ) ) . '</strong></div>';
 		self::summary_item( __( 'Nguồn phí', 'spx-express-woocommerce' ), SPX_Admin_Rate::checkout_source_label( $source ) );
 		if ( '' !== $quoted ) { self::summary_item( __( 'Thời điểm báo giá', 'spx-express-woocommerce' ), $quoted ); }
 		echo '</div>';
-		if ( 'spx_dynamic' === $source ) { echo '<p class="spx-rate-warning"><strong>' . esc_html__( 'Phí động chỉ dùng cho Sandbox. Đơn vị phí chưa được SPX xác nhận và hệ số 1000 vẫn là thử nghiệm.', 'spx-express-woocommerce' ) . '</strong></p>'; }
+		if ( $is_experimental ) { echo '<p class="spx-rate-warning"><strong>' . esc_html__( 'Phí thử nghiệm: đơn vị phí và tiền tệ chưa được SPX xác nhận; hệ số 1000 không được dùng để thu tiền khách Production.', 'spx-express-woocommerce' ) . '</strong></p>'; }
 		echo '<details class="spx-technical-details"><summary>' . esc_html__( 'Chi tiết kỹ thuật', 'spx-express-woocommerce' ) . '</summary><div class="spx-technical-details__body"><dl class="spx-definition-list">';
 		$rows = array(
 			__( 'Phí dự kiến (raw)', 'spx-express-woocommerce' ) => '_spx_rate_raw_estimated',

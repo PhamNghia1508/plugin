@@ -135,7 +135,12 @@ final class SPX_Admin_Rate {
 	private static function render_checkout_audit( WC_Order $order, string $source ): void {
 		echo '<div class="spx-checkout-rate-audit">';
 		echo '<p><strong>' . esc_html__( 'Checkout rate source', 'spx-express-woocommerce' ) . ':</strong> ' . esc_html( self::checkout_source_label( $source ) ) . '</p>';
-		echo '<p style="color:#b26a00;"><strong>' . esc_html__( 'Experimental sandbox conversion: fee unit/currency remain unconfirmed; multiplier 1000 is not authorized for production customer charges.', 'spx-express-woocommerce' ) . '</strong></p>';
+		// Experimental Sandbox warning is only shown when the order actually used the
+		// experimental (multiplier 1000) fee path. Production audit (multiplier 1)
+		// shows no Sandbox notice.
+		if ( 'spx_dynamic' === $source && (string) $order->get_meta( '_spx_rate_multiplier', true ) === '1000' ) {
+			echo '<p class="spx-rate-warning-experimental"><strong>' . esc_html__( 'Thử nghiệm phí động: đơn vị phí và tiền tệ chưa được SPX xác nhận; hệ số 1000 không được dùng để thu tiền khách Production.', 'spx-express-woocommerce' ) . '</strong></p>';
+		}
 		echo '<table class="spx-rate-table">';
 		$raw = array(
 			'_spx_rate_raw_estimated' => 'Estimated shipping fee (raw)', '_spx_rate_raw_basic' => 'Basic fee (raw)',

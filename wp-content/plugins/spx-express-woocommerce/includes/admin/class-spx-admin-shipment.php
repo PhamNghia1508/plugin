@@ -37,7 +37,7 @@ final class SPX_Admin_Shipment {
 		if ( ! current_user_can( self::CAP ) ) { return $actions; }
 		$config = SPX_API_Config::for_test();
 		if ( SPX_API_Config::TEST_ENV !== $config->get_environment() || ! $config->has_account_credentials() ) { return $actions; }
-		$actions[ self::CREATE ] = __( 'Tạo vận đơn SPX (Sandbox)', 'spx-express-woocommerce' );
+		$actions[ self::CREATE ] = __( 'Tạo vận đơn SPX', 'spx-express-woocommerce' );
 		$actions[ self::SYNC ]   = __( 'Đồng bộ trạng thái SPX', 'spx-express-woocommerce' );
 		return $actions;
 	}
@@ -255,7 +255,9 @@ final class SPX_Admin_Shipment {
 		$track = (string) $order->get_meta( self::M_TRACKING, true );
 		if ( '' === $state && '' === $track ) { return; }
 		echo '<div class="spx-shipment-api"><h3>' . esc_html__( 'Vận đơn SPX', 'spx-express-woocommerce' ) . '</h3>';
-		echo '<p><strong>' . esc_html__( 'Environment', 'spx-express-woocommerce' ) . ':</strong> ' . esc_html__( 'Sandbox/Test', 'spx-express-woocommerce' ) . '</p>';
+		$env_meta = (string) $order->get_meta( '_spx_shipment_environment', true );
+		$env_label = 'production' === $env_meta ? __( 'Production', 'spx-express-woocommerce' ) : ( '' === $env_meta ? __( 'Chưa xác định', 'spx-express-woocommerce' ) : __( 'Thử nghiệm', 'spx-express-woocommerce' ) );
+		echo '<p><strong>' . esc_html__( 'Môi trường', 'spx-express-woocommerce' ) . ':</strong> ' . esc_html( $env_label ) . '</p>';
 		if ( 'unknown' === $state ) {
 			echo '<p style="color:#b32d2e;"><strong>' . esc_html__( 'Không xác định được SPX đã tạo vận đơn hay chưa. Không tạo lại; hãy dùng Đồng bộ trạng thái để tra cứu.', 'spx-express-woocommerce' ) . '</strong></p>';
 		}
