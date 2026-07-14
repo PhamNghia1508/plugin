@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SPX Express for WooCommerce 0.9.0-rc.7\n"
+"Project-Id-Version: SPX Express for WooCommerce 0.9.0-rc.8\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"

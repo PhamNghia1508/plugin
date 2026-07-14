@@ -109,7 +109,58 @@ final class SPX_Admin_Settings_Page {
 		self::overview_card( __( 'Mapping trạng thái', 'spx-express-woocommerce' ), 'yes' === $mapping['master_enabled'] ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Chưa kích hoạt', 'spx-express-woocommerce' ), 'yes' === $mapping['master_enabled'] ? 'success' : 'neutral', __( 'Cấu hình trạng thái', 'spx-express-woocommerce' ), 'statuses' );
 		self::overview_card( __( 'Webhook', 'spx-express-woocommerce' ), __( 'Chưa kích hoạt', 'spx-express-woocommerce' ), 'neutral', __( 'Xem tracking', 'spx-express-woocommerce' ), 'tracking' );
 		self::overview_card( __( 'Mức độ sẵn sàng Production', 'spx-express-woocommerce' ), $readiness['ready'] ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Bị khóa', 'spx-express-woocommerce' ), $readiness['ready'] ? 'success' : 'danger', __( 'Xem Production readiness', 'spx-express-woocommerce' ), 'connection' );
-		echo '</div></section>';
+		echo '</div>';
+		self::render_setup_checklist( $test, $repo, $tracking );
+		echo '</section>';
+	}
+
+	/** First-run friendly setup checklist. Read-only, no API calls, no bypass. */
+	private static function render_setup_checklist( SPX_API_Config $test, SPX_Address_Repository $repo, array $tracking ): void {
+		$verified = class_exists( 'SPX_Production_Verification_Store' ) && SPX_Production_Verification_Store::is_verified( SPX_Production_Gate::current_fingerprint(), SPX_Environment::host( 'production' ) );
+		$steps = array(
+			array(
+				'title' => __( 'Bước 1 — Nhập thông tin kết nối SPX', 'spx-express-woocommerce' ),
+				'done'  => $test->has_account_credentials(),
+				'desc'  => __( 'Vào tab Kết nối SPX và nhập App ID, App Secret, User ID, User Secret, Shop ID do SPX cung cấp. Bấm Lưu cấu hình Production, sau đó bấm Xác minh kết nối SPX.', 'spx-express-woocommerce' ),
+				'tab'   => 'connection',
+			),
+			array(
+				'title' => __( 'Bước 2 — Cấu hình hồ sơ người gửi', 'spx-express-woocommerce' ),
+				'done'  => SPX_Sender_Profile::is_complete(),
+				'desc'  => __( 'Nhập tên shop, số điện thoại, địa chỉ chi tiết và chọn đủ Tỉnh/Huyện/Xã. Hình thức gửi hiện tại là Drop-off (shop mang kiện đến điểm gửi SPX).', 'spx-express-woocommerce' ),
+				'tab'   => 'sender',
+			),
+			array(
+				'title' => __( 'Bước 3 — Nhập dữ liệu địa chỉ SPX', 'spx-express-woocommerce' ),
+				'done'  => $repo->is_available(),
+				'desc'  => __( 'Vào tab Dữ liệu địa chỉ và nhập file dataset địa chỉ SPX (.xlsx) do SPX cung cấp.', 'spx-express-woocommerce' ),
+				'tab'   => 'addresses',
+			),
+			array(
+				'title' => __( 'Bước 4 — Xác minh kết nối SPX', 'spx-express-woocommerce' ),
+				'done'  => $verified,
+				'desc'  => __( 'Quay lại tab Kết nối SPX và bấm Xác minh kết nối SPX. Khi thành công, phí giao hàng và tạo vận đơn sẽ tự động mở khoá.', 'spx-express-woocommerce' ),
+				'tab'   => 'connection',
+			),
+			array(
+				'title' => __( 'Bước 5 — Bật đồng bộ tracking', 'spx-express-woocommerce' ),
+				'done'  => 'yes' === ( $tracking['enabled'] ?? '' ),
+				'desc'  => __( 'Vào tab Tracking và bật đồng bộ định kỳ. Chu kỳ mặc định 15 phút. Website cần có cron chạy (system cron hoặc WP-Cron thường xuyên) để đồng bộ hoạt động.', 'spx-express-woocommerce' ),
+				'tab'   => 'tracking',
+			),
+		);
+		echo '<section class="spx-admin-setup" aria-labelledby="spx-setup-title"><h2 id="spx-setup-title">' . esc_html__( 'Bắt đầu sử dụng', 'spx-express-woocommerce' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Danh sách kiểm tra dưới đây giúp bạn cấu hình plugin lần đầu. Plugin không tự gọi SPX; mọi thao tác Xác minh và tạo vận đơn đều do bạn chủ động thực hiện.', 'spx-express-woocommerce' ) . '</p>';
+		echo '<ol class="spx-admin-checklist">';
+		foreach ( $steps as $step ) {
+			$badge = $step['done']
+				? self::status_badge( '', __( 'Hoàn tất', 'spx-express-woocommerce' ), 'success' )
+				: self::status_badge( '', __( 'Chưa hoàn tất', 'spx-express-woocommerce' ), 'warning' );
+			echo '<li class="spx-admin-checklist__item"><div class="spx-admin-checklist__head"><strong>' . esc_html( $step['title'] ) . '</strong> ' . $badge . '</div>';
+			echo '<p>' . esc_html( $step['desc'] ) . '</p>';
+			echo '<p><a class="button button-secondary" href="' . esc_url( self::tab_url( $step['tab'] ) ) . '">' . esc_html__( 'Đi tới bước này', 'spx-express-woocommerce' ) . '</a></p></li>';
+		}
+		echo '</ol></section>';
 	}
 
 	private static function overview_card( string $title, string $status, string $tone, string $cta, string $tab ): void {

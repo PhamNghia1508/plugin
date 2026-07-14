@@ -185,3 +185,76 @@
 	margin-left: 0.2em;
 	text-decoration: none;
 }
+
+/* ── Theme-adaptive polish (RC8) ─────────────────────────────────
+   Inherit theme typography/color as much as possible, keep everything
+   scoped, no !important. Themes can override via these CSS variables:
+     --spx-location-height : min-height of the display box
+     --spx-location-radius : border radius
+     --spx-location-border : border-color
+     --spx-location-accent : focus/link accent color
+*/
+.spx-location-control {
+	--spx-location-height: 2.75rem;
+	--spx-location-radius: 4px;
+	--spx-location-border: #8c8f94;
+	--spx-location-accent: #2271b1;
+	font-family: inherit;
+	color: inherit;
+}
+
+.spx-location-control__label {
+	color: inherit;
+}
+
+.spx-location-control__display {
+	min-height: var(--spx-location-height);
+	border-color: var(--spx-location-border);
+	border-radius: var(--spx-location-radius);
+	font-family: inherit;
+}
+
+.spx-location-control__display:focus {
+	border-color: var(--spx-location-accent);
+	box-shadow: 0 0 0 1px var(--spx-location-accent);
+}
+
+.spx-location-control__panel {
+	border-color: var(--spx-location-border);
+	border-radius: 0 0 var(--spx-location-radius) var(--spx-location-radius);
+}
+
+.spx-location-control__breadcrumb-back {
+	color: var(--spx-location-accent);
+	font-family: inherit;
+}
+
+/* "Đổi khu vực" action inside the summary display */
+.spx-location-control__change {
+	display: inline-block;
+	margin-left: 0.5rem;
+	padding: 0;
+	border: none;
+	background: none;
+	color: var(--spx-location-accent);
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 0.9em;
+	text-decoration: underline;
+}
+
+.spx-location-control__change:hover,
+.spx-location-control__change:focus {
+	color: inherit;
+	outline: none;
+}
+
+/* Mobile-safe: prevent overflow of the field or panel on small viewports */
+@media (max-width: 480px) {
+	.spx-location-control__panel {
+		max-height: 60vh;
+	}
+	.spx-location-control__display {
+		font-size: 16px; /* prevents iOS zoom */
+	}
+}

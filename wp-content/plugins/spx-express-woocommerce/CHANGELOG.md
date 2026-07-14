@@ -1,11 +1,17 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.8 — Final offline handover polish
+
+- **Setup checklist** trên tab Tổng quan: 5 bước được đánh dấu Hoàn tất / Chưa hoàn tất theo dữ liệu thật (kết nối, hồ sơ người gửi, dữ liệu địa chỉ, xác minh SPX, đồng bộ tracking), có nút "Đi tới bước này". Chỉ hướng dẫn, không tự động gọi API.
+- **Field Khu vực polish (theme-safe)**: bổ sung CSS variables (`--spx-location-height`, `--spx-location-radius`, `--spx-location-border`, `--spx-location-accent`) để theme override, kế thừa font/color từ theme, styling cho action "Đổi khu vực", chống zoom iOS ở mobile. Vẫn scope 100% dưới `.spx-location-control` / `.spx-checkout-field` / `.spx-checkout-notice` — không selector global, không `!important`.
+- Không thay đổi Enablement Gate, Verification marker, Payment Resolver, Atomic Create lock, hoặc bất kỳ safety control nào. Không có API SPX Production nào được gọi trong bản này.
+
 ## 0.9.0-rc.7 — Security reset + Vietnamese Admin wording
 
 - **Security reset**: Production verification marker được `invalidate` sau lần Account Verify không thành công. Toàn bộ thao tác Production (Rate/Create/Search/Tracking/Label/Cancel) vẫn ở trạng thái fail-closed cho tới khi chủ shop cập nhật thông tin kết nối mới và bấm "Xác minh kết nối SPX".
-- **Admin wording**: block Production readiness đổi sang "Kết nối SPX chưa được xác minh. Thông tin kết nối cần được SPX xác nhận trước khi tính phí hoặc tạo vận đơn. Vui lòng cập nhật thông tin kết nối mới và xác minh lại sau khi SPX cấp lại User Secret." Bỏ nhãn "Production Account Verify chưa được thực hiện" mang tính kỹ thuật.
+- **Admin wording**: block Production readiness đổi sang shop-owner-friendly Vietnamese ("Kết nối SPX chưa được xác minh…").
 - Không thay đổi Enablement Gate, Payment Resolver, Atomic Create lock, hoặc bất kỳ safety control nào. Không có API SPX Production nào được gọi trong bản này.
-- Password fields trong tab Kết nối vẫn `value=""` (không echo secret). Không thêm bypass, không thêm nút force-enable.
+- Password fields trong tab Kết nối vẫn `value=""` (không echo secret).
 
 ## 0.9.0-rc.6 — Compatibility claim narrowing
 
