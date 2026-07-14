@@ -1,0 +1,33 @@
+# Local credentials and key material.
+.env
+**/.env
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Runtime state and generated artifacts are never release source.
+/backups/
+/release/
+/tests/
+/.agents/
+node_modules/
+vendor/
+**/tests/artifacts/
+*.log
+debug.log
+*.zip
+*.sha256
+
+# Track only the SPX plugin under the local WordPress tree.
+/wp-content/*
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/spx-express-woocommerce/
+
+# OS/editor noise.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+

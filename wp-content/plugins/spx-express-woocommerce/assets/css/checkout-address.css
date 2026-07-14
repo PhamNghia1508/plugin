@@ -1,0 +1,21 @@
+.spx-shipping-address {
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	clear: both;
+	margin: 1.5rem 0;
+	padding: 1rem;
+}
+
+.spx-shipping-address h3 { margin-top: 0; }
+.spx-shipping-address__note { color: #50575e; font-size: .9em; }
+.spx-shipping-address .form-row { float: none; width: 100%; }
+.spx-shipping-address select { max-width: 100%; width: 100%; }
+.spx-shipping-address__feedback { color: #b32d2e; min-height: 1.4em; }
+.spx-checkout-block__field { display: block; margin: 0 0 1rem; }
+.spx-checkout-block__field > span { display: block; margin-bottom: .35rem; }
+.spx-checkout-block__field abbr { margin-left: .2em; text-decoration: none; }
+.spx-checkout-block__field select { box-sizing: border-box; min-height: 2.75rem; }
+
+@media ( min-width: 768px ) {
+	.spx-shipping-address { padding: 1.25rem; }
+}

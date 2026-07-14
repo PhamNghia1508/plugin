@@ -1,0 +1,2235 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SPX Express for WooCommerce 0.9.0-rc.2\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-14T06:44:11+00:00\n"
+"PO-Revision-Date: 2026-07-14T06:44:11+00:00\n"
+"Language: vi\n"
+"X-Domain: spx-express-woocommerce\n"
+
+#: includes/admin/class-spx-admin-tracking.php:27
+#, php-format
+msgid "%d phút"
+msgstr "%d phút"
+
+#: includes/class-spx-shipping-method.php:50
+msgid "2–4 days"
+msgstr "2–4 ngày"
+
+#: includes/shipment/class-spx-label-manager.php:18
+msgid "A label is not available for a cancelled shipment."
+msgstr "Không có nhãn cho vận đơn đã hủy."
+
+#: includes/api/class-spx-shipment-service.php:70
+msgid "A pickup timeslot is required for pickup collection."
+msgstr "Cần chọn khung giờ lấy hàng khi dùng hình thức SPX đến lấy."
+
+#: includes/admin/class-spx-admin-settings-page.php:148
+msgid "A. Phí cố định"
+msgstr "A. Phí cố định"
+
+#: includes/admin/class-spx-admin-settings-page.php:149
+msgid "B. Phí SPX động thử nghiệm"
+msgstr "B. Phí SPX động thử nghiệm"
+
+#: includes/class-spx-shipping-method.php:48
+msgid "Base cost"
+msgstr "Phí cơ bản"
+
+#: includes/admin/class-spx-admin-rate.php:90
+msgid "Báo phí SPX"
+msgstr "Báo phí SPX"
+
+#: includes/admin/class-spx-admin-rate.php:123
+msgid "Báo phí chỉ để tham khảo cho admin; không ảnh hưởng tổng đơn hay phí khách trả."
+msgstr "Báo phí chỉ để tham khảo cho admin; không ảnh hưởng tổng đơn hay phí khách trả."
+
+#: includes/admin/class-spx-admin-rate.php:120
+msgid "Báo phí có thể đã cũ."
+msgstr "Báo phí có thể đã cũ."
+
+#: includes/admin/class-spx-admin-settings-page.php:40
+msgid "Bạn không có quyền truy cập trang này."
+msgstr "Bạn không có quyền truy cập trang này."
+
+#: includes/admin/class-spx-admin-order-metabox.php:229
+msgid "Bạn sắp hủy vận đơn SPX. Đơn WooCommerce sẽ không bị hủy và không được hoàn tiền. Tiếp tục?"
+msgstr "Bạn sắp hủy vận đơn SPX. Đơn WooCommerce sẽ không bị hủy và không được hoàn tiền. Tiếp tục?"
+
+#: includes/admin/class-spx-admin-status-mapping.php:65
+msgid "Bật"
+msgstr "Bật"
+
+#: includes/admin/class-spx-admin-settings-page.php:100
+msgid "Bật đồng bộ tracking"
+msgstr "Bật đồng bộ tracking"
+
+#: includes/admin/class-spx-admin-tracking.php:16
+msgid "Bật đồng bộ tự động"
+msgstr "Bật đồng bộ tự động"
+
+#: includes/admin/class-spx-admin-production.php:38
+#: includes/admin/class-spx-admin-settings-page.php:103
+#: includes/admin/class-spx-admin-settings-page.php:150
+#: includes/admin/class-spx-admin-settings-page.php:195
+msgid "Bị khóa"
+msgstr "Bị khóa"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Bỏ qua"
+msgstr "Bỏ qua"
+
+#: includes/admin/class-spx-admin-settings-page.php:150
+msgid "C. Phí động Production"
+msgstr "C. Phí động Production"
+
+#: includes/class-spx-shipment-readiness.php:64
+msgid "COD amount cannot be negative."
+msgstr "Số tiền COD không được âm."
+
+#: includes/api/class-spx-rate-service.php:70
+#: includes/api/class-spx-shipment-service.php:67
+msgid "COD amount exceeds 20,000,000 VND."
+msgstr "Số tiền COD vượt quá 20.000.000 VND."
+
+#: includes/class-spx-shipment-readiness.php:66
+msgid "COD amount exceeds the SPX limit of 20,000,000 VND."
+msgstr "Số tiền COD vượt giới hạn 20.000.000 VND của SPX."
+
+#: includes/api/class-spx-rate-service.php:69
+#: includes/api/class-spx-shipment-service.php:66
+msgid "COD amount must be a non-negative whole number."
+msgstr "Số tiền COD phải là số nguyên không âm."
+
+#: includes/class-spx-shipment-readiness.php:62
+msgid "COD amount must be a whole number (VND)."
+msgstr "Số tiền COD phải là số nguyên (VND)."
+
+#: includes/admin/class-spx-admin-address.php:226
+msgid "Capabilities"
+msgstr "Khả năng phục vụ"
+
+#: includes/class-spx-order-actions.php:108
+msgid "Carrier"
+msgstr "Đơn vị vận chuyển"
+
+#: includes/checkout/class-spx-checkout-address-snapshot.php:83
+msgid "Checkout Blocks"
+msgstr "Checkout Blocks"
+
+#: includes/checkout/class-spx-checkout-address-snapshot.php:82
+msgid "Checkout Classic"
+msgstr "Checkout Classic"
+
+#: includes/admin/class-spx-admin-rate.php:138
+msgid "Checkout rate source"
+msgstr "Nguồn phí tại checkout"
+
+#: includes/admin/class-spx-admin-address.php:224
+msgid "Checkout snapshot"
+msgstr "Bản chụp checkout"
+
+#: includes/class-spx-shipping-method.php:47
+msgid "Checkout title"
+msgstr "Tiêu đề checkout"
+
+#: includes/checkout/class-spx-checkout-address-snapshot.php:87
+#: includes/checkout/class-spx-checkout-address-snapshot.php:88
+msgid "Checkout — nguồn cũ không xác định"
+msgstr "Checkout — nguồn cũ không xác định"
+
+#: includes/admin/class-spx-admin-address.php:63
+msgid "Chi tiết dữ liệu"
+msgstr "Chi tiết dữ liệu"
+
+#: includes/admin/class-spx-admin-settings-page.php:190
+msgid "Chi tiết hệ thống"
+msgstr "Chi tiết hệ thống"
+
+#: includes/admin/class-spx-admin-order-metabox.php:98
+#: includes/admin/class-spx-admin-order-metabox.php:151
+#: includes/admin/class-spx-admin-order-metabox.php:179
+#: includes/admin/class-spx-admin-order-metabox.php:204
+#: includes/admin/class-spx-admin-order-metabox.php:241
+msgid "Chi tiết kỹ thuật"
+msgstr "Chi tiết kỹ thuật"
+
+#: includes/admin/class-spx-admin-tracking.php:35
+msgid "Chi tiết đồng bộ"
+msgstr "Chi tiết đồng bộ"
+
+#: includes/admin/class-spx-admin-settings-page.php:165
+msgid "Chiều cao mặc định (cm)"
+msgstr "Chiều cao mặc định (cm)"
+
+#: includes/admin/class-spx-admin-settings-page.php:163
+msgid "Chiều dài mặc định (cm)"
+msgstr "Chiều dài mặc định (cm)"
+
+#: includes/admin/class-spx-admin-settings-page.php:164
+msgid "Chiều rộng mặc định (cm)"
+msgstr "Chiều rộng mặc định (cm)"
+
+#: includes/admin/class-spx-admin-tracking.php:27
+msgid "Chu kỳ"
+msgstr "Chu kỳ"
+
+#: includes/admin/class-spx-admin-tracking.php:17
+msgid "Chu kỳ (phút)"
+msgstr "Chu kỳ (phút)"
+
+#: includes/admin/class-spx-admin-settings-page.php:152
+msgid "Chính sách khi không lấy được phí động"
+msgstr "Chính sách khi không lấy được phí động"
+
+#: includes/admin/class-spx-admin-order-metabox.php:142
+msgid "Chưa có cân nặng"
+msgstr "Chưa có cân nặng"
+
+#: includes/admin/class-spx-admin-settings-page.php:192
+msgid "Chưa có dữ liệu"
+msgstr "Chưa có dữ liệu"
+
+#: includes/admin/class-spx-admin-address.php:55
+msgid "Chưa có dữ liệu địa chỉ. Hãy nhập file khu vực phục vụ chính thức của SPX."
+msgstr "Chưa có dữ liệu địa chỉ. Hãy nhập file khu vực phục vụ chính thức của SPX."
+
+#: includes/admin/class-spx-admin-order-metabox.php:138
+msgid "Chưa có kích thước"
+msgstr "Chưa có kích thước"
+
+#: includes/admin/class-spx-admin-shipment.php:221
+msgid "Chưa có mã vận đơn SPX để đồng bộ."
+msgstr "Chưa có mã vận đơn SPX để đồng bộ."
+
+#: includes/admin/class-spx-admin-order-metabox.php:69
+#: includes/admin/class-spx-admin-order-metabox.php:195
+msgid "Chưa có trạng thái"
+msgstr "Chưa có trạng thái"
+
+#: includes/admin/class-spx-admin-settings-page.php:137
+msgid "Chưa cấu hình"
+msgstr "Chưa cấu hình"
+
+#: includes/parcel/class-spx-parcel-builder.php:152
+#: includes/parcel/class-spx-parcel-builder.php:191
+msgid "Chưa cấu hình kiện hàng mặc định."
+msgstr "Chưa cấu hình kiện hàng mặc định."
+
+#: includes/admin/class-spx-admin-tracking.php:26
+msgid "Chưa hoạt động"
+msgstr "Chưa hoạt động"
+
+#: includes/admin/class-spx-admin-order-metabox.php:140
+msgid "Chưa hợp lệ"
+msgstr "Chưa hợp lệ"
+
+#: includes/admin/class-spx-admin-rate.php:96
+msgid "Chưa kiểm tra phí SPX."
+msgstr "Chưa kiểm tra phí SPX."
+
+#: includes/admin/class-spx-admin-settings-page.php:100
+#: includes/admin/class-spx-admin-settings-page.php:101
+#: includes/admin/class-spx-admin-settings-page.php:102
+#: includes/admin/class-spx-admin-settings-page.php:191
+#: includes/admin/class-spx-admin-tracking.php:14
+msgid "Chưa kích hoạt"
+msgstr "Chưa kích hoạt"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Chưa lên lịch"
+msgstr "Chưa lên lịch"
+
+#: includes/admin/class-spx-admin-order-metabox.php:56
+msgid "Chưa sẵn sàng"
+msgstr "Chưa sẵn sàng"
+
+#: includes/admin/class-spx-admin-order-metabox.php:310
+msgid "Chưa tạo"
+msgstr "Chưa tạo"
+
+#: includes/admin/class-spx-admin-order-metabox.php:58
+msgid "Chưa tạo vận đơn."
+msgstr "Chưa tạo vận đơn."
+
+#: includes/admin/class-spx-admin-order-metabox.php:105
+#: includes/admin/class-spx-admin-order-metabox.php:106
+#: includes/admin/class-spx-admin-order-metabox.php:313
+#: includes/admin/class-spx-admin-order-metabox.php:317
+#: includes/checkout/class-spx-checkout-address-snapshot.php:90
+msgid "Chưa xác định"
+msgstr "Chưa xác định"
+
+#: includes/admin/class-spx-admin-notice-presenter.php:16
+msgid "Chưa xác định được kết quả hủy. Hệ thống sẽ tự kiểm tra lại; không gửi lại yêu cầu."
+msgstr "Chưa xác định được kết quả hủy. Hệ thống sẽ tự kiểm tra lại; không gửi lại yêu cầu."
+
+#: includes/admin/class-spx-admin-order-metabox.php:88
+msgid "Chưa xác định đủ khu vực SPX."
+msgstr "Chưa xác định đủ khu vực SPX."
+
+#: includes/admin/class-spx-admin-settings-page.php:150
+msgid "Chưa được kích hoạt và không thể bật từ giao diện này."
+msgstr "Chưa được kích hoạt và không thể bật từ giao diện này."
+
+#: includes/admin/class-spx-admin-address.php:74
+msgid "Chưa đủ thông tin"
+msgstr "Chưa đủ thông tin"
+
+#: includes/admin/class-spx-admin-address.php:274
+msgid "Chưa đủ điều kiện tạo vận đơn SPX:"
+msgstr "Chưa đủ điều kiện tạo vận đơn SPX:"
+
+#: includes/admin/class-spx-admin-shipment.php:68
+#, php-format
+msgid "Chưa đủ điều kiện tạo vận đơn SPX: %s"
+msgstr "Chưa đủ điều kiện tạo vận đơn SPX: %s"
+
+#: includes/admin/class-spx-admin-production.php:54
+msgid "Chế độ Production"
+msgstr "Chế độ Production"
+
+#: includes/admin/class-spx-admin-settings-page.php:149
+msgid "Chỉ Sandbox/Local"
+msgstr "Chỉ Sandbox/Local"
+
+#: includes/admin/class-spx-admin-notice-presenter.php:21
+msgid "Chỉ có thể hủy vận đơn ở môi trường thử nghiệm."
+msgstr "Chỉ có thể hủy vận đơn ở môi trường thử nghiệm."
+
+#: includes/admin/class-spx-admin-order-metabox.php:237
+msgid "Chỉ dùng nội bộ"
+msgstr "Chỉ dùng nội bộ"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:38
+msgid "Chỉ dùng để xác định khu vực giao hàng SPX; địa chỉ WooCommerce của bạn vẫn được giữ nguyên."
+msgstr "Chỉ dùng để xác định khu vực giao hàng SPX; địa chỉ WooCommerce của bạn vẫn được giữ nguyên."
+
+#: includes/admin/class-spx-admin-order-metabox.php:93
+msgid "Chỉnh sửa địa chỉ SPX"
+msgstr "Chỉnh sửa địa chỉ SPX"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Chờ thử lại"
+msgstr "Chờ thử lại"
+
+#: includes/admin/class-spx-admin-cancel.php:12
+#: includes/admin/class-spx-admin-notice-presenter.php:17
+#: includes/admin/class-spx-admin-order-metabox.php:232
+msgid "Chức năng hủy vận đơn chưa được kích hoạt."
+msgstr "Chức năng hủy vận đơn chưa được kích hoạt."
+
+#: includes/admin/class-spx-admin-shipment.php:262
+msgid "Client order ID"
+msgstr "Mã đơn khách hàng"
+
+#: includes/admin/class-spx-admin-rate.php:150
+msgid "Converted checkout candidate"
+msgstr "Phí checkout sau quy đổi"
+
+#: includes/admin/class-spx-admin-shipment.php:274
+msgid "Create state"
+msgstr "Trạng thái tạo vận đơn"
+
+#: includes/class-spx-order-actions.php:115
+msgid "Current status"
+msgstr "Trạng thái hiện tại"
+
+#: includes/admin/class-spx-admin-production.php:40
+#: includes/admin/class-spx-admin-settings-page.php:197
+msgid "Các mục cần hoàn thiện"
+msgstr "Các mục cần hoàn thiện"
+
+#: includes/admin/class-spx-admin-production.php:39
+#: includes/admin/class-spx-admin-settings-page.php:119
+msgid "Các vận đơn thật đang bị khóa để bảo vệ cửa hàng."
+msgstr "Các vận đơn thật đang bị khóa để bảo vệ cửa hàng."
+
+#: includes/admin/class-spx-admin-order-metabox.php:142
+msgid "Cân nặng"
+msgstr "Cân nặng"
+
+#: includes/admin/class-spx-admin-order-metabox.php:153
+msgid "Cân nặng (kg)"
+msgstr "Cân nặng (kg)"
+
+#: includes/admin/class-spx-admin-settings-page.php:162
+msgid "Cân nặng mặc định (gram)"
+msgstr "Cân nặng mặc định (gram)"
+
+#: includes/admin/class-spx-admin-order-metabox.php:105
+#: includes/admin/class-spx-admin-order-metabox.php:106
+msgid "Có"
+msgstr "Có"
+
+#: includes/admin/class-spx-admin-tracking.php:20
+#, php-format
+msgid "Có %d đơn đủ điều kiện trong lượt tiếp theo."
+msgstr "Có %d đơn đủ điều kiện trong lượt tiếp theo."
+
+#: includes/admin/class-spx-admin-status-mapping.php:110
+msgid "Có lỗi khi xử lý"
+msgstr "Có lỗi khi xử lý"
+
+#: includes/admin/class-spx-admin-settings-page.php:17
+#: includes/admin/class-spx-admin-settings-page.php:189
+msgid "Công cụ hệ thống"
+msgstr "Công cụ hệ thống"
+
+#: includes/admin/class-spx-admin-order-metabox.php:237
+msgid "Công cụ phát triển"
+msgstr "Công cụ phát triển"
+
+#: includes/admin/class-spx-admin-settings-page.php:99
+msgid "Cảnh báo — đang thử nghiệm"
+msgstr "Cảnh báo — đang thử nghiệm"
+
+#: includes/admin/class-spx-admin-settings-page.php:212
+msgid "Cấu hình hệ thống"
+msgstr "Cấu hình hệ thống"
+
+#: includes/admin/class-spx-admin-settings-page.php:95
+#: includes/admin/class-spx-admin-settings-page.php:96
+msgid "Cấu hình kết nối"
+msgstr "Cấu hình kết nối"
+
+#: includes/admin/class-spx-admin-settings-page.php:99
+msgid "Cấu hình phí"
+msgstr "Cấu hình phí"
+
+#: includes/admin/class-spx-admin-settings-page.php:101
+msgid "Cấu hình trạng thái"
+msgstr "Cấu hình trạng thái"
+
+#: includes/admin/class-spx-admin-order-metabox.php:61
+msgid "Cần bổ sung thông tin vận đơn."
+msgstr "Cần bổ sung thông tin vận đơn."
+
+#: includes/admin/class-spx-admin-address.php:45
+#: includes/admin/class-spx-admin-settings-page.php:96
+#: includes/admin/class-spx-admin-settings-page.php:97
+#: includes/admin/class-spx-admin-settings-page.php:98
+#: includes/admin/class-spx-admin-settings-page.php:115
+msgid "Cần cấu hình"
+msgstr "Cần cấu hình"
+
+#: includes/admin/class-spx-admin-order-metabox.php:89
+msgid "Cần nhập dữ liệu địa chỉ trước khi chỉnh sửa."
+msgstr "Cần nhập dữ liệu địa chỉ trước khi chỉnh sửa."
+
+#: includes/admin/class-spx-admin-order-metabox.php:314
+msgid "Cần đồng bộ lại"
+msgstr "Cần đồng bộ lại"
+
+#: includes/tracking/class-spx-customer-tracking.php:31
+msgid "Cập nhật lần cuối:"
+msgstr "Cập nhật lần cuối:"
+
+#: includes/admin/class-spx-admin-settings-page.php:97
+msgid "Cập nhật người gửi"
+msgstr "Cập nhật người gửi"
+
+#: includes/admin/class-spx-admin-settings-page.php:192
+msgid "Dataset"
+msgstr "Dataset"
+
+#: includes/admin/class-spx-admin-address.php:227
+msgid "Dataset / validated"
+msgstr "Dataset / thời điểm xác thực"
+
+#: includes/admin/class-spx-admin-address.php:44
+msgid "Dataset SPX"
+msgstr "Dataset SPX"
+
+#: includes/class-spx-shipping-method.php:51
+msgid "Default item weight (grams)"
+msgstr "Cân nặng mặc định mỗi sản phẩm (gram)"
+
+#: includes/admin/class-spx-admin-address.php:122
+#: includes/admin/class-spx-admin-address.php:237
+msgid "District"
+msgstr "Quận/Huyện"
+
+#: includes/admin/class-spx-admin-order-metabox.php:143
+msgid "Dài × Rộng × Cao"
+msgstr "Dài × Rộng × Cao"
+
+#: includes/admin/class-spx-admin-settings-page.php:177
+msgid "Dùng thông số kiện hàng mặc định"
+msgstr "Dùng thông số kiện hàng mặc định"
+
+#: includes/checkout/class-spx-checkout-address-snapshot.php:86
+msgid "Dữ liệu chuyển đổi"
+msgstr "Dữ liệu chuyển đổi"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:140
+msgid "Dữ liệu khu vực SPX đã được cập nhật. Vui lòng chọn lại địa chỉ giao hàng SPX."
+msgstr "Dữ liệu khu vực SPX đã được cập nhật. Vui lòng chọn lại địa chỉ giao hàng SPX."
+
+#: includes/admin/class-spx-admin-address.php:43
+#: includes/admin/class-spx-admin-settings-page.php:13
+#: includes/admin/class-spx-admin-settings-page.php:98
+#: includes/admin/class-spx-admin-settings-page.php:206
+msgid "Dữ liệu địa chỉ"
+msgstr "Dữ liệu địa chỉ"
+
+#: includes/tracking/class-spx-customer-tracking.php:27
+msgid "Dự kiến giao:"
+msgstr "Dự kiến giao:"
+
+#: includes/admin/class-spx-admin-address.php:81
+msgid "Email (tùy chọn)"
+msgstr "Email (tùy chọn)"
+
+#: includes/class-spx-shipping-method.php:46
+msgid "Enable"
+msgstr "Bật"
+
+#: includes/class-spx-shipping-method.php:46
+msgid "Enable this shipping method"
+msgstr "Bật phương thức vận chuyển này"
+
+#: includes/admin/class-spx-admin-rate.php:115
+#: includes/admin/class-spx-admin-shipment.php:258
+msgid "Environment"
+msgstr "Môi trường"
+
+#: includes/class-spx-shipping-method.php:50
+msgid "Estimated delivery"
+msgstr "Dự kiến giao hàng"
+
+#: includes/admin/class-spx-admin-rate.php:139
+msgid "Experimental sandbox conversion: fee unit/currency remain unconfirmed; multiplier 1000 is not authorized for production customer charges."
+msgstr "Quy đổi Sandbox thử nghiệm: đơn vị phí và tiền tệ chưa được xác nhận; hệ số 1000 không được phép dùng để thu phí khách hàng Production."
+
+#: includes/admin/class-spx-admin-address.php:60
+msgid "File dữ liệu SPX (.xlsx)"
+msgstr "File dữ liệu SPX (.xlsx)"
+
+#: includes/admin/class-spx-admin-address.php:63
+msgid "File được kiểm tra đầy đủ trước khi thay thế dataset hiện tại. Nếu import lỗi, dữ liệu cũ vẫn được giữ nguyên."
+msgstr "File được kiểm tra đầy đủ trước khi thay thế dataset hiện tại. Nếu import lỗi, dữ liệu cũ vẫn được giữ nguyên."
+
+#: includes/class-spx-shipping-method.php:10
+msgid "Fixed-rate SPX Express shipping with manual/mock shipment creation."
+msgstr "Vận chuyển SPX Express theo phí cố định, tạo vận đơn thủ công hoặc giả lập."
+
+#: includes/class-spx-shipping-method.php:49
+msgid "Free shipping minimum"
+msgstr "Ngưỡng miễn phí vận chuyển"
+
+#: includes/admin/class-spx-admin-settings-page.php:168
+msgid "Giá trị mặc định chỉ được dùng cho sản phẩm chưa khai báo cân nặng hoặc kích thước."
+msgstr "Giá trị mặc định chỉ được dùng cho sản phẩm chưa khai báo cân nặng hoặc kích thước."
+
+#: includes/admin/class-spx-admin-rate.php:111
+msgid "Giảm voucher (raw)"
+msgstr "Giảm voucher (raw)"
+
+#: includes/admin/class-spx-admin-status-mapping.php:109
+msgid "Giữ thay đổi thủ công"
+msgstr "Giữ thay đổi thủ công"
+
+#: includes/admin/class-spx-admin-settings-page.php:191
+#: includes/admin/class-spx-admin-settings-page.php:208
+msgid "HPOS"
+msgstr "HPOS"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Hàng đợi"
+msgstr "Hàng đợi"
+
+#: includes/admin/class-spx-admin-order-metabox.php:212
+msgid "Hành động"
+msgstr "Hành động"
+
+#: includes/admin/class-spx-admin-cancel.php:9
+msgid "Hành động này chỉ hủy vận đơn SPX, không hủy đơn WooCommerce và không hoàn tiền."
+msgstr "Hành động này chỉ hủy vận đơn SPX, không hủy đơn WooCommerce và không hoàn tiền."
+
+#: includes/admin/class-spx-admin-cancel.php:11
+msgid "Hành động này chỉ hủy vận đơn SPX; không hủy đơn WooCommerce và không hoàn tiền. Tiếp tục?"
+msgstr "Hành động này chỉ hủy vận đơn SPX; không hủy đơn WooCommerce và không hoàn tiền. Tiếp tục?"
+
+#: includes/admin/class-spx-admin-address.php:75
+msgid "Hãy nhập dữ liệu địa chỉ trước khi chọn khu vực người gửi."
+msgstr "Hãy nhập dữ liệu địa chỉ trước khi chọn khu vực người gửi."
+
+#: includes/admin/class-spx-admin-address.php:84
+msgid "Hình thức gửi"
+msgstr "Hình thức gửi"
+
+#: includes/admin/class-spx-admin-order-metabox.php:184
+msgid "Hệ số thử nghiệm"
+msgstr "Hệ số thử nghiệm"
+
+#: includes/admin/class-spx-admin-settings-page.php:149
+msgid "Hệ số thử nghiệm: 1000. Đơn vị phí và tiền tệ chưa được SPX xác nhận."
+msgstr "Hệ số thử nghiệm: 1000. Đơn vị phí và tiền tệ chưa được SPX xác nhận."
+
+#: includes/admin/class-spx-admin-address.php:73
+#: includes/admin/class-spx-admin-settings-page.php:12
+#: includes/admin/class-spx-admin-settings-page.php:97
+#: includes/admin/class-spx-admin-settings-page.php:205
+msgid "Hồ sơ người gửi"
+msgstr "Hồ sơ người gửi"
+
+#: includes/admin/class-spx-admin-order-metabox.php:106
+msgid "Hỗ trợ COD"
+msgstr "Hỗ trợ COD"
+
+#: includes/admin/class-spx-admin-order-metabox.php:105
+msgid "Hỗ trợ giao hàng"
+msgstr "Hỗ trợ giao hàng"
+
+#: includes/admin/class-spx-admin-order-metabox.php:140
+msgid "Hợp lệ"
+msgstr "Hợp lệ"
+
+#: includes/admin/class-spx-admin-cancel.php:9
+#: includes/admin/class-spx-admin-cancel.php:11
+#: includes/admin/class-spx-admin-order-metabox.php:229
+msgid "Hủy vận đơn SPX"
+msgstr "Hủy vận đơn SPX"
+
+#: includes/admin/class-spx-admin-order-metabox.php:228
+msgid "Hủy vận đơn SPX không hủy đơn WooCommerce và không hoàn tiền."
+msgstr "Hủy vận đơn SPX không hủy đơn WooCommerce và không hoàn tiền."
+
+#: includes/admin/class-spx-admin-status-mapping.php:32
+msgid "Hủy vận đơn SPX không nhất thiết đồng nghĩa với hủy đơn bán hàng."
+msgstr "Hủy vận đơn SPX không nhất thiết đồng nghĩa với hủy đơn bán hàng."
+
+#: includes/admin/class-spx-admin-notice-presenter.php:24
+#: includes/admin/class-spx-admin-notice-presenter.php:25
+msgid "Hủy vận đơn SPX không thành công. Vui lòng thử lại sau."
+msgstr "Hủy vận đơn SPX không thành công. Vui lòng thử lại sau."
+
+#: includes/class-spx-sender-profile.php:69
+msgid "Import the SPX address dataset before saving a sender location."
+msgstr "Hãy nhập dataset địa chỉ SPX trước khi lưu địa chỉ người gửi."
+
+#: includes/admin/class-spx-admin-address.php:215
+msgid "Import the SPX address dataset to map this order."
+msgstr "Hãy nhập dataset địa chỉ SPX để ánh xạ đơn hàng này."
+
+#: includes/api/class-spx-shipment-service.php:30
+msgid "Invalid SPX client order id."
+msgstr "Mã đơn khách hàng SPX không hợp lệ."
+
+#: includes/admin/class-spx-admin-production.php:23
+#: includes/admin/class-spx-admin-status-mapping.php:41
+msgid "Invalid request method."
+msgstr "Phương thức yêu cầu không hợp lệ."
+
+#: includes/admin/class-spx-admin-cancel.php:15
+#: includes/admin/class-spx-admin-label.php:15
+msgid "Invalid request."
+msgstr "Yêu cầu không hợp lệ."
+
+#: includes/tracking/class-spx-webhook-controller.php:14
+#: includes/tracking/class-spx-webhook-controller.php:16
+msgid "Invalid webhook request."
+msgstr "Yêu cầu webhook không hợp lệ."
+
+#: includes/admin/class-spx-admin-settings-page.php:175
+msgid "Khi sản phẩm thiếu dữ liệu"
+msgstr "Khi sản phẩm thiếu dữ liệu"
+
+#: includes/admin/class-spx-admin-status-mapping.php:35
+msgid "Khôi phục mặc định"
+msgstr "Khôi phục mặc định"
+
+#: includes/admin/class-spx-admin-settings-page.php:152
+msgid "Không cung cấp phương thức SPX khi lỗi"
+msgstr "Không cung cấp phương thức SPX khi lỗi"
+
+#: includes/admin/class-spx-admin-settings-page.php:176
+msgid "Không cung cấp vận chuyển SPX"
+msgstr "Không cung cấp vận chuyển SPX"
+
+#: includes/admin/class-spx-admin-order-metabox.php:163
+msgid "Không có dữ liệu kiện hàng"
+msgstr "Không có dữ liệu kiện hàng"
+
+#: includes/admin/class-spx-admin-status-mapping.php:105
+msgid "Không cần thay đổi"
+msgstr "Không cần thay đổi"
+
+#: includes/admin/class-spx-admin-order-metabox.php:202
+#: includes/admin/class-spx-admin-status-mapping.php:64
+msgid "Không thay đổi"
+msgstr "Không thay đổi"
+
+#: includes/admin/class-spx-admin-notice-presenter.php:23
+msgid "Không thể gửi lại yêu cầu hủy lúc này."
+msgstr "Không thể gửi lại yêu cầu hủy lúc này."
+
+#: includes/admin/class-spx-admin-settings-page.php:66
+msgid "Không thể lưu cấu hình Production."
+msgstr "Không thể lưu cấu hình Production."
+
+#: includes/admin/class-spx-admin-label.php:11
+msgid "Không thể lấy nhãn SPX. Vui lòng kiểm tra trạng thái vận đơn."
+msgstr "Không thể lấy nhãn SPX. Vui lòng kiểm tra trạng thái vận đơn."
+
+#: includes/admin/class-spx-admin-settings-page.php:62
+msgid "Không thể nhập dữ liệu. Dữ liệu trước đó vẫn được giữ nguyên."
+msgstr "Không thể nhập dữ liệu. Dữ liệu trước đó vẫn được giữ nguyên."
+
+#: includes/class-spx-shipping-method.php:92
+msgid "Không thể tính phí giao hàng SPX lúc này. Vui lòng thử lại."
+msgstr "Không thể tính phí giao hàng SPX lúc này. Vui lòng thử lại."
+
+#: includes/checkout/class-spx-classic-checkout-address.php:26
+msgid "Không thể tải địa chỉ SPX."
+msgstr "Không thể tải địa chỉ SPX."
+
+#: includes/admin/class-spx-admin-order-metabox.php:165
+#: includes/admin/class-spx-admin-status-mapping.php:116
+msgid "Không xác định"
+msgstr "Không xác định"
+
+#: includes/admin/class-spx-admin-shipment.php:166
+msgid "Không xác định được SPX đã tạo vận đơn hay chưa. KHÔNG tạo lại; hãy dùng Đồng bộ trạng thái để tra cứu."
+msgstr "Không xác định được SPX đã tạo vận đơn hay chưa. KHÔNG tạo lại; hãy dùng Đồng bộ trạng thái để tra cứu."
+
+#: includes/admin/class-spx-admin-shipment.php:260
+msgid "Không xác định được SPX đã tạo vận đơn hay chưa. Không tạo lại; hãy dùng Đồng bộ trạng thái để tra cứu."
+msgstr "Không xác định được SPX đã tạo vận đơn hay chưa. Không tạo lại; hãy dùng Đồng bộ trạng thái để tra cứu."
+
+#: includes/admin/class-spx-admin-settings-page.php:98
+msgid "Kiểm tra dữ liệu địa chỉ"
+msgstr "Kiểm tra dữ liệu địa chỉ"
+
+#: includes/admin/class-spx-admin-rate.php:39
+msgid "Kiểm tra phí SPX"
+msgstr "Kiểm tra phí SPX"
+
+#: includes/admin/class-spx-admin-rate.php:63
+#, php-format
+msgid "Kiểm tra phí SPX thất bại: %s"
+msgstr "Kiểm tra phí SPX thất bại: %s"
+
+#: includes/class-spx-shipment-readiness.php:48
+msgid "Kiện hàng chưa hợp lệ để tạo vận đơn SPX."
+msgstr "Kiện hàng chưa hợp lệ để tạo vận đơn SPX."
+
+#: includes/admin/class-spx-admin-order-metabox.php:148
+msgid "Kiện hàng chưa hợp lệ."
+msgstr "Kiện hàng chưa hợp lệ."
+
+#: includes/admin/class-spx-admin-settings-page.php:167
+msgid "Kiện hàng mặc định"
+msgstr "Kiện hàng mặc định"
+
+#: includes/class-spx-shipment-readiness.php:53
+#: includes/parcel/class-spx-parcel-builder.php:203
+msgid "Kiện hàng vượt giới hạn cân nặng SPX."
+msgstr "Kiện hàng vượt giới hạn cân nặng SPX."
+
+#: includes/admin/class-spx-admin-order-metabox.php:154
+msgid "Kích thước (cm)"
+msgstr "Kích thước (cm)"
+
+#: includes/admin/class-spx-admin-order-metabox.php:162
+msgid "Kết hợp sản phẩm và mặc định"
+msgstr "Kết hợp sản phẩm và mặc định"
+
+#: includes/admin/class-spx-admin-settings-page.php:11
+#: includes/admin/class-spx-admin-settings-page.php:96
+#: includes/admin/class-spx-admin-settings-page.php:114
+msgid "Kết nối API"
+msgstr "Kết nối API"
+
+#: includes/admin/class-spx-admin-status-mapping.php:68
+msgid "Kết quả"
+msgstr "Kết quả"
+
+#: includes/admin/class-spx-admin-order-metabox.php:185
+msgid "Kết quả cache"
+msgstr "Kết quả cache"
+
+#: includes/admin/class-spx-admin-order-metabox.php:203
+msgid "Kết quả gần nhất"
+msgstr "Kết quả gần nhất"
+
+#: includes/admin/class-spx-admin-cancel.php:10
+msgid "Kết quả hủy chưa xác định. Chỉ kiểm tra lại trạng thái; không gửi lại yêu cầu hủy."
+msgstr "Kết quả hủy chưa xác định. Chỉ kiểm tra lại trạng thái; không gửi lại yêu cầu hủy."
+
+#: includes/class-spx-order-actions.php:120
+msgid "Last updated"
+msgstr "Cập nhật lần cuối"
+
+#: includes/class-spx-shipping-method.php:49
+msgid "Leave empty or use 0 to disable."
+msgstr "Để trống hoặc nhập 0 để tắt."
+
+#: includes/admin/class-spx-admin-order-metabox.php:74
+msgid "Liên kết theo dõi"
+msgstr "Liên kết theo dõi"
+
+#: includes/admin/class-spx-admin-label.php:10
+msgid "Liên kết tạm thời; lấy nhãn mới nếu đã hết hạn."
+msgstr "Liên kết tạm thời; lấy nhãn mới nếu đã hết hạn."
+
+#: includes/admin/class-spx-admin-order-metabox.php:187
+msgid "Lý do dùng phí dự phòng"
+msgstr "Lý do dùng phí dự phòng"
+
+#: includes/admin/class-spx-admin-status-mapping.php:33
+msgid "Lưu cấu hình"
+msgstr "Lưu cấu hình"
+
+#: includes/admin/class-spx-admin-production.php:55
+msgid "Lưu cấu hình Production"
+msgstr "Lưu cấu hình Production"
+
+#: includes/admin/class-spx-admin-tracking.php:19
+msgid "Lưu cấu hình tracking"
+msgstr "Lưu cấu hình tracking"
+
+#: includes/admin/class-spx-admin-address.php:88
+msgid "Lưu hồ sơ người gửi"
+msgstr "Lưu hồ sơ người gửi"
+
+#: includes/admin/class-spx-admin-settings-page.php:180
+msgid "Lưu kiện hàng mặc định"
+msgstr "Lưu kiện hàng mặc định"
+
+#: includes/admin/class-spx-admin-label.php:12
+#: includes/admin/class-spx-admin-order-metabox.php:259
+msgid "Lấy/In nhãn SPX"
+msgstr "Lấy/In nhãn SPX"
+
+#: includes/admin/class-spx-admin-tracking.php:32
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Lần chạy gần nhất"
+msgstr "Lần chạy gần nhất"
+
+#: includes/admin/class-spx-admin-rate.php:117
+msgid "Lần kiểm tra"
+msgstr "Lần kiểm tra"
+
+#: includes/admin/class-spx-admin-rate.php:97
+msgid "Lần kiểm tra gần nhất chưa thành công."
+msgstr "Lần kiểm tra gần nhất chưa thành công."
+
+#: includes/admin/class-spx-admin-status-mapping.php:66
+msgid "Lần mapping gần nhất"
+msgstr "Lần mapping gần nhất"
+
+#: includes/admin/class-spx-admin-order-metabox.php:245
+msgid "Lần thử gần nhất"
+msgstr "Lần thử gần nhất"
+
+#: includes/admin/class-spx-admin-order-metabox.php:207
+msgid "Lần xử lý gần nhất"
+msgstr "Lần xử lý gần nhất"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Lỗi gần nhất"
+msgstr "Lỗi gần nhất"
+
+#: includes/admin/class-spx-admin-status-mapping.php:65
+msgid "Mapping"
+msgstr "Ánh xạ"
+
+#: includes/admin/class-spx-admin-settings-page.php:101
+msgid "Mapping trạng thái"
+msgstr "Mapping trạng thái"
+
+#: includes/admin/class-spx-admin-order-metabox.php:202
+#: includes/admin/class-spx-admin-status-mapping.php:64
+msgid "Mapping tương ứng"
+msgstr "Mapping tương ứng"
+
+#: includes/class-spx-shipping-method.php:52
+msgid "Mock / Manual"
+msgstr "Giả lập / Thủ công"
+
+#: includes/providers/class-spx-mock-provider.php:32
+msgid "Mock mode does not generate shipping labels."
+msgstr "Chế độ giả lập không tạo nhãn vận chuyển."
+
+#: includes/admin/class-spx-admin-order-metabox.php:102
+msgid "Mã Phường/Xã"
+msgstr "Mã Phường/Xã"
+
+#: includes/admin/class-spx-admin-order-metabox.php:101
+msgid "Mã Quận/Huyện"
+msgstr "Mã Quận/Huyện"
+
+#: includes/admin/class-spx-admin-order-metabox.php:100
+msgid "Mã Tỉnh/Thành phố"
+msgstr "Mã Tỉnh/Thành phố"
+
+#: includes/admin/class-spx-admin-order-metabox.php:205
+msgid "Mã trạng thái SPX"
+msgstr "Mã trạng thái SPX"
+
+#: includes/admin/class-spx-admin-order-metabox.php:68
+#: includes/admin/class-spx-admin-shipment.php:263
+#: includes/class-spx-order-actions.php:92
+msgid "Mã vận đơn"
+msgstr "Mã vận đơn"
+
+#: includes/admin/class-spx-admin-cancel.php:9
+#, php-format
+msgid "Mã vận đơn: %s"
+msgstr "Mã vận đơn: %s"
+
+#: includes/admin/class-spx-admin-order-metabox.php:243
+msgid "Mã đơn nội bộ"
+msgstr "Mã đơn nội bộ"
+
+#: includes/admin/class-spx-admin-order-metabox.php:70
+#: includes/admin/class-spx-admin-settings-page.php:45
+#: includes/admin/class-spx-admin-settings-page.php:194
+#: includes/admin/class-spx-admin-tracking.php:28
+msgid "Môi trường"
+msgstr "Môi trường"
+
+#: includes/admin/class-spx-admin-settings-page.php:95
+msgid "Môi trường hiện tại"
+msgstr "Môi trường hiện tại"
+
+#: includes/admin/class-spx-admin-order-metabox.php:242
+msgid "Môi trường nội bộ"
+msgstr "Môi trường nội bộ"
+
+#: includes/admin/class-spx-admin-settings-page.php:149
+msgid "Mặc định tắt"
+msgstr "Mặc định tắt"
+
+#: includes/admin/class-spx-admin-settings-page.php:178
+msgid "Mặc định: không cung cấp vận chuyển SPX khi sản phẩm thiếu cân nặng hoặc kích thước."
+msgstr "Mặc định: không cung cấp vận chuyển SPX khi sản phẩm thiếu cân nặng hoặc kích thước."
+
+#: includes/parcel/class-spx-parcel-builder.php:208
+msgid "Một chiều kiện hàng vượt giới hạn SPX."
+msgstr "Một chiều kiện hàng vượt giới hạn SPX."
+
+#: includes/admin/class-spx-admin-notice-presenter.php:22
+msgid "Một yêu cầu hủy khác đang được xử lý cho đơn này."
+msgstr "Một yêu cầu hủy khác đang được xử lý cho đơn này."
+
+#: includes/admin/class-spx-admin-label.php:10
+#: includes/admin/class-spx-admin-order-metabox.php:256
+msgid "Mở nhãn SPX"
+msgstr "Mở nhãn SPX"
+
+#: includes/admin/class-spx-admin-order-metabox.php:223
+msgid "Mở tracking"
+msgstr "Mở tracking"
+
+#: includes/admin/class-spx-admin-order-metabox.php:74
+msgid "Mở trang theo dõi"
+msgstr "Mở trang theo dõi"
+
+#: includes/admin/class-spx-admin-production.php:38
+#: includes/admin/class-spx-admin-settings-page.php:103
+#: includes/admin/class-spx-admin-settings-page.php:195
+msgid "Mức độ sẵn sàng Production"
+msgstr "Mức độ sẵn sàng Production"
+
+#: includes/admin/class-spx-admin-order-metabox.php:206
+#: includes/admin/class-spx-admin-status-mapping.php:70
+msgid "Nguồn cập nhật"
+msgstr "Nguồn cập nhật"
+
+#: includes/admin/class-spx-admin-order-metabox.php:144
+msgid "Nguồn dữ liệu"
+msgstr "Nguồn dữ liệu"
+
+#: includes/admin/class-spx-admin-order-metabox.php:175
+msgid "Nguồn phí"
+msgstr "Nguồn phí"
+
+#: includes/admin/class-spx-admin-address.php:222
+#: includes/admin/class-spx-admin-order-metabox.php:99
+msgid "Nguồn địa chỉ"
+msgstr "Nguồn địa chỉ"
+
+#: includes/admin/class-spx-admin-address.php:49
+msgid "Ngày import"
+msgstr "Ngày import"
+
+#: includes/admin/class-spx-admin-order-metabox.php:71
+#: includes/admin/class-spx-admin-shipment.php:272
+msgid "Ngày tạo"
+msgstr "Ngày tạo"
+
+#: includes/class-spx-order-actions.php:94
+msgid "Ngày tạo vận đơn"
+msgstr "Ngày tạo vận đơn"
+
+#: includes/class-spx-order-actions.php:55
+msgid "Nhà vận chuyển không trả về mã vận đơn."
+msgstr "Nhà vận chuyển không trả về mã vận đơn."
+
+#: includes/class-spx-order-actions.php:49
+msgid "Nhà vận chuyển trả về mã vận đơn không hợp lệ."
+msgstr "Nhà vận chuyển trả về mã vận đơn không hợp lệ."
+
+#: includes/admin/class-spx-admin-label.php:9
+msgid "Nhãn vận chuyển SPX"
+msgstr "Nhãn vận chuyển SPX"
+
+#: includes/admin/class-spx-admin-address.php:62
+msgid "Nhập dữ liệu địa chỉ"
+msgstr "Nhập dữ liệu địa chỉ"
+
+#: includes/api/class-spx-tracking-service.php:30
+msgid "No client order id provided."
+msgstr "Chưa cung cấp mã đơn khách hàng."
+
+#: includes/api/class-spx-tracking-service.php:24
+msgid "No tracking number provided."
+msgstr "Chưa cung cấp mã vận đơn."
+
+#: includes/admin/class-spx-admin-cancel.php:15
+#: includes/admin/class-spx-admin-label.php:15
+msgid "Order not found."
+msgstr "Không tìm thấy đơn hàng."
+
+#: includes/class-spx-order-actions.php:75
+msgid "Order products are missing."
+msgstr "Đơn hàng không có sản phẩm."
+
+#: includes/api/class-spx-rate-service.php:65
+#: includes/api/class-spx-shipment-service.php:63
+msgid "Parcel item quantity must be at least one."
+msgstr "Số lượng sản phẩm trong kiện phải từ một trở lên."
+
+#: includes/api/class-spx-rate-service.php:64
+msgid "Parcel weight exceeds the 15 kg rate limit."
+msgstr "Cân nặng kiện vượt giới hạn báo phí 15 kg."
+
+#: includes/api/class-spx-shipment-service.php:62
+msgid "Parcel weight exceeds the 17 kg create limit."
+msgstr "Cân nặng kiện vượt giới hạn tạo vận đơn 17 kg."
+
+#: includes/api/class-spx-rate-service.php:63
+#: includes/api/class-spx-shipment-service.php:61
+msgid "Parcel weight must be greater than zero."
+msgstr "Cân nặng kiện phải lớn hơn 0."
+
+#: includes/admin/class-spx-admin-address.php:134
+#: includes/admin/class-spx-admin-address.php:156
+#: includes/admin/class-spx-admin-address.php:172
+#: includes/admin/class-spx-admin-cancel.php:15
+#: includes/admin/class-spx-admin-label.php:15
+#: includes/admin/class-spx-admin-tracking.php:53
+msgid "Permission denied."
+msgstr "Bạn không có quyền thực hiện thao tác này."
+
+#: includes/admin/class-spx-admin-order-metabox.php:152
+msgid "Phiên bản chính sách kiện hàng"
+msgstr "Phiên bản chính sách kiện hàng"
+
+#: includes/admin/class-spx-admin-address.php:48
+#: includes/admin/class-spx-admin-order-metabox.php:104
+#: includes/admin/class-spx-admin-settings-page.php:193
+msgid "Phiên bản dataset"
+msgstr "Phiên bản dataset"
+
+#: includes/admin/class-spx-admin-order-metabox.php:186
+msgid "Phiên bản hợp đồng"
+msgstr "Phiên bản hợp đồng"
+
+#: includes/admin/class-spx-admin-rate.php:108
+msgid "Phí COD (raw)"
+msgstr "Phí COD (raw)"
+
+#: includes/admin/class-spx-admin-settings-page.php:99
+msgid "Phí Checkout"
+msgstr "Phí Checkout"
+
+#: includes/admin/class-spx-admin-settings-page.php:151
+msgid "Phí SPX động hiện chỉ dùng để thử nghiệm Sandbox. Không sử dụng để thu tiền khách Production cho tới khi SPX xác nhận đơn vị phí."
+msgstr "Phí SPX động hiện chỉ dùng để thử nghiệm Sandbox. Không sử dụng để thu tiền khách Production cho tới khi SPX xác nhận đơn vị phí."
+
+#: includes/admin/class-spx-admin-order-metabox.php:174
+msgid "Phí WooCommerce đang áp dụng"
+msgstr "Phí WooCommerce đang áp dụng"
+
+#: includes/admin/class-spx-admin-order-metabox.php:182
+#: includes/admin/class-spx-admin-rate.php:107
+msgid "Phí cơ bản (raw)"
+msgstr "Phí cơ bản (raw)"
+
+#: includes/admin/class-spx-admin-rate.php:131
+#: includes/admin/class-spx-admin-rate.php:133
+#: includes/admin/class-spx-admin-settings-page.php:99
+msgid "Phí cố định"
+msgstr "Phí cố định"
+
+#: includes/admin/class-spx-admin-rate.php:130
+#: includes/admin/class-spx-admin-settings-page.php:152
+msgid "Phí cố định dự phòng"
+msgstr "Phí cố định dự phòng"
+
+#: includes/admin/class-spx-admin-order-metabox.php:181
+msgid "Phí dự kiến (raw)"
+msgstr "Phí dự kiến (raw)"
+
+#: includes/admin/class-spx-admin-rate.php:109
+msgid "Phí giá trị cao (raw)"
+msgstr "Phí giá trị cao (raw)"
+
+#: includes/admin/class-spx-admin-order-metabox.php:171
+#: includes/admin/class-spx-admin-settings-page.php:14
+#: includes/admin/class-spx-admin-settings-page.php:147
+msgid "Phí vận chuyển"
+msgstr "Phí vận chuyển"
+
+#: includes/admin/class-spx-admin-rate.php:106
+msgid "Phí vận chuyển dự kiến (raw)"
+msgstr "Phí vận chuyển dự kiến (raw)"
+
+#: includes/admin/class-spx-admin-order-metabox.php:178
+msgid "Phí động chỉ dùng cho Sandbox. Đơn vị phí chưa được SPX xác nhận và hệ số 1000 vẫn là thử nghiệm."
+msgstr "Phí động chỉ dùng cho Sandbox. Đơn vị phí chưa được SPX xác nhận và hệ số 1000 vẫn là thử nghiệm."
+
+#: includes/admin/class-spx-admin-address.php:52
+#: includes/admin/class-spx-admin-address.php:102
+#: includes/admin/class-spx-admin-order-metabox.php:97
+msgid "Phường/Xã"
+msgstr "Phường/Xã"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:41
+msgid "Phường/Xã SPX"
+msgstr "Phường/Xã SPX"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:142
+msgid "Phường/Xã SPX đã chọn hiện không hoạt động."
+msgstr "Phường/Xã SPX đã chọn hiện không hoạt động."
+
+#: includes/admin/class-spx-admin-status-mapping.php:32
+msgid "Plugin không tự động hoàn tiền."
+msgstr "Plugin không tự động hoàn tiền."
+
+#: includes/admin/class-spx-admin-order-metabox.php:70
+#: includes/admin/class-spx-admin-settings-page.php:119
+msgid "Production"
+msgstr "Production"
+
+#: includes/admin/class-spx-admin-production.php:39
+#: includes/admin/class-spx-admin-settings-page.php:119
+msgid "Production Account Verify chưa được thực hiện."
+msgstr "Production Account Verify chưa được thực hiện."
+
+#: includes/class-spx-shipping-method.php:52
+msgid "Provider"
+msgstr "Nhà cung cấp"
+
+#: includes/admin/class-spx-admin-address.php:118
+#: includes/admin/class-spx-admin-address.php:234
+msgid "Province"
+msgstr "Tỉnh/Thành phố"
+
+#: includes/admin/class-spx-admin-settings-page.php:44
+msgid "Quản lý kết nối, địa chỉ, vận chuyển và đồng bộ đơn hàng tại một nơi."
+msgstr "Quản lý kết nối, địa chỉ, vận chuyển và đồng bộ đơn hàng tại một nơi."
+
+#: includes/checkout/class-spx-checkout-address-snapshot.php:84
+msgid "Quản trị viên ghi đè"
+msgstr "Quản trị viên ghi đè"
+
+#: includes/admin/class-spx-admin-address.php:51
+#: includes/admin/class-spx-admin-address.php:101
+#: includes/admin/class-spx-admin-order-metabox.php:96
+msgid "Quận/Huyện"
+msgstr "Quận/Huyện"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:40
+msgid "Quận/Huyện SPX"
+msgstr "Quận/Huyện SPX"
+
+#: includes/api/class-spx-rate-service.php:59
+#: includes/api/class-spx-shipment-service.php:58
+msgid "Recipient SPX address is not fully resolved."
+msgstr "Địa chỉ SPX của người nhận chưa được xác định đầy đủ."
+
+#: includes/class-spx-shipment-readiness.php:39
+msgid "Recipient SPX district is not resolved."
+msgstr "Chưa xác định Quận/Huyện SPX của người nhận."
+
+#: includes/class-spx-shipment-readiness.php:38
+msgid "Recipient SPX province is not resolved."
+msgstr "Chưa xác định Tỉnh/Thành phố SPX của người nhận."
+
+#: includes/class-spx-shipment-readiness.php:59
+msgid "Recipient SPX ward does not support COD."
+msgstr "Phường/Xã SPX của người nhận không hỗ trợ COD."
+
+#: includes/class-spx-shipment-readiness.php:42
+msgid "Recipient SPX ward does not support delivery."
+msgstr "Phường/Xã SPX của người nhận không hỗ trợ giao hàng."
+
+#: includes/class-spx-shipment-readiness.php:41
+msgid "Recipient SPX ward is not currently available."
+msgstr "Phường/Xã SPX của người nhận hiện chưa hỗ trợ."
+
+#: includes/class-spx-shipment-readiness.php:40
+msgid "Recipient SPX ward/commune is not resolved."
+msgstr "Chưa xác định Phường/Xã SPX của người nhận."
+
+#: includes/class-spx-order-actions.php:73
+msgid "Recipient address is missing."
+msgstr "Thiếu địa chỉ người nhận."
+
+#: includes/class-spx-shipment-readiness.php:37
+msgid "Recipient detail address is missing."
+msgstr "Thiếu địa chỉ chi tiết người nhận."
+
+#: includes/class-spx-shipment-readiness.php:35
+msgid "Recipient name is missing."
+msgstr "Thiếu tên người nhận."
+
+#: includes/class-spx-order-actions.php:74
+#: includes/class-spx-shipment-readiness.php:36
+msgid "Recipient phone is missing."
+msgstr "Thiếu số điện thoại người nhận."
+
+#: includes/api/class-spx-http-client.php:43
+msgid "SPX API credentials are not configured."
+msgstr "Chưa cấu hình thông tin xác thực SPX API."
+
+#: includes/providers/class-spx-api-provider.php:35
+msgid "SPX API method chưa được triển khai trong phase hiện tại."
+msgstr "SPX API method chưa được triển khai trong phase hiện tại."
+
+#: includes/admin/class-spx-admin-address.php:33
+#: includes/admin/class-spx-admin-order-metabox.php:20
+#: includes/admin/class-spx-admin-settings-page.php:44
+#: includes/class-spx-order-actions.php:108
+#: includes/class-spx-shipping-method.php:9
+#: includes/class-spx-shipping-method.php:40
+#: includes/class-spx-shipping-method.php:47
+msgid "SPX Express"
+msgstr "SPX Express"
+
+#: includes/class-spx-plugin.php:127
+msgid "SPX Express for WooCommerce requires WooCommerce to be installed and active."
+msgstr "SPX Express for WooCommerce cần cài đặt và kích hoạt WooCommerce."
+
+#: includes/admin/class-spx-admin-address.php:225
+msgid "SPX IDs"
+msgstr "Mã địa chỉ SPX"
+
+#: includes/api/class-spx-account-service.php:30
+#: includes/api/class-spx-rate-service.php:34
+#: includes/api/class-spx-shipment-service.php:35
+#: includes/api/class-spx-tracking-service.php:50
+#: includes/api/class-spx-tracking-service.php:70
+msgid "SPX account credentials are not configured."
+msgstr "Chưa cấu hình thông tin xác thực tài khoản SPX."
+
+#: includes/api/class-spx-account-service.php:60
+msgid "SPX account credentials did not match."
+msgstr "Thông tin xác thực tài khoản SPX không khớp."
+
+#: includes/admin/class-spx-admin-address.php:290
+msgid "SPX address override was not saved: invalid province/district/ward."
+msgstr "Không lưu địa chỉ SPX ghi đè: Tỉnh/Huyện/Xã không hợp lệ."
+
+#: includes/admin/class-spx-admin-status-mapping.php:92
+msgid "SPX báo hư hỏng → Tạm giữ đơn hàng"
+msgstr "SPX báo hư hỏng → Tạm giữ đơn hàng"
+
+#: includes/admin/class-spx-admin-status-mapping.php:93
+msgid "SPX báo thất lạc → Tạm giữ đơn hàng"
+msgstr "SPX báo thất lạc → Tạm giữ đơn hàng"
+
+#: includes/admin/class-spx-admin-shipment.php:156
+msgid "SPX báo trùng nhưng chưa tra cứu được mã vận đơn. Không tạo lại; hãy dùng Đồng bộ trạng thái sau."
+msgstr "SPX báo trùng nhưng chưa tra cứu được mã vận đơn. Không tạo lại; hãy dùng Đồng bộ trạng thái sau."
+
+#: includes/admin/class-spx-admin-shipment.php:152
+#, php-format
+msgid "SPX báo trùng; đã phục hồi mã vận đơn: %s"
+msgstr "SPX báo trùng; đã phục hồi mã vận đơn: %s"
+
+#: includes/status/class-spx-woo-status-mapping-service.php:108
+#, php-format
+msgid "SPX báo trạng thái ngoại lệ (%1$s). Đơn WooCommerce được chuyển sang %2$s để quản trị viên kiểm tra."
+msgstr "SPX báo trạng thái ngoại lệ (%1$s). Đơn WooCommerce được chuyển sang %2$s để quản trị viên kiểm tra."
+
+#: includes/status/class-spx-woo-status-mapping-service.php:106
+msgid "SPX báo vận đơn đã hủy. Đơn WooCommerce được chuyển sang Đã hủy theo cấu hình của cửa hàng."
+msgstr "SPX báo vận đơn đã hủy. Đơn WooCommerce được chuyển sang Đã hủy theo cấu hình của cửa hàng."
+
+#: includes/admin/class-spx-admin-shipment.php:230
+msgid "SPX chưa đồng bộ trạng thái, vui lòng thử lại sau."
+msgstr "SPX chưa đồng bộ trạng thái, vui lòng thử lại sau."
+
+#: includes/api/class-spx-cancel-service.php:23
+msgid "SPX could not cancel the shipment."
+msgstr "SPX không thể hủy vận đơn."
+
+#: includes/api/class-spx-label-service.php:41
+msgid "SPX could not create the shipping label."
+msgstr "SPX không thể tạo nhãn vận chuyển."
+
+#: includes/api/class-spx-shipment-service.php:109
+msgid "SPX could not create this order."
+msgstr "SPX không thể tạo vận đơn này."
+
+#: includes/api/class-spx-api-error-mapper.php:62
+msgid "SPX could not find the requested order."
+msgstr "SPX không tìm thấy vận đơn được yêu cầu."
+
+#: includes/api/class-spx-rate-service.php:103
+msgid "SPX could not price this order."
+msgstr "SPX không thể báo phí cho đơn hàng này."
+
+#: includes/api/class-spx-cancel-service.php:24
+msgid "SPX did not confirm the cancel result."
+msgstr "SPX chưa xác nhận kết quả hủy."
+
+#: includes/api/class-spx-shipment-service.php:92
+msgid "SPX did not confirm whether the shipment was created."
+msgstr "SPX chưa xác nhận vận đơn đã được tạo hay chưa."
+
+#: includes/api/class-spx-label-service.php:46
+msgid "SPX did not return a label link."
+msgstr "SPX không trả về liên kết nhãn."
+
+#: includes/api/class-spx-shipment-service.php:119
+msgid "SPX did not return a matching created order."
+msgstr "SPX không trả về vận đơn đã tạo phù hợp."
+
+#: includes/api/class-spx-shipment-service.php:124
+msgid "SPX did not return a valid tracking number."
+msgstr "SPX không trả về mã vận đơn hợp lệ."
+
+#: includes/api/class-spx-rate-service.php:78
+#: includes/api/class-spx-shipment-service.php:76
+msgid "SPX does not deliver to the recipient area."
+msgstr "SPX không giao hàng đến khu vực người nhận."
+
+#: includes/api/class-spx-rate-service.php:79
+#: includes/api/class-spx-shipment-service.php:77
+msgid "SPX does not support COD for the recipient area."
+msgstr "SPX không hỗ trợ COD tại khu vực người nhận."
+
+#: includes/admin/class-spx-admin-shipment.php:214
+msgid "SPX environment is missing or production is not enabled."
+msgstr "Thiếu thông tin môi trường SPX hoặc Production chưa được bật."
+
+#: includes/admin/class-spx-admin-status-mapping.php:90
+msgid "SPX giao thành công → Hoàn thành đơn hàng"
+msgstr "SPX giao thành công → Hoàn thành đơn hàng"
+
+#: includes/api/class-spx-tracking-service.php:103
+msgid "SPX has not returned a valid tracking number."
+msgstr "SPX chưa trả về mã vận đơn hợp lệ."
+
+#: includes/api/class-spx-tracking-service.php:84
+#: includes/api/class-spx-tracking-service.php:95
+msgid "SPX has not synced this order yet."
+msgstr "SPX chưa đồng bộ đơn hàng này."
+
+#: includes/checkout/class-spx-classic-checkout-address.php:144
+msgid "SPX hiện không hỗ trợ COD tại Phường/Xã đã chọn."
+msgstr "SPX hiện không hỗ trợ COD tại Phường/Xã đã chọn."
+
+#: includes/checkout/class-spx-classic-checkout-address.php:143
+msgid "SPX hiện không hỗ trợ giao hàng tại Phường/Xã đã chọn."
+msgstr "SPX hiện không hỗ trợ giao hàng tại Phường/Xã đã chọn."
+
+#: includes/admin/class-spx-admin-status-mapping.php:96
+msgid "SPX hoàn hàng thất bại → Tạm giữ đơn hàng"
+msgstr "SPX hoàn hàng thất bại → Tạm giữ đơn hàng"
+
+#: includes/admin/class-spx-admin-status-mapping.php:98
+msgid "SPX hủy vận đơn → Hủy đơn WooCommerce"
+msgstr "SPX hủy vận đơn → Hủy đơn WooCommerce"
+
+#: includes/api/class-spx-api-error-mapper.php:64
+msgid "SPX is temporarily unavailable. Please try again later."
+msgstr "SPX tạm thời không khả dụng. Vui lòng thử lại sau."
+
+#: includes/admin/class-spx-admin-status-mapping.php:95
+msgid "SPX lấy hàng thất bại → Tạm giữ đơn hàng"
+msgstr "SPX lấy hàng thất bại → Tạm giữ đơn hàng"
+
+#: includes/api/class-spx-rate-service.php:83
+#: includes/api/class-spx-shipment-service.php:80
+msgid "SPX pickup is not available at the sender area."
+msgstr "SPX không hỗ trợ lấy hàng tại khu vực người gửi."
+
+#: includes/admin/class-spx-admin-shipment.php:277
+msgid "SPX raw fee — đơn vị chưa được SPX xác nhận"
+msgstr "SPX raw fee — đơn vị chưa được SPX xác nhận"
+
+#: includes/admin/class-spx-admin-rate.php:104
+msgid "SPX raw fee — đơn vị chưa được SPX xác nhận."
+msgstr "SPX raw fee — đơn vị chưa được SPX xác nhận."
+
+#: includes/api/class-spx-api-error-mapper.php:56
+msgid "SPX rejected the request authentication or account credentials."
+msgstr "SPX từ chối thông tin xác thực của yêu cầu hoặc tài khoản."
+
+#: includes/api/class-spx-api-error-mapper.php:58
+msgid "SPX rejected the request because one or more fields are invalid."
+msgstr "SPX từ chối yêu cầu vì có trường dữ liệu không hợp lệ."
+
+#: includes/api/class-spx-api-error-mapper.php:60
+msgid "SPX reported this request or order as a duplicate."
+msgstr "SPX báo yêu cầu hoặc vận đơn này bị trùng."
+
+#: includes/api/class-spx-shipment-service.php:107
+msgid "SPX reports this order was already created (duplicate)."
+msgstr "SPX báo vận đơn này đã được tạo trước đó."
+
+#: includes/shipment/class-spx-label-manager.php:34
+msgid "SPX returned a label URL that is not allowed."
+msgstr "SPX trả về URL nhãn không được phép."
+
+#: includes/api/class-spx-api-response.php:40
+msgid "SPX returned an empty response."
+msgstr "SPX trả về phản hồi rỗng."
+
+#: includes/api/class-spx-rate-service.php:114
+msgid "SPX returned an invalid shipping fee."
+msgstr "SPX trả về phí vận chuyển không hợp lệ."
+
+#: includes/api/class-spx-api-response.php:37
+msgid "SPX returned an unexpected HTTP status."
+msgstr "SPX trả về trạng thái HTTP không mong đợi."
+
+#: includes/api/class-spx-api-response.php:44
+msgid "SPX returned an unreadable response."
+msgstr "SPX trả về phản hồi không thể đọc."
+
+#: includes/api/class-spx-shipment-service.php:99
+msgid "SPX returned no create data."
+msgstr "SPX không trả về dữ liệu tạo vận đơn."
+
+#: includes/shipment/class-spx-label-manager.php:23
+msgid "SPX returned no matching label result."
+msgstr "SPX không trả về kết quả nhãn phù hợp."
+
+#: includes/api/class-spx-rate-service.php:108
+msgid "SPX returned no priced order."
+msgstr "SPX không trả về đơn hàng đã báo phí."
+
+#: includes/api/class-spx-rate-service.php:97
+msgid "SPX returned no rate data."
+msgstr "SPX không trả về dữ liệu phí."
+
+#: includes/api/class-spx-tracking-service.php:79
+msgid "SPX returned no tracking data."
+msgstr "SPX không trả về dữ liệu tracking."
+
+#: includes/class-spx-order-actions.php:34
+#: includes/class-spx-order-actions.php:42
+#, php-format
+msgid "SPX shipment could not be created: %s"
+msgstr "Không thể tạo vận đơn SPX: %s"
+
+#: includes/class-spx-order-actions.php:66
+#, php-format
+msgid "SPX shipment created. Tracking number: %s"
+msgstr "Đã tạo vận đơn SPX. Mã vận đơn: %s"
+
+#: includes/class-spx-order-actions.php:23
+msgid "SPX shipment was not created because this order already has a tracking number."
+msgstr "Không tạo vận đơn SPX vì đơn hàng đã có mã vận đơn."
+
+#: includes/admin/class-spx-admin-status-mapping.php:91
+msgid "SPX tạm giữ → Tạm giữ đơn hàng"
+msgstr "SPX tạm giữ → Tạm giữ đơn hàng"
+
+#: includes/tracking/class-spx-webhook-controller.php:19
+#: includes/tracking/class-spx-webhook-controller.php:21
+msgid "SPX webhook verification is unavailable."
+msgstr "Xác thực webhook SPX hiện chưa khả dụng."
+
+#: includes/status/class-spx-woo-status-mapping-service.php:103
+#, php-format
+msgid "SPX xác nhận giao hàng thành công. Đơn WooCommerce được chuyển từ %1$s sang %2$s."
+msgstr "SPX xác nhận giao hàng thành công. Đơn WooCommerce được chuyển từ %1$s sang %2$s."
+
+#: includes/admin/class-spx-admin-status-mapping.php:94
+msgid "SPX đang hoàn hàng → Tạm giữ đơn hàng"
+msgstr "SPX đang hoàn hàng → Tạm giữ đơn hàng"
+
+#: includes/admin/class-spx-admin-status-mapping.php:97
+msgid "SPX đã hoàn về shop → Tạm giữ đơn hàng"
+msgstr "SPX đã hoàn về shop → Tạm giữ đơn hàng"
+
+#: includes/admin/class-spx-admin-address.php:85
+msgid "SPX đến lấy"
+msgstr "SPX đến lấy"
+
+#: includes/admin/class-spx-admin-rate.php:129
+msgid "SPX động"
+msgstr "SPX động"
+
+#: includes/admin/class-spx-admin-settings-page.php:115
+msgid "Sandbox"
+msgstr "Sandbox"
+
+#: includes/admin/class-spx-admin-order-metabox.php:172
+msgid "Sandbox thử nghiệm"
+msgstr "Sandbox thử nghiệm"
+
+#: includes/admin/class-spx-admin-shipment.php:258
+msgid "Sandbox/Test"
+msgstr "Sandbox/Test"
+
+#: includes/class-spx-sender-profile.php:71
+msgid "Select province, district and ward."
+msgstr "Chọn Tỉnh/Thành phố, Quận/Huyện và Phường/Xã."
+
+#: includes/class-spx-shipment-readiness.php:29
+msgid "Sender detail address is not configured."
+msgstr "Chưa cấu hình địa chỉ chi tiết người gửi."
+
+#: includes/class-spx-sender-profile.php:65
+msgid "Sender detail address is required."
+msgstr "Địa chỉ chi tiết người gửi là bắt buộc."
+
+#: includes/class-spx-sender-profile.php:66
+msgid "Sender detail address must be at most 256 characters."
+msgstr "Địa chỉ chi tiết người gửi tối đa 256 ký tự."
+
+#: includes/class-spx-shipment-readiness.php:31
+msgid "Sender district is not configured."
+msgstr "Chưa cấu hình Quận/Huyện người gửi."
+
+#: includes/class-spx-shipment-readiness.php:27
+msgid "Sender name is not configured."
+msgstr "Chưa cấu hình tên người gửi."
+
+#: includes/class-spx-sender-profile.php:61
+msgid "Sender name is required."
+msgstr "Tên người gửi là bắt buộc."
+
+#: includes/class-spx-sender-profile.php:62
+msgid "Sender name must be at most 64 characters."
+msgstr "Tên người gửi tối đa 64 ký tự."
+
+#: includes/class-spx-sender-profile.php:64
+msgid "Sender phone format is not valid for Vietnam."
+msgstr "Số điện thoại người gửi không đúng định dạng Việt Nam."
+
+#: includes/class-spx-shipment-readiness.php:28
+msgid "Sender phone is not configured."
+msgstr "Chưa cấu hình số điện thoại người gửi."
+
+#: includes/class-spx-sender-profile.php:63
+msgid "Sender phone is required."
+msgstr "Số điện thoại người gửi là bắt buộc."
+
+#: includes/api/class-spx-rate-service.php:56
+#: includes/api/class-spx-shipment-service.php:57
+msgid "Sender profile is incomplete."
+msgstr "Hồ sơ người gửi chưa đầy đủ."
+
+#: includes/class-spx-shipment-readiness.php:30
+msgid "Sender province is not configured."
+msgstr "Chưa cấu hình Tỉnh/Thành phố người gửi."
+
+#: includes/class-spx-shipment-readiness.php:32
+msgid "Sender ward is not configured."
+msgstr "Chưa cấu hình Phường/Xã người gửi."
+
+#: includes/providers/class-spx-mock-provider.php:11
+msgid "Shipment data is incomplete."
+msgstr "Dữ liệu vận đơn chưa đầy đủ."
+
+#: includes/class-spx-order-actions.php:107
+msgid "Shipment tracking"
+msgstr "Theo dõi vận đơn"
+
+#: includes/class-spx-order-actions.php:76
+msgid "Shipment weight is invalid."
+msgstr "Cân nặng vận đơn không hợp lệ."
+
+#: includes/admin/class-spx-admin-address.php:86
+msgid "Shop mang tới điểm gửi"
+msgstr "Shop mang tới điểm gửi"
+
+#: includes/class-spx-shipment-readiness.php:52
+#: includes/parcel/class-spx-parcel-builder.php:155
+msgid "Sản phẩm chưa có cân nặng."
+msgstr "Sản phẩm chưa có cân nặng."
+
+#: includes/parcel/class-spx-parcel-builder.php:193
+msgid "Sản phẩm chưa có đầy đủ kích thước."
+msgstr "Sản phẩm chưa có đầy đủ kích thước."
+
+#: includes/admin/class-spx-admin-address.php:45
+#: includes/admin/class-spx-admin-order-metabox.php:56
+#: includes/admin/class-spx-admin-production.php:38
+#: includes/admin/class-spx-admin-settings-page.php:96
+#: includes/admin/class-spx-admin-settings-page.php:97
+#: includes/admin/class-spx-admin-settings-page.php:98
+#: includes/admin/class-spx-admin-settings-page.php:100
+#: includes/admin/class-spx-admin-settings-page.php:101
+#: includes/admin/class-spx-admin-settings-page.php:103
+#: includes/admin/class-spx-admin-settings-page.php:192
+#: includes/admin/class-spx-admin-settings-page.php:195
+msgid "Sẵn sàng"
+msgstr "Sẵn sàng"
+
+#: includes/admin/class-spx-admin-address.php:272
+msgid "Sẵn sàng tạo vận đơn SPX"
+msgstr "Sẵn sàng tạo vận đơn SPX"
+
+#: includes/admin/class-spx-admin-tracking.php:29
+msgid "Số lượt đồng bộ đang chờ"
+msgstr "Số lượt đồng bộ đang chờ"
+
+#: includes/admin/class-spx-admin-tracking.php:30
+msgid "Số lần thử lại đang chờ"
+msgstr "Số lần thử lại đang chờ"
+
+#: includes/admin/class-spx-admin-tracking.php:31
+msgid "Số tác vụ lỗi"
+msgstr "Số tác vụ lỗi"
+
+#: includes/admin/class-spx-admin-address.php:80
+msgid "Số điện thoại"
+msgstr "Số điện thoại"
+
+#: includes/admin/class-spx-admin-tracking.php:18
+msgid "Số đơn mỗi lượt"
+msgstr "Số đơn mỗi lượt"
+
+#: includes/admin/class-spx-admin-rate.php:115
+msgid "Test"
+msgstr "Test"
+
+#: includes/api/class-spx-http-client.php:46
+msgid "Thao tác Production đang bị khóa vì tài khoản SPX chưa được xác minh."
+msgstr "Thao tác Production đang bị khóa vì tài khoản SPX chưa được xác minh."
+
+#: includes/api/class-spx-cancel-service.php:27
+msgid "The SPX cancel result is unknown."
+msgstr "Kết quả hủy SPX chưa xác định."
+
+#: includes/api/class-spx-http-client.php:40
+msgid "The SPX endpoint path or host is not allowed."
+msgstr "Đường dẫn hoặc máy chủ endpoint SPX không được phép."
+
+#: includes/api/class-spx-label-service.php:53
+msgid "The SPX label request could not be completed."
+msgstr "Không thể hoàn tất yêu cầu nhãn SPX."
+
+#: includes/api/class-spx-api-error-mapper.php:66
+msgid "The SPX request could not be completed."
+msgstr "Không thể hoàn tất yêu cầu SPX."
+
+#: includes/api/class-spx-http-client.php:52
+msgid "The SPX request could not be signed."
+msgstr "Không thể ký yêu cầu SPX."
+
+#: includes/api/class-spx-rate-service.php:77
+#: includes/api/class-spx-shipment-service.php:75
+msgid "The recipient area is not currently serviceable by SPX."
+msgstr "SPX hiện không phục vụ khu vực người nhận."
+
+#: includes/api/class-spx-rate-service.php:76
+#: includes/api/class-spx-shipment-service.php:74
+msgid "The recipient area is not in the SPX dataset."
+msgstr "Khu vực người nhận không có trong dataset SPX."
+
+#: includes/class-spx-order-address.php:54
+msgid "The selected SPX province/district/ward is not valid."
+msgstr "Tỉnh/Huyện/Xã SPX đã chọn không hợp lệ."
+
+#: includes/class-spx-sender-profile.php:73
+msgid "The selected province/district/ward is not a valid SPX combination."
+msgstr "Tổ hợp Tỉnh/Huyện/Xã đã chọn không hợp lệ với SPX."
+
+#: includes/tracking/class-spx-customer-tracking.php:30
+msgid "Theo dõi trên SPX Express"
+msgstr "Theo dõi trên SPX Express"
+
+#: includes/tracking/class-spx-customer-tracking.php:23
+msgid "Theo dõi đơn hàng"
+msgstr "Theo dõi đơn hàng"
+
+#: includes/shipment/class-spx-label-manager.php:16
+msgid "This order has no valid SPX tracking number."
+msgstr "Đơn hàng không có mã vận đơn SPX hợp lệ."
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Thành công gần nhất"
+msgstr "Thành công gần nhất"
+
+#: includes/admin/class-spx-admin-production.php:41
+msgid "Thông tin Production"
+msgstr "Thông tin Production"
+
+#: includes/admin/class-spx-admin-settings-page.php:118
+msgid "Thông tin Sandbox được quản lý bằng cấu hình máy chủ. Giá trị bí mật không được hiển thị trên trang."
+msgstr "Thông tin Sandbox được quản lý bằng cấu hình máy chủ. Giá trị bí mật không được hiển thị trên trang."
+
+#: includes/admin/class-spx-admin-order-metabox.php:139
+msgid "Thông tin kiện hàng"
+msgstr "Thông tin kiện hàng"
+
+#: includes/admin/class-spx-admin-settings-page.php:203
+msgid "Thông tin kết nối"
+msgstr "Thông tin kết nối"
+
+#: includes/admin/class-spx-admin-settings-page.php:189
+msgid "Thông tin kỹ thuật được thu gọn và không chứa thông tin xác thực hoặc dữ liệu cá nhân."
+msgstr "Thông tin kỹ thuật được thu gọn và không chứa thông tin xác thực hoặc dữ liệu cá nhân."
+
+#: includes/admin/class-spx-admin-address.php:74
+msgid "Thông tin lấy hàng"
+msgstr "Thông tin lấy hàng"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Thất bại"
+msgstr "Thất bại"
+
+#: includes/admin/class-spx-admin-order-metabox.php:176
+msgid "Thời điểm báo giá"
+msgstr "Thời điểm báo giá"
+
+#: includes/admin/class-spx-admin-order-metabox.php:70
+#: includes/admin/class-spx-admin-settings-page.php:45
+#: includes/admin/class-spx-admin-settings-page.php:95
+#: includes/admin/class-spx-admin-settings-page.php:194
+#: includes/admin/class-spx-admin-tracking.php:28
+msgid "Thử nghiệm (Sandbox)"
+msgstr "Thử nghiệm (Sandbox)"
+
+#: includes/tracking/class-spx-customer-tracking.php:36
+msgid "Tiến trình giao hàng"
+msgstr "Tiến trình giao hàng"
+
+#: includes/admin/class-spx-admin-settings-page.php:15
+msgid "Tracking"
+msgstr "Tracking"
+
+#: includes/admin/class-spx-admin-shipment.php:265
+#: includes/class-spx-order-actions.php:118
+msgid "Tracking link"
+msgstr "Liên kết tracking"
+
+#: includes/class-spx-order-actions.php:109
+msgid "Tracking number"
+msgstr "Mã vận đơn"
+
+#: includes/admin/class-spx-admin-settings-page.php:100
+msgid "Tracking tự động"
+msgstr "Tracking tự động"
+
+#: includes/admin/class-spx-admin-order-metabox.php:69
+#: includes/admin/class-spx-admin-shipment.php:270
+msgid "Trạng thái"
+msgstr "Trạng thái"
+
+#: includes/admin/class-spx-admin-order-metabox.php:200
+#: includes/admin/class-spx-admin-shipment.php:269
+msgid "Trạng thái SPX"
+msgstr "Trạng thái SPX"
+
+#: includes/admin/class-spx-admin-status-mapping.php:62
+msgid "Trạng thái SPX hiện tại"
+msgstr "Trạng thái SPX hiện tại"
+
+#: includes/tracking/class-spx-tracking-updater.php:66
+#, php-format
+msgid "Trạng thái SPX: %s"
+msgstr "Trạng thái SPX: %s"
+
+#: includes/admin/class-spx-admin-order-metabox.php:201
+msgid "Trạng thái WooCommerce"
+msgstr "Trạng thái WooCommerce"
+
+#: includes/admin/class-spx-admin-status-mapping.php:63
+msgid "Trạng thái WooCommerce hiện tại"
+msgstr "Trạng thái WooCommerce hiện tại"
+
+#: includes/admin/class-spx-admin-order-metabox.php:244
+msgid "Trạng thái tạo vận đơn"
+msgstr "Trạng thái tạo vận đơn"
+
+#: includes/admin/class-spx-admin-status-mapping.php:23
+msgid "Trạng thái tự động"
+msgstr "Trạng thái tự động"
+
+#: includes/admin/class-spx-admin-order-metabox.php:199
+msgid "Trạng thái và hành trình"
+msgstr "Trạng thái và hành trình"
+
+#: includes/class-spx-order-actions.php:93
+msgid "Trạng thái vận chuyển"
+msgstr "Trạng thái vận chuyển"
+
+#: includes/admin/class-spx-admin-settings-page.php:16
+msgid "Trạng thái đơn hàng"
+msgstr "Trạng thái đơn hàng"
+
+#: includes/admin/class-spx-admin-status-mapping.php:108
+msgid "Trạng thái được bảo vệ"
+msgstr "Trạng thái được bảo vệ"
+
+#: includes/admin/class-spx-admin-tracking.php:16
+msgid "Trạng thái đồng bộ"
+msgstr "Trạng thái đồng bộ"
+
+#: includes/admin/class-spx-admin-address.php:79
+msgid "Tên cửa hàng/người gửi"
+msgstr "Tên cửa hàng/người gửi"
+
+#: includes/admin/class-spx-admin-settings-page.php:93
+msgid "Tình trạng vận hành"
+msgstr "Tình trạng vận hành"
+
+#: includes/admin/class-spx-admin-tracking.php:24
+msgid "Tình trạng đồng bộ"
+msgstr "Tình trạng đồng bộ"
+
+#: includes/admin/class-spx-admin-address.php:87
+msgid "Tích hợp hiện sử dụng hình thức shop mang tới điểm gửi."
+msgstr "Tích hợp hiện sử dụng hình thức shop mang tới điểm gửi."
+
+#: includes/admin/class-spx-admin-status-mapping.php:84
+msgid "Tùy chọn nâng cao"
+msgstr "Tùy chọn nâng cao"
+
+#: includes/admin/class-spx-admin-settings-page.php:210
+msgid "Tương thích hệ thống"
+msgstr "Tương thích hệ thống"
+
+#: includes/admin/class-spx-admin-order-metabox.php:315
+msgid "Tạo không thành công"
+msgstr "Tạo không thành công"
+
+#: includes/admin/class-spx-admin-production.php:55
+msgid "Tạo vận đơn Production — chưa được kích hoạt"
+msgstr "Tạo vận đơn Production — chưa được kích hoạt"
+
+#: includes/admin/class-spx-admin-order-metabox.php:220
+#: includes/class-spx-order-actions.php:12
+msgid "Tạo vận đơn SPX"
+msgstr "Tạo vận đơn SPX"
+
+#: includes/admin/class-spx-admin-shipment.php:40
+msgid "Tạo vận đơn SPX (Sandbox)"
+msgstr "Tạo vận đơn SPX (Sandbox)"
+
+#: includes/admin/class-spx-admin-order-metabox.php:219
+msgid "Tạo vận đơn SPX Sandbox"
+msgstr "Tạo vận đơn SPX Sandbox"
+
+#: includes/admin/class-spx-admin-shipment.php:174
+#, php-format
+msgid "Tạo vận đơn SPX thất bại: %s"
+msgstr "Tạo vận đơn SPX thất bại: %s"
+
+#: includes/admin/class-spx-admin-order-metabox.php:221
+msgid "Tạo vận đơn SPX — Production chưa xác minh"
+msgstr "Tạo vận đơn SPX — Production chưa xác minh"
+
+#: includes/admin/class-spx-admin-order-metabox.php:238
+msgid "Tạo vận đơn giả lập"
+msgstr "Tạo vận đơn giả lập"
+
+#: includes/admin/class-spx-admin-status-mapping.php:65
+msgid "Tắt"
+msgstr "Tắt"
+
+#: includes/admin/class-spx-admin-address.php:50
+#: includes/admin/class-spx-admin-address.php:100
+#: includes/admin/class-spx-admin-order-metabox.php:95
+msgid "Tỉnh/Thành phố"
+msgstr "Tỉnh/Thành phố"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:39
+msgid "Tỉnh/Thành phố SPX"
+msgstr "Tỉnh/Thành phố SPX"
+
+#: includes/parcel/class-spx-parcel-builder.php:211
+msgid "Tổng kích thước kiện hàng vượt giới hạn SPX."
+msgstr "Tổng kích thước kiện hàng vượt giới hạn SPX."
+
+#: includes/admin/class-spx-admin-settings-page.php:10
+msgid "Tổng quan"
+msgstr "Tổng quan"
+
+#: includes/admin/class-spx-admin-order-metabox.php:55
+msgid "Tổng quan vận đơn"
+msgstr "Tổng quan vận đơn"
+
+#: includes/admin/class-spx-admin-order-metabox.php:161
+msgid "Từ cấu hình mặc định"
+msgstr "Từ cấu hình mặc định"
+
+#: includes/admin/class-spx-admin-order-metabox.php:160
+msgid "Từ sản phẩm"
+msgstr "Từ sản phẩm"
+
+#: includes/checkout/class-spx-checkout-address-snapshot.php:85
+msgid "Tự phân giải"
+msgstr "Tự phân giải"
+
+#: includes/admin/class-spx-admin-status-mapping.php:24
+msgid "Tự động cập nhật trạng thái WooCommerce theo SPX"
+msgstr "Tự động cập nhật trạng thái WooCommerce theo SPX"
+
+#: includes/admin/class-spx-admin-status-mapping.php:16
+msgid "Tự động cập nhật trạng thái đơn WooCommerce"
+msgstr "Tự động cập nhật trạng thái đơn WooCommerce"
+
+#: includes/admin/class-spx-admin-status-mapping.php:82
+msgid "Tự động hoàn tất"
+msgstr "Tự động hoàn tất"
+
+#: includes/class-spx-order-actions.php:41
+msgid "Unknown provider error."
+msgstr "Lỗi nhà cung cấp chưa xác định."
+
+#: includes/admin/class-spx-admin-order-metabox.php:183
+#: includes/admin/class-spx-admin-rate.php:110
+msgid "VAT (raw)"
+msgstr "VAT (dữ liệu gốc)"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:139
+msgid "Vui lòng chọn đầy đủ Tỉnh/Thành phố, Quận/Huyện và Phường/Xã giao hàng SPX."
+msgstr "Vui lòng chọn đầy đủ Tỉnh/Thành phố, Quận/Huyện và Phường/Xã giao hàng SPX."
+
+#: includes/admin/class-spx-admin-settings-page.php:64
+msgid "Vui lòng kiểm tra lại thông tin người gửi."
+msgstr "Vui lòng kiểm tra lại thông tin người gửi."
+
+#: includes/admin/class-spx-admin-shipment.php:257
+msgid "Vận đơn SPX"
+msgstr "Vận đơn SPX"
+
+#: includes/class-spx-order-actions.php:91
+msgid "Vận đơn SPX Express"
+msgstr "Vận đơn SPX Express"
+
+#: includes/shipment/class-spx-cancel-manager.php:38
+msgid "Vận đơn SPX đã được hủy. Trạng thái đơn WooCommerce không thay đổi."
+msgstr "Vận đơn SPX đã được hủy. Trạng thái đơn WooCommerce không thay đổi."
+
+#: includes/admin/class-spx-admin-notice-presenter.php:14
+msgid "Vận đơn SPX đã ở trạng thái đã hủy."
+msgstr "Vận đơn SPX đã ở trạng thái đã hủy."
+
+#: includes/admin/class-spx-admin-notice-presenter.php:18
+#: includes/admin/class-spx-admin-notice-presenter.php:19
+#: includes/admin/class-spx-admin-order-metabox.php:233
+msgid "Vận đơn hiện không còn đủ điều kiện hủy trên SPX."
+msgstr "Vận đơn hiện không còn đủ điều kiện hủy trên SPX."
+
+#: includes/admin/class-spx-admin-cancel.php:10
+msgid "Vận đơn đã được hủy."
+msgstr "Vận đơn đã được hủy."
+
+#: includes/admin/class-spx-admin-address.php:126
+#: includes/admin/class-spx-admin-address.php:240
+msgid "Ward"
+msgstr "Phường/Xã"
+
+#: includes/admin/class-spx-admin-settings-page.php:102
+#: includes/admin/class-spx-admin-status-mapping.php:116
+msgid "Webhook"
+msgstr "Webhook"
+
+#: includes/admin/class-spx-admin-tracking.php:21
+msgid "Webhook chưa được kích hoạt vì SPX chưa cung cấp đầy đủ tài liệu xác thực. Plugin hiện sử dụng đồng bộ định kỳ."
+msgstr "Webhook chưa được kích hoạt vì SPX chưa cung cấp đầy đủ tài liệu xác thực. Plugin hiện sử dụng đồng bộ định kỳ."
+
+#: includes/admin/class-spx-admin-settings-page.php:207
+msgid "Website HTTPS"
+msgstr "Website dùng HTTPS"
+
+#: includes/admin/class-spx-admin-production.php:39
+#: includes/admin/class-spx-admin-settings-page.php:119
+msgid "Website cần HTTPS trước khi kích hoạt Production."
+msgstr "Website cần HTTPS trước khi kích hoạt Production."
+
+#: includes/admin/class-spx-admin-settings-page.php:103
+msgid "Xem Production readiness"
+msgstr "Xem mức độ sẵn sàng Production"
+
+#: includes/admin/class-spx-admin-settings-page.php:102
+msgid "Xem tracking"
+msgstr "Xem tracking"
+
+#: includes/admin/class-spx-admin-settings-page.php:204
+msgid "Xác minh tài khoản"
+msgstr "Xác minh tài khoản"
+
+#: includes/admin/class-spx-admin-production.php:50
+msgid "Xóa thông tin bí mật đã lưu? Hành động chỉ được áp dụng sau khi bấm Lưu."
+msgstr "Xóa thông tin bí mật đã lưu? Hành động chỉ được áp dụng sau khi bấm Lưu."
+
+#: includes/admin/class-spx-admin-production.php:50
+msgid "Xóa thông tin đã lưu"
+msgstr "Xóa thông tin đã lưu"
+
+#: includes/admin/class-spx-admin-production.php:24
+#: includes/admin/class-spx-admin-status-mapping.php:40
+msgid "You do not have permission to perform this action."
+msgstr "Bạn không có quyền thực hiện thao tác này."
+
+#: includes/admin/class-spx-admin-shipment.php:73
+msgid "Yêu cầu Create SPX đã được khóa cho order này; không gửi thêm yêu cầu."
+msgstr "Yêu cầu Create SPX đã được khóa cho order này; không gửi thêm yêu cầu."
+
+#: includes/admin/class-spx-admin-notice-presenter.php:15
+msgid "Yêu cầu hủy đang được xử lý. Vui lòng kiểm tra lại sau."
+msgstr "Yêu cầu hủy đang được xử lý. Vui lòng kiểm tra lại sau."
+
+#: includes/admin/class-spx-admin-tracking.php:13
+msgid "Yêu cầu đồng bộ SPX đã được xếp hàng."
+msgstr "Yêu cầu đồng bộ SPX đã được xếp hàng."
+
+#: includes/admin/class-spx-admin-settings-page.php:149
+#: includes/admin/class-spx-admin-settings-page.php:191
+#: includes/admin/class-spx-admin-tracking.php:14
+msgid "Đang bật"
+msgstr "Đang bật"
+
+#: includes/admin/class-spx-admin-production.php:54
+msgid "Đang chờ hoàn thiện"
+msgstr "Đang chờ hoàn thiện"
+
+#: includes/api/class-spx-tracking-status-mapper.php:46
+#: includes/tracking/class-spx-customer-tracking.php:24
+msgid "Đang cập nhật"
+msgstr "Đang cập nhật"
+
+#: includes/admin/class-spx-admin-order-metabox.php:311
+msgid "Đang gửi yêu cầu"
+msgstr "Đang gửi yêu cầu"
+
+#: includes/admin/class-spx-admin-tracking.php:26
+msgid "Đang hoạt động"
+msgstr "Đang hoạt động"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:26
+msgid "Đang tải…"
+msgstr "Đang tải…"
+
+#: includes/admin/class-spx-admin-settings-page.php:48
+msgid "Điều hướng cài đặt SPX Express"
+msgstr "Điều hướng cài đặt SPX Express"
+
+#: includes/admin/class-spx-admin-production.php:49
+#: includes/admin/class-spx-admin-settings-page.php:115
+#: includes/admin/class-spx-admin-settings-page.php:137
+msgid "Đã cấu hình"
+msgstr "Đã cấu hình"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Đã cập nhật"
+msgstr "Đã cập nhật"
+
+#: includes/admin/class-spx-admin-notice-presenter.php:13
+msgid "Đã hủy vận đơn SPX. Đơn WooCommerce không bị hủy và không được hoàn tiền."
+msgstr "Đã hủy vận đơn SPX. Đơn WooCommerce không bị hủy và không được hoàn tiền."
+
+#: includes/admin/class-spx-admin-rate.php:82
+#, php-format
+msgid "Đã kiểm tra phí SPX (test): phí dự kiến (raw) %s — đơn vị chưa được SPX xác nhận."
+msgstr "Đã kiểm tra phí SPX (test): phí dự kiến (raw) %s — đơn vị chưa được SPX xác nhận."
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Đã lên lịch"
+msgstr "Đã lên lịch"
+
+#: includes/admin/class-spx-admin-settings-page.php:65
+msgid "Đã lưu cấu hình Production."
+msgstr "Đã lưu cấu hình Production."
+
+#: includes/admin/class-spx-admin-settings-page.php:67
+msgid "Đã lưu cấu hình kiện hàng mặc định."
+msgstr "Đã lưu cấu hình kiện hàng mặc định."
+
+#: includes/admin/class-spx-admin-status-mapping.php:18
+msgid "Đã lưu cấu hình đồng bộ trạng thái."
+msgstr "Đã lưu cấu hình đồng bộ trạng thái."
+
+#: includes/admin/class-spx-admin-settings-page.php:63
+msgid "Đã lưu hồ sơ người gửi."
+msgstr "Đã lưu hồ sơ người gửi."
+
+#: includes/admin/class-spx-admin-label.php:11
+msgid "Đã lấy nhãn SPX. Liên kết chỉ dành cho quản trị viên và có thời hạn."
+msgstr "Đã lấy nhãn SPX. Liên kết chỉ dành cho quản trị viên và có thời hạn."
+
+#: includes/admin/class-spx-admin-settings-page.php:61
+msgid "Đã nhập dữ liệu địa chỉ SPX."
+msgstr "Đã nhập dữ liệu địa chỉ SPX."
+
+#: includes/admin/class-spx-admin-order-metabox.php:312
+msgid "Đã tạo"
+msgstr "Đã tạo"
+
+#: includes/admin/class-spx-admin-shipment.php:138
+#, php-format
+msgid "Đã tạo vận đơn SPX (sandbox). Mã vận đơn: %s"
+msgstr "Đã tạo vận đơn SPX (sandbox). Mã vận đơn: %s"
+
+#: includes/admin/class-spx-admin-production.php:54
+msgid "Đã tắt"
+msgstr "Đã tắt"
+
+#: includes/admin/class-spx-admin-status-mapping.php:106
+msgid "Đã tắt trong cấu hình"
+msgstr "Đã tắt trong cấu hình"
+
+#: includes/admin/class-spx-admin-tracking.php:36
+msgid "Đã xử lý"
+msgstr "Đã xử lý"
+
+#: includes/admin/class-spx-admin-status-mapping.php:107
+msgid "Đã xử lý trước đó"
+msgstr "Đã xử lý trước đó"
+
+#: includes/admin/class-spx-admin-status-mapping.php:104
+msgid "Đã áp dụng"
+msgstr "Đã áp dụng"
+
+#: includes/admin/class-spx-admin-notice-presenter.php:20
+msgid "Đơn hàng chưa có mã vận đơn SPX hợp lệ."
+msgstr "Đơn hàng chưa có mã vận đơn SPX hợp lệ."
+
+#: includes/class-spx-shipment-readiness.php:54
+#: includes/parcel/class-spx-parcel-builder.php:187
+msgid "Đơn hàng không có sản phẩm cần giao."
+msgstr "Đơn hàng không có sản phẩm cần giao."
+
+#: includes/admin/class-spx-admin-shipment.php:56
+msgid "Đơn này đã có mã mock (SPXMOCK). Hãy dùng một order test mới để tạo vận đơn sandbox."
+msgstr "Đơn này đã có mã mock (SPXMOCK). Hãy dùng một order test mới để tạo vận đơn sandbox."
+
+#: includes/admin/class-spx-admin-shipment.php:58
+msgid "Đơn này đã có mã vận đơn SPX; không tạo lại."
+msgstr "Đơn này đã có mã vận đơn SPX; không tạo lại."
+
+#: includes/admin/class-spx-admin-shipment.php:59
+msgid "Đơn này đã từng gửi yêu cầu Create tới SPX. Không tạo lại; chỉ dùng Đồng bộ trạng thái SPX."
+msgstr "Đơn này đã từng gửi yêu cầu Create tới SPX. Không tạo lại; chỉ dùng Đồng bộ trạng thái SPX."
+
+#: includes/admin/class-spx-admin-status-mapping.php:83
+msgid "Đưa vào kiểm tra"
+msgstr "Đưa vào kiểm tra"
+
+#: includes/admin/class-spx-admin-settings-page.php:148
+msgid "Được dùng khi chế độ thử nghiệm tắt hoặc khi chính sách dự phòng yêu cầu."
+msgstr "Được dùng khi chế độ thử nghiệm tắt hoặc khi chính sách dự phòng yêu cầu."
+
+#: includes/admin/class-spx-admin-production.php:46
+msgid "Được quản lý bởi máy chủ"
+msgstr "Được quản lý bởi máy chủ"
+
+#: includes/admin/class-spx-admin-settings-page.php:116
+#: includes/admin/class-spx-admin-settings-page.php:119
+msgid "Địa chỉ API"
+msgstr "Địa chỉ API"
+
+#: includes/admin/class-spx-admin-address.php:213
+msgid "Địa chỉ SPX"
+msgstr "Địa chỉ SPX"
+
+#: includes/admin/class-spx-admin-address.php:82
+msgid "Địa chỉ chi tiết"
+msgstr "Địa chỉ chi tiết"
+
+#: includes/admin/class-spx-admin-order-metabox.php:87
+#: includes/checkout/class-spx-classic-checkout-address.php:37
+msgid "Địa chỉ giao hàng SPX"
+msgstr "Địa chỉ giao hàng SPX"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:141
+msgid "Địa chỉ giao hàng SPX không hợp lệ. Vui lòng chọn lại."
+msgstr "Địa chỉ giao hàng SPX không hợp lệ. Vui lòng chọn lại."
+
+#: includes/admin/class-spx-admin-address.php:74
+msgid "Địa chỉ hợp lệ"
+msgstr "Địa chỉ hợp lệ"
+
+#: includes/admin/class-spx-admin-shipment.php:226
+#, php-format
+msgid "Đồng bộ SPX lỗi: %s"
+msgstr "Đồng bộ SPX lỗi: %s"
+
+#: includes/admin/class-spx-admin-shipment.php:273
+msgid "Đồng bộ cuối"
+msgstr "Đồng bộ cuối"
+
+#: includes/admin/class-spx-admin-order-metabox.php:72
+#: includes/class-spx-order-actions.php:95
+msgid "Đồng bộ gần nhất"
+msgstr "Đồng bộ gần nhất"
+
+#: includes/admin/class-spx-admin-order-metabox.php:225
+#: includes/admin/class-spx-admin-tracking.php:20
+msgid "Đồng bộ ngay"
+msgstr "Đồng bộ ngay"
+
+#: includes/admin/class-spx-admin-status-mapping.php:116
+#: includes/admin/class-spx-admin-tracking.php:20
+msgid "Đồng bộ thủ công"
+msgstr "Đồng bộ thủ công"
+
+#: includes/admin/class-spx-admin-tracking.php:11
+msgid "Đồng bộ tracking"
+msgstr "Đồng bộ tracking"
+
+#: includes/admin/class-spx-admin-shipment.php:41
+msgid "Đồng bộ trạng thái SPX"
+msgstr "Đồng bộ trạng thái SPX"
+
+#: includes/admin/class-spx-admin-status-mapping.php:61
+msgid "Đồng bộ trạng thái WooCommerce"
+msgstr "Đồng bộ trạng thái WooCommerce"
+
+#: includes/admin/class-spx-admin-tracking.php:14
+msgid "Đồng bộ tự động"
+msgstr "Đồng bộ tự động"
+
+#: includes/admin/class-spx-admin-settings-page.php:209
+#: includes/admin/class-spx-admin-status-mapping.php:116
+#: includes/admin/class-spx-admin-tracking.php:26
+msgid "Đồng bộ định kỳ"
+msgstr "Đồng bộ định kỳ"
+
+#: includes/checkout/class-spx-classic-checkout-address.php:26
+#: includes/checkout/class-spx-classic-checkout-address.php:39
+#: includes/checkout/class-spx-classic-checkout-address.php:40
+#: includes/checkout/class-spx-classic-checkout-address.php:41
+msgid "— Chọn —"
+msgstr "— Chọn —"
+
+#. Plugin Name of the plugin
+#: spx-express-woocommerce.php
+msgid "SPX Express for WooCommerce"
+msgstr "SPX Express for WooCommerce"
+
+#. Description of the plugin
+#: spx-express-woocommerce.php
+msgid "Kết nối WooCommerce với SPX Express (Việt Nam): địa chỉ SPX ở checkout, phí cố định, tạo vận đơn Sandbox, tracking, nhãn và đồng bộ trạng thái. Production còn khóa chờ xác minh."
+msgstr "Kết nối WooCommerce với SPX Express (Việt Nam): địa chỉ SPX ở checkout, phí cố định, tạo vận đơn Sandbox, tracking, nhãn và đồng bộ trạng thái. Production còn khóa chờ xác minh."
+
+#: includes/class-spx-shipping-method.php:52
+msgid "Production activation is managed centrally on the SPX Express page and is currently unavailable."
+msgstr "Kích hoạt Production được quản lý tập trung tại trang SPX Express và hiện chưa khả dụng."
+
+#: includes/shipment/class-spx-label-manager.php:17
+msgid "Shipping labels are available only for sandbox shipments."
+msgstr "Nhãn vận chuyển chỉ khả dụng cho vận đơn Sandbox."
