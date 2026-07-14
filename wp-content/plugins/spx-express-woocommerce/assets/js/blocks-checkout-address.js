@@ -33,13 +33,20 @@
 		} ).then( function ( response ) { if ( ! response.ok ) { throw new Error( 'spx_address_fetch' ); } return response.json(); } );
 	}
 
-	function SelectField( props ) {
+	function optionLabel( items, id ) {
+		var match = items.filter( function ( item ) { return String( item.id ) === String( id ); } )[0];
+		return match ? match.label : '';
+	}
+
+	function LocationField( props ) {
 		return el( 'label', { className: 'spx-checkout-block__field' },
-			el( 'span', null, props.label, el( 'abbr', { title: 'bắt buộc' }, '*' ) ),
-			el( 'select', { value: props.value, onChange: function ( event ) { props.onChange( event.target.value ); }, required: true, disabled: props.disabled },
-				el( 'option', { value: '' }, chooseLabel ),
+			el( 'span', null, 'Khu vực', el( 'abbr', { title: 'bắt buộc' }, '*' ) ),
+			el( 'select', { value: '', onChange: function ( event ) { props.onChange( event.target.value ); }, required: true, disabled: props.disabled },
+				el( 'option', { value: '' }, props.placeholder || chooseLabel ),
 				props.items.map( function ( item ) { return el( 'option', { key: item.id, value: item.id }, item.label ); } )
-			)
+			),
+			props.canGoBack ? el( 'button', { type: 'button', className: 'spx-location-control__breadcrumb-back', onClick: props.onBack }, '← ', 'Quay lại' ) : null,
+			props.summary ? el( 'small', { className: 'spx-location-control__summary' }, props.summary ) : null
 		);
 	}
 
@@ -53,6 +60,10 @@
 		var districtsState = useState( [] );
 		var wardsState = useState( [] );
 		var errorState = useState( '' );
+		var levelState = useState( 'province' );
+		var provinceLabelState = useState( '' );
+		var districtLabelState = useState( '' );
+		var wardLabelState = useState( '' );
 		var province = provinceState[0], setProvince = provinceState[1];
 		var district = districtState[0], setDistrict = districtState[1];
 		var ward = wardState[0], setWard = wardState[1];
@@ -61,23 +72,39 @@
 		var districts = districtsState[0], setDistricts = districtsState[1];
 		var wards = wardsState[0], setWards = wardsState[1];
 		var error = errorState[0], setError = errorState[1];
+		var level = levelState[0], setLevel = levelState[1];
+		var provinceLabel = provinceLabelState[0], setProvinceLabel = provinceLabelState[1];
+		var districtLabel = districtLabelState[0], setDistrictLabel = districtLabelState[1];
+		var wardLabel = wardLabelState[0], setWardLabel = wardLabelState[1];
 		var setExtensionData = props.checkoutExtensionData && props.checkoutExtensionData.setExtensionData;
 
 		var cart = props.cart || {};
 		var isSpx = hasSelectedSpx( cart.shippingRates || cart.shipping_rates || [] );
 
 		useEffect( function () {
-			fetchItems( '/provinces', {} ).then( function ( data ) { setProvinces( data.items || [] ); setVersion( data.dataset_version || version ); } ).catch( function () { setError( 'Không thể tải địa chỉ SPX.' ); } );
+			fetchItems( '/provinces', {} ).then( function ( data ) {
+				var items = data.items || [];
+				setProvinces( items );
+				setVersion( data.dataset_version || version );
+				if ( province && ! provinceLabel ) { setProvinceLabel( optionLabel( items, province ) ); }
+			} ).catch( function () { setError( 'Không thể tải địa chỉ SPX.' ); } );
 		}, [] );
 		useEffect( function () {
 			if ( ! province ) { setDistricts( [] ); return; }
-			fetchItems( '/districts', { province_id: province } ).then( function ( data ) { setDistricts( data.items || [] ); setVersion( data.dataset_version || version ); } ).catch( function () { setError( 'Không thể tải Quận/Huyện SPX.' ); } );
+			fetchItems( '/districts', { province_id: province } ).then( function ( data ) {
+				var items = data.items || [];
+				setDistricts( items );
+				setVersion( data.dataset_version || version );
+				if ( district && ! districtLabel ) { setDistrictLabel( optionLabel( items, district ) ); }
+			} ).catch( function () { setError( 'Không thể tải Quận/Huyện SPX.' ); } );
 		}, [ province ] );
 		useEffect( function () {
 			if ( ! province || ! district ) { setWards( [] ); return; }
 			fetchItems( '/wards', { province_id: province, district_id: district } ).then( function ( data ) {
-				setWards( ( data.items || [] ).filter( function ( item ) { return item.active && item.delivery_supported; } ) );
+				var items = ( data.items || [] ).filter( function ( item ) { return item.active && item.delivery_supported; } );
+				setWards( items );
 				setVersion( data.dataset_version || version );
+				if ( ward && ! wardLabel ) { setWardLabel( optionLabel( items, ward ) ); }
 			} ).catch( function () { setError( 'Không thể tải Phường/Xã SPX.' ); } );
 		}, [ province, district ] );
 		useEffect( function () {
@@ -95,23 +122,90 @@
 			} ); } ).catch( function () { setError( 'Không thể cập nhật phí giao hàng SPX.' ); } );
 		}, [ province, district, ward, version ] );
 
+		function currentItems() {
+			if ( level === 'district' ) { return districts; }
+			if ( level === 'ward' ) { return wards; }
+			return provinces;
+		}
+
+		function currentPlaceholder() {
+			if ( level === 'district' ) { return 'Chọn Quận/Huyện'; }
+			if ( level === 'ward' ) { return 'Chọn Phường/Xã'; }
+			return 'Chọn Tỉnh/Thành phố';
+		}
+
+		function summaryText() {
+			var parts = [ provinceLabel, districtLabel, wardLabel ].filter( Boolean );
+			return parts.length ? parts.join( ' - ' ) : '';
+		}
+
+		function chooseLocationPart( id ) {
+			if ( ! id ) { return; }
+			setError( '' );
+			if ( level === 'province' ) {
+				setProvince( id );
+				setProvinceLabel( optionLabel( provinces, id ) );
+				setDistrict( '' );
+				setWard( '' );
+				setDistrictLabel( '' );
+				setWardLabel( '' );
+				setLevel( 'district' );
+				return;
+			}
+			if ( level === 'district' ) {
+				setDistrict( id );
+				setDistrictLabel( optionLabel( districts, id ) );
+				setWard( '' );
+				setWardLabel( '' );
+				setLevel( 'ward' );
+				return;
+			}
+			setWard( id );
+			setWardLabel( optionLabel( wards, id ) );
+			setLevel( 'province' );
+		}
+
+		function goBack() {
+			setError( '' );
+			if ( level === 'ward' ) {
+				setDistrict( '' );
+				setWard( '' );
+				setDistrictLabel( '' );
+				setWardLabel( '' );
+				setLevel( 'district' );
+				return;
+			}
+			if ( level === 'district' ) {
+				setProvince( '' );
+				setDistrict( '' );
+				setWard( '' );
+				setProvinceLabel( '' );
+				setDistrictLabel( '' );
+				setWardLabel( '' );
+				setLevel( 'province' );
+			}
+		}
+
 		if ( ! isSpx ) { return null; }
-		return el( 'section', { className: 'spx-shipping-address spx-checkout-block' },
-			el( 'h3', null, 'Địa chỉ giao hàng SPX' ),
-			el( 'p', { className: 'spx-shipping-address__note' }, 'Chỉ dùng để xác định khu vực giao hàng SPX; địa chỉ WooCommerce của bạn vẫn được giữ nguyên.' ),
-			el( SelectField, { label: 'Tỉnh/Thành phố SPX', value: province, items: provinces, onChange: function ( id ) { setProvince( id ); setDistrict( '' ); setWard( '' ); setError( '' ); } } ),
-			el( SelectField, { label: 'Quận/Huyện SPX', value: district, items: districts, disabled: ! province, onChange: function ( id ) { setDistrict( id ); setWard( '' ); setError( '' ); } } ),
-			el( SelectField, { label: 'Phường/Xã SPX', value: ward, items: wards, disabled: ! district, onChange: function ( id ) { setWard( id ); setError( '' ); } } ),
-			el( 'p', { className: 'spx-shipping-address__feedback', role: 'status', 'aria-live': 'polite' }, error )
+		return el( 'section', { className: 'spx-checkout-field spx-location-control spx-checkout-block' },
+			el( LocationField, {
+				items: currentItems(),
+				placeholder: currentPlaceholder(),
+				disabled: ( level === 'district' && ! province ) || ( level === 'ward' && ! district ),
+				canGoBack: level === 'district' || level === 'ward',
+				onBack: goBack,
+				onChange: chooseLocationPart,
+				summary: summaryText()
+			} ),
+			el( 'p', { className: 'spx-checkout-notice', role: 'alert', 'aria-live': 'polite' }, error )
 		);
 	}
 
 	var metadata = {
 		apiVersion: 3,
 		name: 'spx-express/shipping-address',
-		version: '0.9.0-rc.2',
+		version: '0.9.0-rc.4',
 		title: 'Địa chỉ giao hàng SPX',
-		category: 'woocommerce',
 		description: 'Chọn hierarchy giao hàng SPX từ dataset local.',
 		parent: [ 'woocommerce/checkout-shipping-address-block' ],
 		attributes: {

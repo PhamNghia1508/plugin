@@ -116,14 +116,8 @@ final class SPX_Admin_Settings_Page {
 
 	private static function render_connection(): void {
 		$store = new SPX_Credential_Store();
-		$test = $store->get( 'test' );
-		echo '<section aria-labelledby="spx-connection-title"><h2 id="spx-connection-title">' . esc_html__( 'Kết nối API', 'spx-express-woocommerce' ) . '</h2><div class="spx-admin-grid spx-admin-grid--two">';
-		echo '<article class="spx-admin-card"><div class="spx-card-heading"><h3>' . esc_html__( 'Sandbox', 'spx-express-woocommerce' ) . '</h3>' . self::status_badge( '', self::credentials_complete( $test, false ) ? __( 'Đã cấu hình', 'spx-express-woocommerce' ) : __( 'Cần cấu hình', 'spx-express-woocommerce' ), self::credentials_complete( $test, false ) ? 'success' : 'warning' ) . '</div>';
-		echo '<p><strong>' . esc_html__( 'Địa chỉ API', 'spx-express-woocommerce' ) . ':</strong> <code>https://test-stable.spx.vn/</code></p>';
-		self::credential_status_list( $test, false );
-		echo '<p class="description">' . esc_html__( 'Thông tin Sandbox được quản lý bằng cấu hình máy chủ. Giá trị bí mật không được hiển thị trên trang.', 'spx-express-woocommerce' ) . '</p></article>';
+		echo '<section aria-labelledby="spx-connection-title"><h2 id="spx-connection-title">' . esc_html__( 'Kết nối API', 'spx-express-woocommerce' ) . '</h2>';
 		echo '<article class="spx-admin-card"><h3>' . esc_html__( 'Production', 'spx-express-woocommerce' ) . '</h3><p><strong>' . esc_html__( 'Địa chỉ API', 'spx-express-woocommerce' ) . ':</strong> <code>https://spx.vn/</code></p><p>' . esc_html__( 'Các vận đơn thật đang bị khóa để bảo vệ cửa hàng.', 'spx-express-woocommerce' ) . '</p><p>' . esc_html__( 'Production Account Verify chưa được thực hiện.', 'spx-express-woocommerce' ) . '</p><p>' . esc_html__( 'Website cần HTTPS trước khi kích hoạt Production.', 'spx-express-woocommerce' ) . '</p></article>';
-		echo '</div>';
 		SPX_Admin_Production::render_section();
 		echo '</section>';
 	}
@@ -151,7 +145,7 @@ final class SPX_Admin_Settings_Page {
 		$policy = defined( 'SPX_EXPERIMENTAL_DYNAMIC_RATE_FALLBACK_POLICY' ) ? sanitize_key( (string) SPX_EXPERIMENTAL_DYNAMIC_RATE_FALLBACK_POLICY ) : SPX_Dynamic_Checkout_Rate_Service::POLICY_FIXED_FALLBACK;
 		echo '<section aria-labelledby="spx-rates-title"><h2 id="spx-rates-title">' . esc_html__( 'Phí vận chuyển', 'spx-express-woocommerce' ) . '</h2><div class="spx-admin-grid">';
 		self::render_instance_fee_cards( $verified );
-		echo '<article class="spx-admin-card"><div class="spx-card-heading"><h3>' . esc_html__( 'B. Phí SPX động thử nghiệm', 'spx-express-woocommerce' ) . '</h3>' . self::status_badge( '', $dynamic ? __( 'Đang bật', 'spx-express-woocommerce' ) : __( 'Mặc định tắt', 'spx-express-woocommerce' ), 'warning' ) . '</div><p><strong>' . esc_html__( 'Chỉ Sandbox/Local', 'spx-express-woocommerce' ) . '</strong></p><p>' . esc_html__( 'Hệ số thử nghiệm: 1000. Đơn vị phí và tiền tệ chưa được SPX xác nhận.', 'spx-express-woocommerce' ) . '</p></article>';
+		echo '<article class="spx-admin-card"><div class="spx-card-heading"><h3>' . esc_html__( 'B. Phí SPX động', 'spx-express-woocommerce' ) . '</h3>' . self::status_badge( '', __( 'Bị khóa', 'spx-express-woocommerce' ), 'danger' ) . '</div><p>' . esc_html__( 'Phí động chỉ được kích hoạt sau khi xác minh kết nối SPX Production.', 'spx-express-woocommerce' ) . '</p></article>';
 		echo '<article class="spx-admin-card"><h3>' . esc_html__( 'C. Phí động Production', 'spx-express-woocommerce' ) . '</h3>' . self::status_badge( '', __( 'Bị khóa', 'spx-express-woocommerce' ), 'danger' ) . '<p>' . esc_html__( 'Chưa được kích hoạt và không thể bật từ giao diện này.', 'spx-express-woocommerce' ) . '</p></article>';
 		echo '</div><div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Phí SPX động hiện chỉ dùng để thử nghiệm Sandbox. Không sử dụng để thu tiền khách Production cho tới khi SPX xác nhận đơn vị phí.', 'spx-express-woocommerce' ) . '</strong></p></div>';
 		echo '<article class="spx-admin-card spx-rate-policy"><h3>' . esc_html__( 'Chính sách khi không lấy được phí động', 'spx-express-woocommerce' ) . '</h3><p>' . esc_html( SPX_Dynamic_Checkout_Rate_Service::POLICY_FIXED_FALLBACK === $policy ? __( 'Phí cố định dự phòng', 'spx-express-woocommerce' ) : __( 'Không cung cấp phương thức SPX khi lỗi', 'spx-express-woocommerce' ) ) . '</p></article>';
@@ -249,13 +243,15 @@ final class SPX_Admin_Settings_Page {
 		$repo = new SPX_Address_Repository();
 		$meta = $repo->get_dataset_metadata();
 		$readiness = SPX_Production_Readiness::current();
+		$verified = class_exists( 'SPX_Production_Verification_Store' ) && SPX_Production_Verification_Store::is_verified( SPX_Production_Gate::current_fingerprint(), SPX_Environment::host( SPX_Environment::PRODUCTION ) );
 		$hpos = class_exists( '\\Automattic\\WooCommerce\\Utilities\\OrderUtil' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
 		echo '<section aria-labelledby="spx-tools-title"><h2 id="spx-tools-title">' . esc_html__( 'Công cụ hệ thống', 'spx-express-woocommerce' ) . '</h2><p>' . esc_html__( 'Thông tin kỹ thuật được thu gọn và không chứa thông tin xác thực hoặc dữ liệu cá nhân.', 'spx-express-woocommerce' ) . '</p>';
 		echo '<details class="spx-technical-details"><summary>' . esc_html__( 'Chi tiết hệ thống', 'spx-express-woocommerce' ) . '</summary><div class="spx-technical-details__body"><dl class="spx-definition-list">';
 		self::detail( __( 'HPOS', 'spx-express-woocommerce' ), $hpos ? __( 'Đang bật', 'spx-express-woocommerce' ) : __( 'Chưa kích hoạt', 'spx-express-woocommerce' ) );
 		self::detail( __( 'Dataset', 'spx-express-woocommerce' ), $repo->is_available() ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Chưa có dữ liệu', 'spx-express-woocommerce' ) );
 		self::detail( __( 'Phiên bản dataset', 'spx-express-woocommerce' ), (string) ( $meta['version'] ?? '—' ) );
-		self::detail( __( 'Môi trường', 'spx-express-woocommerce' ), __( 'Thử nghiệm (Sandbox)', 'spx-express-woocommerce' ) );
+		$env_label = $verified ? __( 'Production', 'spx-express-woocommerce' ) : __( 'Chờ xác minh', 'spx-express-woocommerce' );
+		self::detail( __( 'Môi trường', 'spx-express-woocommerce' ), $env_label );
 		self::detail( __( 'Mức độ sẵn sàng Production', 'spx-express-woocommerce' ), $readiness['ready'] ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Bị khóa', 'spx-express-woocommerce' ) );
 		echo '</dl>';
 		if ( ! empty( $readiness['failed'] ) ) { echo '<p><strong>' . esc_html__( 'Các mục cần hoàn thiện', 'spx-express-woocommerce' ) . ':</strong> ' . esc_html( implode( ', ', array_map( array( __CLASS__, 'readiness_label' ), $readiness['failed'] ) ) ) . '</p>'; }

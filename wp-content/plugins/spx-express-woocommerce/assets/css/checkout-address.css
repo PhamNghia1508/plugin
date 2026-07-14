@@ -1,21 +1,187 @@
-.spx-shipping-address {
-	border: 1px solid #dcdcde;
-	border-radius: 4px;
-	clear: both;
-	margin: 1.5rem 0;
-	padding: 1rem;
+/*
+ * SPX Checkout Address — scoped styles.
+ *
+ * ALL selectors MUST be scoped under:
+ *   .spx-checkout-field
+ *   .spx-checkout-notice
+ *   .spx-location-control
+ *
+ * NEVER use global selectors (input, select, button, table, body, form,
+ * .woocommerce, .checkout). No !important. No reset/normalize imports.
+ */
+
+/* ── Location control: single "Khu vực" field ────────────────────── */
+.spx-location-control {
+	position: relative;
+	margin-bottom: 1rem;
 }
 
-.spx-shipping-address h3 { margin-top: 0; }
-.spx-shipping-address__note { color: #50575e; font-size: .9em; }
-.spx-shipping-address .form-row { float: none; width: 100%; }
-.spx-shipping-address select { max-width: 100%; width: 100%; }
-.spx-shipping-address__feedback { color: #b32d2e; min-height: 1.4em; }
-.spx-checkout-block__field { display: block; margin: 0 0 1rem; }
-.spx-checkout-block__field > span { display: block; margin-bottom: .35rem; }
-.spx-checkout-block__field abbr { margin-left: .2em; text-decoration: none; }
-.spx-checkout-block__field select { box-sizing: border-box; min-height: 2.75rem; }
+.spx-location-control__label {
+	display: block;
+	margin-bottom: 0.35rem;
+	font-weight: 600;
+}
 
-@media ( min-width: 768px ) {
-	.spx-shipping-address { padding: 1.25rem; }
+.spx-location-control__label abbr {
+	text-decoration: none;
+	margin-left: 0.15em;
+	color: inherit;
+}
+
+.spx-location-control__display {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 2.75rem;
+	padding: 0.5rem 2rem 0.5rem 0.75rem;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2350575e' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+	cursor: pointer;
+	font-size: inherit;
+	line-height: 1.4;
+	color: #2c3338;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.spx-location-control__display:focus {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: none;
+}
+
+.spx-location-control__display--placeholder {
+	color: #8c8f94;
+}
+
+/* ── Dropdown panel ──────────────────────────────────────────────── */
+.spx-location-control__panel {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	max-height: 18rem;
+	overflow-y: auto;
+	border: 1px solid #8c8f94;
+	border-top: none;
+	border-radius: 0 0 4px 4px;
+	background: #fff;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.spx-location-control__panel--open {
+	display: block;
+}
+
+.spx-location-control__search {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	border: none;
+	border-bottom: 1px solid #dcdcde;
+	font-size: inherit;
+	outline: none;
+}
+
+.spx-location-control__search:focus {
+	box-shadow: none;
+}
+
+.spx-location-control__breadcrumb {
+	display: flex;
+	align-items: center;
+	padding: 0.4rem 0.75rem;
+	background: #f6f7f7;
+	border-bottom: 1px solid #dcdcde;
+	font-size: 0.85em;
+	color: #50575e;
+}
+
+.spx-location-control__breadcrumb-back {
+	display: inline-flex;
+	align-items: center;
+	padding: 0;
+	margin: 0 0.5rem 0 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+	color: #2271b1;
+	font-size: inherit;
+}
+
+.spx-location-control__breadcrumb-back:hover {
+	color: #135e96;
+}
+
+.spx-location-control__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.spx-location-control__item {
+	padding: 0.5rem 0.75rem;
+	cursor: pointer;
+	border-bottom: 1px solid #f0f0f1;
+	transition: background-color 0.1s;
+}
+
+.spx-location-control__item:last-child {
+	border-bottom: none;
+}
+
+.spx-location-control__item:hover,
+.spx-location-control__item:focus {
+	background-color: #f0f6fc;
+}
+
+.spx-location-control__item--active {
+	background-color: #e7f3ff;
+}
+
+.spx-location-control__empty {
+	padding: 0.75rem;
+	color: #8c8f94;
+	text-align: center;
+	font-style: italic;
+}
+
+/* ── Validation notice ───────────────────────────────────────────── */
+.spx-checkout-notice {
+	color: #b32d2e;
+	min-height: 1.4em;
+	margin-top: 0.25rem;
+	font-size: 0.9em;
+}
+
+/* ── Checkout field wrapper ──────────────────────────────────────── */
+.spx-checkout-field {
+	margin-bottom: 1rem;
+}
+
+/* ── Loading state ───────────────────────────────────────────────── */
+.spx-location-control__display--loading {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+/* ── Blocks-specific field ───────────────────────────────────────── */
+.spx-location-control .spx-checkout-block__field {
+	display: block;
+	margin: 0 0 1rem;
+}
+
+.spx-location-control .spx-checkout-block__field > span {
+	display: block;
+	margin-bottom: 0.35rem;
+}
+
+.spx-location-control .spx-checkout-block__field abbr {
+	margin-left: 0.2em;
+	text-decoration: none;
 }

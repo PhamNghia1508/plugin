@@ -53,6 +53,7 @@ final class SPX_Plugin {
 			'includes/address/class-spx-address-import-service.php',
 			'includes/address/class-spx-address-repository.php',
 			'includes/address/class-spx-wc-address-resolver.php',
+			'includes/checkout/class-spx-checkout-mode-detector.php',
 			'includes/checkout/class-spx-checkout-eligibility.php',
 			'includes/checkout/class-spx-checkout-address-service.php',
 			'includes/checkout/class-spx-checkout-address-snapshot.php',
@@ -60,6 +61,7 @@ final class SPX_Plugin {
 			'includes/checkout/class-spx-classic-checkout-address.php',
 			'includes/checkout/class-spx-blocks-checkout-integration.php',
 			'includes/checkout/class-spx-blocks-checkout-address.php',
+			'includes/checkout/class-spx-shipping-destination-resolver.php',
 			'includes/rate/class-spx-fee-conversion-contract.php',
 			'includes/rate/class-spx-checkout-rate-request-builder.php',
 			'includes/rate/class-spx-checkout-rate-cache.php',
@@ -92,8 +94,10 @@ final class SPX_Plugin {
 		SPX_Webhook_Controller::init();
 		SPX_Customer_Tracking::init();
 		SPX_Checkout_Address_REST_Controller::init();
+		// Mode-aware checkout: only one adapter per request.
 		SPX_Classic_Checkout_Address::init();
 		SPX_Blocks_Checkout_Address::init();
+		SPX_Checkout_Mode_Detector::admin_compatibility_notice();
 		SPX_Shipping_Method::init_audit_persistence();
 
 		if ( is_admin() ) {

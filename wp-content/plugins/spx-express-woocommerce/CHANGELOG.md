@@ -1,5 +1,13 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.4 — Non-destructive Checkout Integration & Pilot Readiness
+
+- Thêm **SPX_Checkout_Mode_Detector** tự động phát hiện Classic Checkout, Checkout Blocks hoặc Unsupported mode; mỗi request chỉ chạy 1 adapter phù hợp.
+- Tích hợp 1 control **Khu vực** duy nhất (Tỉnh → Huyện → Xã điều hướng bên trong), loại bỏ 3 thẻ select riêng; giữ nguyên 100% giao diện, theme và cổng thanh toán WooCommerce.
+- Bổ sung **SPX_Shipping_Destination_Resolver** quy định thứ tự ưu tiên địa chỉ giao hàng chuẩn (Shipping address → Billing address → Blocked).
+- Purge toàn bộ giao diện Sandbox trên Admin UI; hiển thị trạng thái Production Readiness và Verification marker chính xác.
+- Đã bổ sung bộ kiểm thử 30 test TDD cho Checkout Integration (100% PASS requirement).
+
 ## 0.9.0-rc.3 — Production enablement path
 
 - Thêm cơ chế **Production Enablement Gate** theo từng thao tác (account_verify / rate / create / search / tracking / label / cancel), thay ba kill-switch cứng bằng cổng có điều kiện, vẫn fail-closed mặc định.

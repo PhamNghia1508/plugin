@@ -7,7 +7,7 @@ Tài liệu này dành cho **chủ shop**. Bản hiện tại là **Release Cand
 - Khuyến nghị bật **HPOS** (High-Performance Order Storage). Production yêu cầu site chạy **HTTPS**.
 
 ## 2. Cài plugin
-Tải file `spx-express-woocommerce-0.9.0-rc.2.zip` lên qua **Plugins → Add New → Upload Plugin**, hoặc giải nén vào `wp-content/plugins/`.
+Tải file `spx-express-woocommerce-0.9.0-rc.4.zip` lên qua **Plugins → Add New → Upload Plugin**, hoặc giải nén vào `wp-content/plugins/`.
 
 ## 3. Kích hoạt
 Kích hoạt **SPX Express for WooCommerce**. Nếu WooCommerce chưa bật, plugin chỉ hiển thị thông báo và không tải các lớp phụ thuộc — **không gây lỗi nghiêm trọng**.
