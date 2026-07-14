@@ -15,6 +15,8 @@ final class SPX_Plugin {
 			'includes/production/class-spx-production-state.php',
 			'includes/production/class-spx-production-readiness.php',
 			'includes/production/class-spx-order-environment.php',
+			'includes/production/class-spx-production-verification-store.php',
+			'includes/production/class-spx-production-gate.php',
 			'includes/production/class-spx-environment-router.php',
 			'includes/production/class-spx-credential-migration.php',
 			'includes/api/class-spx-api-error-mapper.php',

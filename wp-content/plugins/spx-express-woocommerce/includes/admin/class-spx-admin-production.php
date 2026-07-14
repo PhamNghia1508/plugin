@@ -4,8 +4,45 @@ defined( 'ABSPATH' ) || exit;
 final class SPX_Admin_Production {
 	const ACTION = 'spx_save_production_settings';
 	const NONCE = 'spx_production_settings';
+	const VERIFY_ACTION = 'spx_verify_production';
+	const VERIFY_NONCE  = 'spx_verify_production';
+	const COOLDOWN_KEY  = 'spx_production_verify_cooldown';
+	const COOLDOWN_TTL  = 30;
 
-	public static function init(): void { add_action( 'admin_post_' . self::ACTION, array( __CLASS__, 'handle_save' ) ); }
+	public static function init(): void {
+		add_action( 'admin_post_' . self::ACTION, array( __CLASS__, 'handle_save' ) );
+		add_action( 'admin_post_' . self::VERIFY_ACTION, array( __CLASS__, 'handle_verify' ) );
+	}
+
+	/**
+	 * Bootstrap Account Verify handler. Runs ONLY on an explicit admin POST — it
+	 * is never auto-invoked. Enforces the gate's bootstrap policy (admin HTTPS),
+	 * a short cooldown against rapid re-submits, and persists the verification
+	 * marker on success. On any failure the marker is invalidated (fail closed).
+	 */
+	public static function handle_verify(): void {
+		if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) { wp_die( esc_html__( 'Invalid request method.', 'spx-express-woocommerce' ), '', array( 'response' => 405 ) ); }
+		if ( ! current_user_can( 'manage_woocommerce' ) ) { wp_die( esc_html__( 'You do not have permission to perform this action.', 'spx-express-woocommerce' ), '', array( 'response' => 403 ) ); }
+		check_admin_referer( self::VERIFY_NONCE );
+		$url = SPX_Admin_Settings_Page::tab_url( 'connection' );
+		if ( get_transient( self::COOLDOWN_KEY ) ) { wp_safe_redirect( add_query_arg( 'spx_notice', 'production_verify_cooldown', $url ) ); exit; }
+		set_transient( self::COOLDOWN_KEY, 1, self::COOLDOWN_TTL );
+		$ctx = SPX_Production_Gate::runtime_context();
+		if ( ! SPX_Production_Gate::allows( 'account_verify', $ctx ) ) {
+			SPX_Production_Verification_Store::invalidate( 'bootstrap_' . SPX_Production_Gate::evaluate( 'account_verify', $ctx )['reason'] );
+			wp_safe_redirect( add_query_arg( 'spx_notice', 'production_verify_blocked', $url ) ); exit;
+		}
+		$config  = SPX_API_Config::for_production();
+		$client  = new SPX_HTTP_Client( $config, new SPX_Request_Signer(), null );
+		$result  = ( new SPX_Account_Service( $config, $client ) )->verify_credentials();
+		if ( ! empty( $result['success'] ) && ! empty( $result['verified'] ) ) {
+			$store = new SPX_Credential_Store();
+			SPX_Production_Verification_Store::mark_verified( $store->fingerprint( SPX_Environment::PRODUCTION ), SPX_Environment::host( SPX_Environment::PRODUCTION ) );
+			wp_safe_redirect( add_query_arg( 'spx_notice', 'production_verified', $url ) ); exit;
+		}
+		SPX_Production_Verification_Store::invalidate( 'verify_failed' );
+		wp_safe_redirect( add_query_arg( 'spx_notice', 'production_verify_failed', $url ) ); exit;
+	}
 
 	public static function merge_submission( array $existing, array $posted ): array {
 		$out = $existing;
@@ -27,7 +64,7 @@ final class SPX_Admin_Production {
 		$store = new SPX_Credential_Store(); $before = $store->fingerprint( 'production' ); $values = array(); $delete = array();
 		foreach ( array( 'app_id', 'app_secret', 'user_id', 'user_secret', 'shop_id' ) as $field ) { $values[$field] = isset( $posted[$field] ) ? sanitize_text_field( $posted[$field] ) : ''; $delete[$field] = ! empty( $posted[ 'delete_' . $field ] ) ? 'yes' : ''; }
 		$ok = $store->save( 'production', $values, $delete ); $after = $store->fingerprint( 'production' );
-		if ( $before !== $after ) { delete_option( 'spx_production_verified_fingerprint' ); delete_option( 'spx_production_verified_at' ); delete_option( 'spx_production_verification_result' ); }
+		if ( $before !== $after ) { delete_option( 'spx_production_verified_fingerprint' ); delete_option( 'spx_production_verified_at' ); delete_option( 'spx_production_verification_result' ); SPX_Production_Verification_Store::invalidate( 'credentials_changed' ); }
 		$current = SPX_Production_State::normalize( get_option( 'spx_production_state', 'disabled' ) );
 		update_option( 'spx_production_state', SPX_Production_State::offline_transition( $current, self::sanitize_requested_state( $posted['state'] ?? 'disabled' ) ), false );
 		wp_safe_redirect( add_query_arg( 'spx_notice', $ok ? 'production_saved' : 'production_error', SPX_Admin_Settings_Page::tab_url( 'connection' ) ) ); exit;
@@ -52,6 +89,30 @@ final class SPX_Admin_Production {
 			echo '</div>';
 		}
 		echo '<div class="spx-form-field"><label for="spx_production_state">' . esc_html__( 'Chế độ Production', 'spx-express-woocommerce' ) . '</label><select id="spx_production_state" name="spx_production[state]"><option value="disabled"' . selected( $state, 'disabled', false ) . '>' . esc_html__( 'Đã tắt', 'spx-express-woocommerce' ) . '</option><option value="readiness_pending"' . selected( $state, 'readiness_pending', false ) . '>' . esc_html__( 'Đang chờ hoàn thiện', 'spx-express-woocommerce' ) . '</option></select></div></div>';
-		submit_button( __( 'Lưu cấu hình Production', 'spx-express-woocommerce' ) ); echo ' <button type="button" class="button" disabled aria-disabled="true">' . esc_html__( 'Tạo vận đơn Production — chưa được kích hoạt', 'spx-express-woocommerce' ) . '</button></form></article>';
+		submit_button( __( 'Lưu cấu hình Production', 'spx-express-woocommerce' ) ); echo '</form>';
+		self::render_verification_status();
+		echo '</article>';
+	}
+
+	/** Masked verification status + the (non-auto-invoked) verify button. */
+	private static function render_verification_status(): void {
+		$marker      = SPX_Production_Verification_Store::get();
+		$fingerprint = SPX_Production_Gate::current_fingerprint();
+		$host        = SPX_Environment::host( SPX_Environment::PRODUCTION );
+		$verified    = SPX_Production_Verification_Store::is_verified( $fingerprint, $host );
+		$state       = SPX_Production_Verification_Store::state( $fingerprint, $host );
+		$label       = $verified ? __( 'Đã xác minh', 'spx-express-woocommerce' ) : ( 'invalidated' === $state ? __( 'Cần xác minh lại', 'spx-express-woocommerce' ) : __( 'Chưa xác minh', 'spx-express-woocommerce' ) );
+		echo '<div class="spx-verification-status"><p><strong>' . esc_html__( 'Trạng thái xác minh SPX', 'spx-express-woocommerce' ) . ':</strong> ' . SPX_Admin_Settings_Page::status_badge( '', $label, $verified ? 'success' : 'warning' ) . '</p>';
+		if ( $verified && '' !== $marker['verified_at'] ) { echo '<p><strong>' . esc_html__( 'Thời điểm xác minh', 'spx-express-woocommerce' ) . ':</strong> ' . esc_html( $marker['verified_at'] ) . '</p>'; }
+		if ( ! $verified ) {
+			echo '<p class="description">' . ( 'invalidated' === $state
+				? esc_html__( 'Thông tin kết nối đã thay đổi. Vui lòng xác minh lại.', 'spx-express-woocommerce' )
+				: esc_html__( 'Kết nối SPX chưa được xác minh. Vui lòng xác minh kết nối trước khi sử dụng phí và vận đơn SPX.', 'spx-express-woocommerce' ) ) . '</p>';
+		}
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
+		wp_nonce_field( self::VERIFY_NONCE );
+		echo '<input type="hidden" name="action" value="' . esc_attr( self::VERIFY_ACTION ) . '">';
+		submit_button( __( 'Xác minh kết nối SPX', 'spx-express-woocommerce' ), 'secondary', 'submit', false );
+		echo '</form></div>';
 	}
 }

@@ -12,7 +12,12 @@ final class SPX_Tracking_Sync_Service {
 	public function sync_orders( array $orders, string $source = 'scheduler', int $retry_count = 0 ): array {
 		$environment = SPX_Environment_Router::single_batch_environment( $orders );
 		if ( $orders && '' === $environment ) { return array( 'queried' => 0, 'updated' => 0, 'retry' => array(), 'fatal' => array( 'error_code' => 'mixed_or_missing_environment', 'ret_code' => 0 ) ); }
-		if ( 'production' === $environment ) { return array( 'queried' => 0, 'updated' => 0, 'retry' => array(), 'fatal' => array( 'error_code' => 'production_not_enabled', 'ret_code' => 0 ) ); }
+		if ( 'production' === $environment ) {
+			// Production tracking sync is permitted only once Account Verify has
+			// produced a valid marker; otherwise it fails closed (no network).
+			$allowed = class_exists( 'SPX_Production_Gate' ) && SPX_Production_Gate::allows( 'tracking', SPX_Production_Gate::runtime_context() );
+			if ( ! $allowed ) { return array( 'queried' => 0, 'updated' => 0, 'retry' => array(), 'fatal' => array( 'error_code' => 'production_not_verified', 'ret_code' => 0 ) ); }
+		}
 		$map = array();
 		foreach ( $orders as $order ) { if ( SPX_Tracking_Order_Query::is_eligible( $order ) ) { $map[ (string) $order->get_meta( '_spx_tracking_number', true ) ] = $order; } }
 		$results = $this->api->get_many_by_tracking_numbers( array_keys( $map ) );

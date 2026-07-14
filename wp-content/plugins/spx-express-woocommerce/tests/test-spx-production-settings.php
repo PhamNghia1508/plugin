@@ -13,6 +13,6 @@ e( ! array_key_exists( 'base_url', $clean ), 'settings cannot accept custom base
 e( 'readiness_pending' === SPX_Admin_Production::sanitize_requested_state( 'enabled' ), 'settings cannot enable production offline' );
 e( 'disabled' === SPX_Admin_Production::sanitize_requested_state( 'disabled' ), 'settings can disable production' );
 $source = file_get_contents( dirname( __DIR__ ) . '/includes/admin/class-spx-admin-production.php' );
-foreach ( array( "'POST'", 'manage_woocommerce', 'check_admin_referer', 'wp_safe_redirect', 'autocomplete="new-password"', 'disabled aria-disabled="true"' ) as $contract ) { e( false !== strpos( $source, $contract ), 'admin security contract: ' . $contract ); }
+foreach ( array( "'POST'", 'manage_woocommerce', 'check_admin_referer', 'wp_safe_redirect', 'autocomplete="new-password"', "SPX_Production_Gate::allows( 'account_verify'", 'SPX_Production_Verification_Store::mark_verified', 'SPX_Production_Verification_Store::invalidate', 'get_transient( self::COOLDOWN_KEY' ) as $contract ) { e( false !== strpos( $source, $contract ), 'admin security contract: ' . $contract ); }
 e( false === strpos( $source, 'SPX_TEST_APP_SECRET' ), 'production settings never reference sandbox secret fallback' );
 echo "Production settings tests passed.\n";

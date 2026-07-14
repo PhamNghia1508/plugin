@@ -1,5 +1,13 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.3 — Production enablement path
+
+- Thêm cơ chế **Production Enablement Gate** theo từng thao tác (account_verify / rate / create / search / tracking / label / cancel), thay ba kill-switch cứng bằng cổng có điều kiện, vẫn fail-closed mặc định.
+- Thêm **marker xác minh** (`SPX_Production_Verification_Store`) chỉ lưu fingerprint HMAC + host (không lưu bí mật); tự vô hiệu khi thông tin kết nối hoặc host thay đổi.
+- Bootstrap Account Verify chỉ chạy từ thao tác admin qua HTTPS, có nonce/capability/cooldown; **không tự động gọi**. Không có API Production nào được gọi trong bản này.
+- Giao diện Kết nối hiển thị trạng thái xác minh; Tổng quan không còn thẻ "Môi trường: Sandbox"; tab Phí đọc đúng instance/zone (không mặc định 30.000đ).
+- Đã kiểm thử offline: PHP 7.4/8.2, gate/marker/invalidation, mojibake = 0, external SPX requests = 0. *Account Verify / Rate / Create Production: chưa chạy (UNVERIFIED).*
+
 ## 0.9.0-rc.2 — Release integrity
 
 - Chuẩn hóa các thông báo tiếng Việt bị lỗi mã hóa UTF-8 trong luồng kiểm tra thanh toán.

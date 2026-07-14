@@ -336,3 +336,6 @@
 		flex-direction: column;
 	}
 }
+
+.spx-th-left{text-align:left;}
+.spx-rate-table--zones td,.spx-rate-table--zones th{padding-right:12px;}

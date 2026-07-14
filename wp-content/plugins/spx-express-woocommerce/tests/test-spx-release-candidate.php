@@ -67,7 +67,10 @@ if ( is_file( $guide_path ) ) {
 
 spx_rc_check( false !== strpos( $fee, 'return new self( self::MODE_VERIFIED_VND, 1 );' ), 'Production fee contract uses multiplier 1' );
 spx_rc_check( false !== strpos( $fee, 'return new self( self::MODE_EXPERIMENTAL_THOUSAND_VND, 1000 );' ), 'UAT fee contract keeps the internal multiplier 1000' );
-spx_rc_check( false !== strpos( $router, 'production_operation_allowed( string $operation ): bool { return false; }' ), 'Production operation router remains fail-closed' );
+spx_rc_check( false !== strpos( $router, 'SPX_Production_Gate::allows( $operation' ), 'Production operation router delegates to the enablement gate' );
+$gate_src = spx_rc_read( dirname( __DIR__ ) . '/includes/production/class-spx-production-gate.php' );
+spx_rc_check( false !== strpos( $gate_src, "'verification_required'" ), 'Production gate is fail-closed before verification' );
+spx_rc_check( false !== strpos( $gate_src, "self::BOOTSTRAP_OPERATION" ), 'Production gate uses an explicit bootstrap policy for account_verify' );
 
 if ( 0 === $failures ) {
 	echo "OK test-spx-release-candidate\n";

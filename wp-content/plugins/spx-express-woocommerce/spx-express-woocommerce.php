@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SPX Express for WooCommerce
  * Description: Kết nối WooCommerce với SPX Express (Việt Nam): địa chỉ SPX ở checkout, phí cố định, tạo vận đơn Sandbox, tracking, nhãn và đồng bộ trạng thái. Production còn khóa chờ xác minh.
- * Version: 0.9.0-rc.2
+ * Version: 0.9.0-rc.3
  * Requires PHP: 7.4
  * Requires at least: 5.8
  * WC requires at least: 6.0
@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SPX_WC_VERSION', '0.9.0-rc.2' );
+define( 'SPX_WC_VERSION', '0.9.0-rc.3' );
 define( 'SPX_WC_FILE', __FILE__ );
 define( 'SPX_WC_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SPX_WC_URL', plugin_dir_url( __FILE__ ) );

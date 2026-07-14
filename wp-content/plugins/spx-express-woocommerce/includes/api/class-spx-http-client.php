@@ -43,7 +43,16 @@ final class SPX_HTTP_Client implements SPX_Http_Client_Interface {
 			return SPX_API_Response::config_error( 'missing_credentials', __( 'SPX API credentials are not configured.', 'spx-express-woocommerce' ) );
 		}
 		if ( SPX_API_Config::PRODUCTION_ENV === $this->config->get_environment() ) {
-			return SPX_API_Response::config_error( 'production_not_enabled', __( 'Thao tác Production đang bị khóa vì tài khoản SPX chưa được xác minh.', 'spx-express-woocommerce' ) );
+			// Operation-aware Production enablement gate. account_verify may run
+			// under the bootstrap policy (admin HTTPS request); every other
+			// operation requires a valid verification marker. Transport security
+			// (host/HTTPS/port/sslverify/redirects) is still enforced below and
+			// in build_url() regardless of this decision.
+			$operation = SPX_Production_Gate::operation_for_path( $path );
+			$decision  = SPX_Production_Gate::evaluate( $operation, SPX_Production_Gate::runtime_context() );
+			if ( empty( $decision['allowed'] ) ) {
+				return SPX_API_Response::config_error( 'production_' . sanitize_key( (string) $decision['reason'] ), __( 'Thao tác Production đang bị khóa. Vui lòng xác minh kết nối SPX.', 'spx-express-woocommerce' ) );
+			}
 		}
 
 		try {

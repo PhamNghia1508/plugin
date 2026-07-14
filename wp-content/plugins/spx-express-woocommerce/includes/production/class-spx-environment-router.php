@@ -6,7 +6,9 @@ final class SPX_Environment_Router {
 		foreach ( $orders as $order ) { $current = SPX_Order_Environment::get( $order ); if ( '' === $current || ( '' !== $environment && $environment !== $current ) ) { return ''; } $environment = $current; }
 		return $environment;
 	}
-	public static function production_operation_allowed( string $operation ): bool { return false; }
+	public static function production_operation_allowed( string $operation ): bool {
+		return class_exists( 'SPX_Production_Gate' ) && SPX_Production_Gate::allows( $operation, SPX_Production_Gate::runtime_context() );
+	}
 
 	public static function config( string $environment ): SPX_API_Config { return SPX_API_Config::for_environment( SPX_Environment::normalize( $environment ) ); }
 

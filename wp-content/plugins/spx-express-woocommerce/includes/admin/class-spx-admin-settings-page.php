@@ -42,7 +42,8 @@ final class SPX_Admin_Settings_Page {
 		$active = self::active_tab();
 		echo '<div class="wrap spx-admin-page">';
 		echo '<div class="spx-admin-heading"><div><h1>' . esc_html__( 'SPX Express', 'spx-express-woocommerce' ) . '</h1><p>' . esc_html__( 'Quản lý kết nối, địa chỉ, vận chuyển và đồng bộ đơn hàng tại một nơi.', 'spx-express-woocommerce' ) . '</p></div>';
-		echo self::status_badge( __( 'Môi trường', 'spx-express-woocommerce' ), __( 'Thử nghiệm (Sandbox)', 'spx-express-woocommerce' ), 'warning' );
+		list( $vlabel, $vtone ) = self::verification_summary();
+		echo self::status_badge( __( 'Kết nối SPX', 'spx-express-woocommerce' ), $vlabel, $vtone );
 		echo '</div>';
 		self::render_notice();
 		echo '<nav class="nav-tab-wrapper spx-admin-tabs" aria-label="' . esc_attr__( 'Điều hướng cài đặt SPX Express', 'spx-express-woocommerce' ) . '">';
@@ -64,6 +65,10 @@ final class SPX_Admin_Settings_Page {
 			'sender_error'     => array( 'error', __( 'Vui lòng kiểm tra lại thông tin người gửi.', 'spx-express-woocommerce' ) ),
 			'production_saved' => array( 'success', __( 'Đã lưu cấu hình Production.', 'spx-express-woocommerce' ) ),
 			'production_error' => array( 'error', __( 'Không thể lưu cấu hình Production.', 'spx-express-woocommerce' ) ),
+			'production_verified'        => array( 'success', __( 'Đã xác minh kết nối SPX.', 'spx-express-woocommerce' ) ),
+			'production_verify_failed'   => array( 'error', __( 'Không thể xác minh kết nối SPX. Vui lòng kiểm tra thông tin kết nối và thử lại.', 'spx-express-woocommerce' ) ),
+			'production_verify_blocked'  => array( 'error', __( 'Chưa thể xác minh: yêu cầu phải chạy từ trang quản trị qua HTTPS với thông tin kết nối đầy đủ.', 'spx-express-woocommerce' ) ),
+			'production_verify_cooldown' => array( 'warning', __( 'Vui lòng đợi trong giây lát trước khi xác minh lại.', 'spx-express-woocommerce' ) ),
 			'parcel_saved'     => array( 'success', __( 'Đã lưu cấu hình kiện hàng mặc định.', 'spx-express-woocommerce' ) ),
 		);
 		if ( ! isset( $notices[ $notice ] ) ) { return; }
@@ -92,7 +97,8 @@ final class SPX_Admin_Settings_Page {
 		$dynamic = defined( 'SPX_EXPERIMENTAL_DYNAMIC_RATE' ) && true === SPX_EXPERIMENTAL_DYNAMIC_RATE;
 		echo '<section aria-labelledby="spx-overview-title"><h2 id="spx-overview-title">' . esc_html__( 'Tình trạng vận hành', 'spx-express-woocommerce' ) . '</h2>';
 		echo '<div class="spx-admin-grid">';
-		self::overview_card( __( 'Môi trường hiện tại', 'spx-express-woocommerce' ), __( 'Thử nghiệm (Sandbox)', 'spx-express-woocommerce' ), 'warning', __( 'Cấu hình kết nối', 'spx-express-woocommerce' ), 'connection' );
+		list( $ov_label, $ov_tone ) = self::verification_summary();
+		self::overview_card( __( 'Xác minh kết nối SPX', 'spx-express-woocommerce' ), $ov_label, $ov_tone, __( 'Cấu hình kết nối', 'spx-express-woocommerce' ), 'connection' );
 		self::overview_card( __( 'Kết nối API', 'spx-express-woocommerce' ), $test->has_account_credentials() ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Cần cấu hình', 'spx-express-woocommerce' ), $test->has_account_credentials() ? 'success' : 'warning', __( 'Cấu hình kết nối', 'spx-express-woocommerce' ), 'connection' );
 		self::overview_card( __( 'Hồ sơ người gửi', 'spx-express-woocommerce' ), SPX_Sender_Profile::is_complete() ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Cần cấu hình', 'spx-express-woocommerce' ), SPX_Sender_Profile::is_complete() ? 'success' : 'warning', __( 'Cập nhật người gửi', 'spx-express-woocommerce' ), 'sender' );
 		self::overview_card( __( 'Dữ liệu địa chỉ', 'spx-express-woocommerce' ), $repo->is_available() ? __( 'Sẵn sàng', 'spx-express-woocommerce' ) : __( 'Cần cấu hình', 'spx-express-woocommerce' ), $repo->is_available() ? 'success' : 'warning', __( 'Kiểm tra dữ liệu địa chỉ', 'spx-express-woocommerce' ), 'addresses' );
@@ -140,18 +146,76 @@ final class SPX_Admin_Settings_Page {
 	}
 
 	private static function render_rates(): void {
-		$settings = SPX_Settings::get_instance_settings();
-		$fixed = isset( $settings['base_cost'] ) && is_numeric( $settings['base_cost'] ) ? (float) $settings['base_cost'] : 30000;
+		$verified = class_exists( 'SPX_Production_Verification_Store' ) && SPX_Production_Verification_Store::is_verified( SPX_Production_Gate::current_fingerprint(), SPX_Environment::host( SPX_Environment::PRODUCTION ) );
 		$dynamic = defined( 'SPX_EXPERIMENTAL_DYNAMIC_RATE' ) && true === SPX_EXPERIMENTAL_DYNAMIC_RATE;
 		$policy = defined( 'SPX_EXPERIMENTAL_DYNAMIC_RATE_FALLBACK_POLICY' ) ? sanitize_key( (string) SPX_EXPERIMENTAL_DYNAMIC_RATE_FALLBACK_POLICY ) : SPX_Dynamic_Checkout_Rate_Service::POLICY_FIXED_FALLBACK;
 		echo '<section aria-labelledby="spx-rates-title"><h2 id="spx-rates-title">' . esc_html__( 'Phí vận chuyển', 'spx-express-woocommerce' ) . '</h2><div class="spx-admin-grid">';
-		echo '<article class="spx-admin-card"><h3>' . esc_html__( 'A. Phí cố định', 'spx-express-woocommerce' ) . '</h3><p class="spx-rate-amount">' . wp_kses_post( wc_price( $fixed ) ) . '</p><p>' . esc_html__( 'Được dùng khi chế độ thử nghiệm tắt hoặc khi chính sách dự phòng yêu cầu.', 'spx-express-woocommerce' ) . '</p></article>';
+		self::render_instance_fee_cards( $verified );
 		echo '<article class="spx-admin-card"><div class="spx-card-heading"><h3>' . esc_html__( 'B. Phí SPX động thử nghiệm', 'spx-express-woocommerce' ) . '</h3>' . self::status_badge( '', $dynamic ? __( 'Đang bật', 'spx-express-woocommerce' ) : __( 'Mặc định tắt', 'spx-express-woocommerce' ), 'warning' ) . '</div><p><strong>' . esc_html__( 'Chỉ Sandbox/Local', 'spx-express-woocommerce' ) . '</strong></p><p>' . esc_html__( 'Hệ số thử nghiệm: 1000. Đơn vị phí và tiền tệ chưa được SPX xác nhận.', 'spx-express-woocommerce' ) . '</p></article>';
 		echo '<article class="spx-admin-card"><h3>' . esc_html__( 'C. Phí động Production', 'spx-express-woocommerce' ) . '</h3>' . self::status_badge( '', __( 'Bị khóa', 'spx-express-woocommerce' ), 'danger' ) . '<p>' . esc_html__( 'Chưa được kích hoạt và không thể bật từ giao diện này.', 'spx-express-woocommerce' ) . '</p></article>';
 		echo '</div><div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Phí SPX động hiện chỉ dùng để thử nghiệm Sandbox. Không sử dụng để thu tiền khách Production cho tới khi SPX xác nhận đơn vị phí.', 'spx-express-woocommerce' ) . '</strong></p></div>';
 		echo '<article class="spx-admin-card spx-rate-policy"><h3>' . esc_html__( 'Chính sách khi không lấy được phí động', 'spx-express-woocommerce' ) . '</h3><p>' . esc_html( SPX_Dynamic_Checkout_Rate_Service::POLICY_FIXED_FALLBACK === $policy ? __( 'Phí cố định dự phòng', 'spx-express-woocommerce' ) : __( 'Không cung cấp phương thức SPX khi lỗi', 'spx-express-woocommerce' ) ) . '</p></article>';
 		self::render_default_parcel_form();
 		echo '</section>';
+	}
+
+	/**
+	 * Reads the SPX shipping method from every zone (never instance 0 blindly)
+	 * and classifies each instance's real, saved fee — distinguishing "Phí do SPX
+	 * tính", "Phí dự phòng của shop", "Miễn phí vận chuyển" and "Chưa cấu hình".
+	 * Never prints a 30.000đ default for an unconfigured instance.
+	 */
+	private static function render_instance_fee_cards( bool $verified ): void {
+		$instances = self::spx_shipping_instances();
+		echo '<article class="spx-admin-card"><h3>' . esc_html__( 'Phí giao hàng SPX theo khu vực', 'spx-express-woocommerce' ) . '</h3>';
+		echo '<p class="description">' . esc_html__( 'Phí giao hàng được tính trực tiếp từ SPX sau khi xác minh kết nối. Trước khi xác minh, mỗi khu vực dùng phí dự phòng của shop nếu được cấu hình.', 'spx-express-woocommerce' ) . '</p>';
+		if ( ! $instances ) {
+			echo '<p>' . esc_html__( 'Chưa có phương thức SPX Express trong khu vực vận chuyển nào.', 'spx-express-woocommerce' ) . '</p></article>';
+			return;
+		}
+		echo '<table class="spx-rate-table spx-rate-table--zones"><thead><tr><th class="spx-th-left">' . esc_html__( 'Khu vực', 'spx-express-woocommerce' ) . '</th><th class="spx-th-left">' . esc_html__( 'Phí áp dụng', 'spx-express-woocommerce' ) . '</th></tr></thead><tbody>';
+		foreach ( $instances as $row ) {
+			echo '<tr><th class="spx-th-left">' . esc_html( $row['zone'] . ' (#' . $row['instance_id'] . ')' ) . '</th><td>' . wp_kses_post( self::instance_fee_label( $row, $verified ) ) . '</td></tr>';
+		}
+		echo '</tbody></table></article>';
+	}
+
+	private static function instance_fee_label( array $row, bool $verified ): string {
+		if ( ! $row['enabled'] ) { return esc_html__( 'Đã tắt', 'spx-express-woocommerce' ); }
+		if ( $verified ) { return esc_html__( 'Phí do SPX tính', 'spx-express-woocommerce' ); }
+		$base = $row['base_cost'];
+		if ( '' === trim( (string) $base ) || ! is_numeric( $base ) ) { return '<span class="spx-status-badge spx-status-badge--warning">' . esc_html__( 'Chưa cấu hình phí', 'spx-express-woocommerce' ) . '</span>'; }
+		$base = (float) $base;
+		$threshold = is_numeric( $row['threshold'] ) ? (float) $row['threshold'] : 0.0;
+		if ( $base <= 0.0 ) {
+			return $threshold > 0.0
+				? esc_html__( 'Miễn phí khi đạt ngưỡng; ngoài ngưỡng chưa cấu hình phí', 'spx-express-woocommerce' )
+				: '<span class="spx-status-badge spx-status-badge--warning">' . esc_html__( 'Chưa cấu hình phí', 'spx-express-woocommerce' ) . '</span>';
+		}
+		$label = esc_html__( 'Phí dự phòng của shop', 'spx-express-woocommerce' ) . ': ' . wp_kses_post( wc_price( $base ) );
+		if ( $threshold > 0.0 ) { $label .= ' — ' . esc_html__( 'miễn phí từ', 'spx-express-woocommerce' ) . ' ' . wp_kses_post( wc_price( $threshold ) ); }
+		return $label;
+	}
+
+	private static function spx_shipping_instances(): array {
+		$rows = array();
+		if ( ! class_exists( 'WC_Shipping_Zones' ) ) { return $rows; }
+		$zones = (array) WC_Shipping_Zones::get_zones();
+		$zones[] = array( 'zone_name' => __( 'Khu vực còn lại', 'spx-express-woocommerce' ), 'shipping_methods' => WC_Shipping_Zones::get_zone( 0 )->get_shipping_methods() );
+		foreach ( $zones as $zone ) {
+			$methods = isset( $zone['shipping_methods'] ) ? $zone['shipping_methods'] : array();
+			foreach ( (array) $methods as $method ) {
+				if ( ! is_object( $method ) || 'spx_express' !== ( $method->id ?? '' ) ) { continue; }
+				$rows[] = array(
+					'zone'        => (string) ( $zone['zone_name'] ?? '' ),
+					'instance_id' => (int) ( $method->instance_id ?? 0 ),
+					'enabled'     => 'yes' === ( $method->enabled ?? '' ),
+					'base_cost'   => $method->get_option( 'base_cost', '' ),
+					'threshold'   => $method->get_option( 'free_shipping_min_amount', '' ),
+				);
+			}
+		}
+		return $rows;
 	}
 
 	private static function render_default_parcel_form(): void {
@@ -210,6 +274,13 @@ final class SPX_Admin_Settings_Page {
 			'compatibility' => __( 'Tương thích hệ thống', 'spx-express-woocommerce' ),
 		);
 		return $labels[ $key ] ?? __( 'Cấu hình hệ thống', 'spx-express-woocommerce' );
+	}
+
+	/** @return array{0:string,1:string} [label, tone] for the SPX verification state. */
+	public static function verification_summary(): array {
+		if ( ! class_exists( 'SPX_Production_Verification_Store' ) ) { return array( __( 'Chưa xác minh', 'spx-express-woocommerce' ), 'warning' ); }
+		$verified = SPX_Production_Verification_Store::is_verified( SPX_Production_Gate::current_fingerprint(), SPX_Environment::host( SPX_Environment::PRODUCTION ) );
+		return $verified ? array( __( 'Đã xác minh', 'spx-express-woocommerce' ), 'success' ) : array( __( 'Chưa xác minh', 'spx-express-woocommerce' ), 'warning' );
 	}
 
 	public static function status_badge( string $label, string $value, string $tone = 'neutral' ): string {
