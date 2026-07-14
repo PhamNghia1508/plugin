@@ -30,10 +30,10 @@ $changelog = spx_rc_read( $root . '/CHANGELOG.md' );
 $fee       = spx_rc_read( $root . '/includes/rate/class-spx-fee-conversion-contract.php' );
 $router    = spx_rc_read( $root . '/includes/production/class-spx-environment-router.php' );
 
-spx_rc_check( 1 === preg_match( '/^[ \t]*\*[ \t]+Version:[ \t]+0\.9\.0-rc\.8[ \t]*$/m', $main ), 'plugin header uses 0.9.0-rc.8' );
-spx_rc_check( false !== strpos( $main, "define( 'SPX_WC_VERSION', '0.9.0-rc.8' );" ), 'runtime version constant uses 0.9.0-rc.8' );
-spx_rc_check( false !== strpos( $bundle, "version: '0.9.0-rc.8'" ), 'Checkout Blocks metadata uses the RC version' );
-spx_rc_check( false !== strpos( $changelog, '0.9.0-rc.8' ), 'changelog contains the RC version' );
+spx_rc_check( 1 === preg_match( '/^[ \t]*\*[ \t]+Version:[ \t]+0\.9\.0-rc\.9[ \t]*$/m', $main ), 'plugin header uses 0.9.0-rc.9' );
+spx_rc_check( false !== strpos( $main, "define( 'SPX_WC_VERSION', '0.9.0-rc.9' );" ), 'runtime version constant uses 0.9.0-rc.9' );
+spx_rc_check( false !== strpos( $bundle, "version: '0.9.0-rc.9'" ), 'Checkout Blocks metadata uses the RC version' );
+spx_rc_check( false !== strpos( $changelog, '0.9.0-rc.9' ), 'changelog contains the RC version' );
 spx_rc_check( false === stripos( $changelog, 'Production Ready' ) && false === stripos( $changelog, 'Final Production' ), 'changelog does not claim production readiness' );
 
 $pot = $root . '/languages/spx-express-woocommerce.pot';

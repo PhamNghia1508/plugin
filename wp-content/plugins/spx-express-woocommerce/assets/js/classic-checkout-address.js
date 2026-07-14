@@ -144,10 +144,12 @@
 	}
 
 	function refreshVisibility() {
-		if ( ! $control || ! $control.length ) { return; }
-		var required = selectedMethod().split( ':' )[ 0 ] === config.spxMethod;
-		$control.toggle( required );
-		// Do NOT change required attributes on hidden inputs — validation happens server-side.
+		// PHP owns render-time visibility: the container is only ever emitted
+		// when the cart needs shipping and SPX is available in the matched zone.
+		// Do NOT hide the container based on chosen-method here — before the
+		// customer picks a location there is no chosen shipping method yet, so
+		// hiding on that basis creates a chicken/egg where the field never
+		// appears. This function is kept as a no-op for backward-compat.
 	}
 
 	// ── Bind ──────────────────────────────────────────────────────────

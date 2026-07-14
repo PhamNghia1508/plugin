@@ -1,5 +1,14 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.9 — Fix: "Khu vực" field visible on first Checkout load
+
+- **Fix (P0)**: field "Khu vực" trước đây bị render `display:none` trên Classic Checkout khi khách chưa chọn phương thức vận chuyển SPX — nhưng phương thức lại chỉ hiện sau khi có địa chỉ SPX. Kết quả: khách không bao giờ thấy được field để chọn Tỉnh/Huyện/Xã, Checkout báo "không có tùy chọn vận chuyển".
+  - PHP: tách "render visibility" (hiện khi cart cần shipping AND SPX có mặt trong zone) khỏi "validation requirement" (chỉ bắt buộc khi SPX là phương thức được chọn) qua `SPX_Checkout_Eligibility::should_render_field()` mới. Bỏ inline `style="display:none"` khỏi container.
+  - JS: `refreshVisibility()` không còn `$control.toggle()` theo chosen method — PHP đã quyết định visibility ở render-time; JS không được hide lại.
+  - Container nhận thêm class `form-row form-row-wide` để theme render đúng như checkout field chuẩn.
+- Test: RED-first `test-spx-checkout-eligibility-render.php` với 7 assertions; toàn bộ 60/60 test PASS trên PHP 7.4 + 8.2.
+- Không thay đổi Enablement Gate, Verification marker, Payment Resolver, Atomic Create lock, hoặc bất kỳ safety control nào. Không có API SPX Production nào được gọi trong bản này.
+
 ## 0.9.0-rc.8 — Final offline handover polish
 
 - **Setup checklist** trên tab Tổng quan: 5 bước được đánh dấu Hoàn tất / Chưa hoàn tất theo dữ liệu thật (kết nối, hồ sơ người gửi, dữ liệu địa chỉ, xác minh SPX, đồng bộ tracking), có nút "Đi tới bước này". Chỉ hướng dẫn, không tự động gọi API.
