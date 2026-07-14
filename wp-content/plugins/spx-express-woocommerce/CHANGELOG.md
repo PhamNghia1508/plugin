@@ -1,5 +1,12 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.7 — Security reset + Vietnamese Admin wording
+
+- **Security reset**: Production verification marker được `invalidate` sau lần Account Verify không thành công. Toàn bộ thao tác Production (Rate/Create/Search/Tracking/Label/Cancel) vẫn ở trạng thái fail-closed cho tới khi chủ shop cập nhật thông tin kết nối mới và bấm "Xác minh kết nối SPX".
+- **Admin wording**: block Production readiness đổi sang "Kết nối SPX chưa được xác minh. Thông tin kết nối cần được SPX xác nhận trước khi tính phí hoặc tạo vận đơn. Vui lòng cập nhật thông tin kết nối mới và xác minh lại sau khi SPX cấp lại User Secret." Bỏ nhãn "Production Account Verify chưa được thực hiện" mang tính kỹ thuật.
+- Không thay đổi Enablement Gate, Payment Resolver, Atomic Create lock, hoặc bất kỳ safety control nào. Không có API SPX Production nào được gọi trong bản này.
+- Password fields trong tab Kết nối vẫn `value=""` (không echo secret). Không thêm bypass, không thêm nút force-enable.
+
 ## 0.9.0-rc.6 — Compatibility claim narrowing
 
 - Docs (README, USER-GUIDE-vi) tuyên bố rõ tương thích: **đã xác minh với WooCommerce Classic Checkout và Checkout Blocks chuẩn**; với custom theme hoặc plugin Checkout tùy biến, cần smoke test trên staging trước khi mở bán. Không tuyên bố đã xác minh trên bất kỳ theme khách cụ thể nào.

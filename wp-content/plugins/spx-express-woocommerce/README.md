@@ -1,6 +1,6 @@
 # SPX Express for WooCommerce
 
-**Phiên bản:** `0.9.0-rc.6` — Release Candidate dành cho staging, chưa phải bản Production cuối.
+**Phiên bản:** `0.9.0-rc.7` — Release Candidate dành cho staging, chưa phải bản Production cuối.
 
 Plugin kết nối WooCommerce với SPX Express (Việt Nam). Plugin hỗ trợ:
 
