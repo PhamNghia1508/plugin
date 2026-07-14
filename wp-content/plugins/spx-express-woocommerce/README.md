@@ -1,12 +1,12 @@
 # SPX Express for WooCommerce
 
-**Phiên bản:** `0.9.0-rc.5` — Release Candidate dành cho staging, chưa phải bản Production cuối.
+**Phiên bản:** `0.9.0-rc.6` — Release Candidate dành cho staging, chưa phải bản Production cuối.
 
 Plugin kết nối WooCommerce với SPX Express (Việt Nam). Plugin hỗ trợ:
 
 - **Sandbox (thử nghiệm):** kiểm tra phí, tạo vận đơn một lần, tra cứu tracking, đồng bộ trạng thái định kỳ, in nhãn, và hủy vận đơn (có kiểm soát) trên môi trường sandbox của SPX.
 - **Production (thật):** bị khóa cho tới khi hoàn tất xác minh tài khoản; không thể bật từ giao diện.
-- **Checkout:** hoạt động với cả Classic Checkout và Checkout Blocks; địa chỉ SPX (Tỉnh/Huyện/Xã) chọn ở phần giao hàng.
+- **Checkout:** đã xác minh với WooCommerce Classic Checkout và Checkout Blocks chuẩn. Với custom theme hoặc plugin Checkout tùy biến, cần smoke test trên staging trước khi mở bán. Địa chỉ SPX (Tỉnh/Huyện/Xã) chọn ở phần giao hàng.
 - **Phí vận chuyển:** mặc định là **phí cố định**. Có một chế độ **phí động thử nghiệm** (chỉ Sandbox/Local, tắt mặc định); đơn vị phí chưa được SPX xác nhận nên **không dùng để thu tiền khách Production**.
 - **Kiện hàng:** cân nặng và kích thước được tính bằng một mô hình kiện hàng chuẩn dùng chung cho cả báo phí và tạo vận đơn.
 - **HPOS:** tương thích; mọi thao tác dùng WC_Order CRUD.

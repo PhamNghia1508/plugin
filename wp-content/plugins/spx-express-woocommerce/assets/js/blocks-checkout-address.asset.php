@@ -6,5 +6,5 @@ return array(
 		'wc-blocks-checkout',
 		'wc-blocks-data-store',
 	),
-	'version'      => 'ec7b1f03ec6273d34c6c8b20b0fd4d48cf1875dd462e492101c7a6f16b086217',
+	'version'      => '0543bfa823f1e20ab3bcf0dcb47bbd7b8e22e41a2dff37d1854434e736048e3b',
 );

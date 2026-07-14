@@ -1,5 +1,11 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.6 — Compatibility claim narrowing
+
+- Docs (README, USER-GUIDE-vi) tuyên bố rõ tương thích: **đã xác minh với WooCommerce Classic Checkout và Checkout Blocks chuẩn**; với custom theme hoặc plugin Checkout tùy biến, cần smoke test trên staging trước khi mở bán. Không tuyên bố đã xác minh trên bất kỳ theme khách cụ thể nào.
+- Không có thay đổi runtime source (chỉ docs và bump version).
+- Không có API SPX Production nào được gọi trong bản này.
+
 ## 0.9.0-rc.5 — Production UI polish (Sandbox purge)
 
 - Loại các nhãn "Sandbox" khỏi giao diện vận hành Production: action tạo vận đơn, metabox đơn hàng, tab tracking, notice tab phí, cảnh báo phí thử nghiệm.
