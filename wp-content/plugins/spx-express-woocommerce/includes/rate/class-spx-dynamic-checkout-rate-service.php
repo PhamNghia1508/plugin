@@ -104,6 +104,7 @@ final class SPX_Dynamic_Checkout_Rate_Service {
 	public static function classic_posted_recipient_context(string $posted):array{
 		$data=array();parse_str($posted,$data);$prefix=!empty($data['ship_to_different_address'])?'shipping':'billing';
 		$name=trim(sanitize_text_field((string)($data[$prefix.'_first_name']??'')).' '.sanitize_text_field((string)($data[$prefix.'_last_name']??'')));
+		if('billing'===$prefix&&isset($data['billing_full_name']))$name=trim(preg_replace('/\s+/u',' ',sanitize_text_field((string)$data['billing_full_name'])));
 		$address=trim(sanitize_text_field((string)($data[$prefix.'_address_1']??'')).' '.sanitize_text_field((string)($data[$prefix.'_address_2']??'')));
 		if('shipping'===$prefix&&''===$name)$name=trim(sanitize_text_field((string)($data['billing_first_name']??'')).' '.sanitize_text_field((string)($data['billing_last_name']??'')));
 		if('shipping'===$prefix&&''===$address)$address=trim(sanitize_text_field((string)($data['billing_address_1']??'')).' '.sanitize_text_field((string)($data['billing_address_2']??'')));

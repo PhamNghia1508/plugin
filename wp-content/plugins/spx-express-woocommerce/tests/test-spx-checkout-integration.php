@@ -14,7 +14,7 @@ error_reporting( E_ALL );
 define( 'ABSPATH', __DIR__ );
 define( 'SPX_WC_PATH', dirname( __DIR__ ) . '/' );
 define( 'SPX_WC_URL', 'https://example.com/wp-content/plugins/spx-express-woocommerce/' );
-define( 'SPX_WC_VERSION', '0.9.0-rc.4' );
+define( 'SPX_WC_VERSION', '0.9.0-rc.11' );
 
 // ── Minimal WP/WC stubs ──────────────────────────────────────────────
 function __( $text, $domain = null ) { return $text; }
@@ -507,6 +507,31 @@ $mode = SPX_Checkout_Mode_Detector::detect();
 t(
 	SPX_Checkout_Mode_Detector::MODE_UNSUPPORTED === $mode,
 	'#30 Mode detector fail-closed to unsupported when WC not available'
+);
+
+// ═══════════════════════════════════════════════════════════════════════
+// TEST 31: RC11 Classic field placement and compact location UX
+// ═══════════════════════════════════════════════════════════════════════
+t(
+	false !== strpos( $classic_php, 'woocommerce_form_field_spx_location' )
+	&& false === strpos( $classic_php, "add_action( 'woocommerce_after_checkout_billing_form'" ),
+	'#31 Classic Khu vực renders through WooCommerce field ordering, not after the whole billing form'
+);
+t(
+	false !== strpos( $classic_php, 'spx-location-control__display-text' )
+	&& false !== strpos( $classic_php, 'spx-location-control__change' )
+	&& false !== strpos( $classic_php, 'Đổi khu vực' ),
+	'#31 Selected Khu vực exposes one compact Đổi khu vực action inside the visible control'
+);
+t(
+	false !== strpos( $css, '@media (max-width: 768px)' )
+	&& false !== strpos( $css, '.spx-vn-checkout form.checkout .form-row.form-row-first' )
+	&& false !== strpos( $css, '.spx-vn-checkout form.checkout .form-row.form-row-last' ),
+	'#31 Phone and email become full-width rows on mobile'
+);
+t(
+	false !== strpos( $css, '.spx-vn-field--fullname .optional' ),
+	'#31 Custom-required full name never presents a contradictory optional label'
 );
 
 // ── Summary ───────────────────────────────────────────────────────────

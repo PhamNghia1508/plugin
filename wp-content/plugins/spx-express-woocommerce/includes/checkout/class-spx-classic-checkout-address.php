@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * Contracts:
  *   - Only renders when SPX_Checkout_Mode_Detector::is_classic().
- *   - Injected via woocommerce_after_checkout_billing_form hook.
+ *   - Rendered by WooCommerce's custom field-type filter at priority 40.
  *   - No template overrides. No global CSS selectors.
  *   - All events namespaced .spxCheckout.
  *   - Never resets payment method, customer fields, or quantities.
@@ -20,11 +20,26 @@ final class SPX_Classic_Checkout_Address {
 	const CUSTOMER_KEY = '_spx_checkout_shipping_selection';
 
 	public static function init(): void {
-		add_action( 'woocommerce_after_checkout_billing_form', array( __CLASS__, 'render' ), 20 );
+		add_filter( 'woocommerce_form_field_spx_location', array( __CLASS__, 'render_field' ), 10, 4 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 		add_action( 'woocommerce_after_checkout_validation', array( __CLASS__, 'validate_checkout' ), 20, 2 );
 		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'persist_order' ), 20, 2 );
 		add_action( 'woocommerce_checkout_update_order_review', array( __CLASS__, 'remember_posted_selection' ) );
+	}
+
+	/**
+	 * Render the custom WooCommerce field type registered by the VN profile.
+	 *
+	 * @param string $field Existing field HTML (empty for unknown custom types).
+	 * @param string $key Field key.
+	 * @param array  $args Field arguments.
+	 * @param mixed  $value Current value.
+	 */
+	public static function render_field( string $field, string $key, array $args, $value ): string {
+		if ( 'billing_spx_location' !== $key ) { return $field; }
+		ob_start();
+		self::render();
+		return (string) ob_get_clean();
 	}
 
 	public static function enqueue(): void {
@@ -91,7 +106,10 @@ final class SPX_Classic_Checkout_Address {
 		echo '<button type="button" id="spx-location-display" class="spx-location-control__display'
 			. ( $placeholder ? ' spx-location-control__display--placeholder' : '' )
 			. '" aria-haspopup="listbox" aria-expanded="false">';
+		echo '<span class="spx-location-control__display-text">';
 		echo esc_html( $placeholder ? __( '— Chọn khu vực —', 'spx-express-woocommerce' ) : $display_text );
+		echo '</span>';
+		echo '<span class="spx-location-control__change">' . esc_html__( 'Đổi khu vực', 'spx-express-woocommerce' ) . '</span>';
 		echo '</button>';
 
 		// Dropdown panel.

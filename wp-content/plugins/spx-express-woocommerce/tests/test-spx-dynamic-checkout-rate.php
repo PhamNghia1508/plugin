@@ -66,4 +66,6 @@ t('Test Buyer'===$customer_context['recipient_name']&&'Test billing address'===$
 t('0970000000'===$customer_context['recipient_phone'],'Blocks customer context prefers the Store API shipping phone');
 $posted_context=SPX_Dynamic_Checkout_Rate_Service::classic_posted_recipient_context('billing_first_name=Test&billing_last_name=Buyer&billing_phone=0980000000&billing_address_1=Test+posted+address');
 t('Test Buyer'===$posted_context['recipient_name']&&'0980000000'===$posted_context['recipient_phone']&&'Test posted address'===$posted_context['recipient_address'],'Classic update_order_review post data is sanitized into an in-memory recipient context');
+$full_name_context=SPX_Dynamic_Checkout_Rate_Service::classic_posted_recipient_context('billing_full_name=Nguy%E1%BB%85n+V%C4%83n+A&billing_first_name=A&billing_last_name=Nguy%E1%BB%85n+V%C4%83n&billing_phone=0980000000&billing_address_1=Test+posted+address');
+t('Nguyễn Văn A'===$full_name_context['recipient_name'],'Classic rate context prioritizes exact billing_full_name without reordering');
 echo "All dynamic checkout request tests passed ($n assertions).\n";

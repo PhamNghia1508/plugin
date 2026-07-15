@@ -72,6 +72,7 @@ final class SPX_Plugin {
 			'includes/class-spx-sender-profile.php',
 			'includes/class-spx-order-address.php',
 			'includes/class-spx-payment-resolver.php',
+			'includes/class-spx-order-name-resolver.php',
 			'includes/class-spx-shipment-readiness.php',
 			'includes/providers/interface-spx-shipping-provider.php',
 			'includes/providers/class-spx-mock-provider.php',

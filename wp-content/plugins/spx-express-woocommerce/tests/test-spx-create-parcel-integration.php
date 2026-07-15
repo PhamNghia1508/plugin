@@ -61,6 +61,7 @@ class SPX_Test_Order extends WC_Order {
 	public function get_shipping_last_name() { return 'Van A'; }
 	public function get_billing_first_name() { return 'Nguyen'; }
 	public function get_billing_last_name() { return 'Van A'; }
+	public function get_meta( $key, $single = true ) { return ''; }
 	public function get_shipping_address_1() { return '1 Test St'; }
 	public function get_shipping_address_2() { return ''; }
 	public function get_billing_address_1() { return '1 Test St'; }
@@ -81,6 +82,7 @@ class SPX_Test_Order extends WC_Order {
 require_once dirname( __DIR__ ) . '/includes/parcel/class-spx-parcel-validation-result.php';
 require_once dirname( __DIR__ ) . '/includes/parcel/class-spx-parcel-builder.php';
 require_once dirname( __DIR__ ) . '/includes/class-spx-payment-resolver.php';
+require_once dirname( __DIR__ ) . '/includes/class-spx-order-name-resolver.php';
 require_once dirname( __DIR__ ) . '/includes/class-spx-order-mapper.php';
 require_once dirname( __DIR__ ) . '/includes/rate/class-spx-checkout-rate-request-builder.php';
 

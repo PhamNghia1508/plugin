@@ -29,7 +29,10 @@
 }
 
 .spx-location-control__display {
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
 	box-sizing: border-box;
 	width: 100%;
 	min-height: 2.75rem;
@@ -46,6 +49,12 @@
 	white-space: nowrap;
 }
 
+.spx-location-control__display-text {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .spx-location-control__display:focus {
 	border-color: #2271b1;
 	box-shadow: 0 0 0 1px #2271b1;
@@ -54,6 +63,10 @@
 
 .spx-location-control__display--placeholder {
 	color: #8c8f94;
+}
+
+.spx-location-control__display--placeholder .spx-location-control__change {
+	display: none;
 }
 
 /* ── Dropdown panel ──────────────────────────────────────────────── */
@@ -273,4 +286,24 @@
 }
 .form-row.spx-vn-field {
 	margin-bottom: 1rem;
+}
+
+.spx-vn-checkout .spx-vn-required-label::after {
+	content: " *";
+}
+
+/* WooCommerce appends an "optional" marker whenever required=false. The
+ * dedicated full-name validator owns requiredness, so that marker would be
+ * contradictory while the accessible aria-required state remains true. */
+.spx-vn-checkout .spx-vn-field--fullname .optional {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.spx-vn-checkout form.checkout .form-row.form-row-first,
+	.spx-vn-checkout form.checkout .form-row.form-row-last {
+		float: none;
+		clear: both;
+		width: 100%;
+	}
 }

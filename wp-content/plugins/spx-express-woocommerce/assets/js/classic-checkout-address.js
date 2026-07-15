@@ -3,7 +3,7 @@
 	if ( ! config ) { return; }
 
 	// ── State ─────────────────────────────────────────────────────────
-	var $control, $display, $panel, $search, $list, $breadcrumb;
+	var $control, $display, $displayText, $panel, $search, $list, $breadcrumb;
 	var $provinceInput, $districtInput, $wardInput, $versionInput, $feedback;
 	var requestId = 0; // latest-request-wins counter.
 	var debounceTimer = null;
@@ -81,11 +81,11 @@
 	function updateDisplayText() {
 		var wardLabel = $wardInput.attr( 'data-label' ) || '';
 		if ( selectedProvince.id && selectedDistrict.id && wardLabel ) {
-			$display.text( selectedProvince.label + ' - ' + selectedDistrict.label + ' - ' + wardLabel )
-				.removeClass( 'spx-location-control__display--placeholder' );
+			$displayText.text( selectedProvince.label + ' - ' + selectedDistrict.label + ' - ' + wardLabel );
+			$display.removeClass( 'spx-location-control__display--placeholder' );
 		} else {
-			$display.text( config.labels.choose || '— Chọn khu vực —' )
-				.addClass( 'spx-location-control__display--placeholder' );
+			$displayText.text( config.labels.choose || '— Chọn khu vực —' );
+			$display.addClass( 'spx-location-control__display--placeholder' );
 		}
 	}
 
@@ -158,6 +158,7 @@
 		if ( ! $control.length ) { return; }
 
 		$display    = $control.find( '.spx-location-control__display' );
+		$displayText = $control.find( '.spx-location-control__display-text' );
 		$panel      = $control.find( '.spx-location-control__panel' );
 		$search     = $control.find( '.spx-location-control__search' );
 		$list       = $control.find( '.spx-location-control__list' );

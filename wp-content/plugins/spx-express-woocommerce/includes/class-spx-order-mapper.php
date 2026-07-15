@@ -69,7 +69,7 @@ final class SPX_Order_Mapper {
 			'order_id' => $order->get_id(), 'order_number' => $order->get_order_number(),
 			'sender' => array( 'name' => get_bloginfo( 'name' ), 'phone' => '', 'address' => WC()->countries->get_base_address(), 'province' => WC()->countries->get_base_state(), 'district' => '', 'ward' => '' ),
 			'recipient' => array(
-				'name' => trim( $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name() ) ?: trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ),
+				'name' => SPX_Order_Name_Resolver::recipient_name( $order ),
 				'phone' => sanitize_text_field( $order->get_billing_phone() ), 'address' => sanitize_text_field( $shipping_address ),
 				'province' => sanitize_text_field( $order->get_shipping_state() ?: $order->get_billing_state() ), 'district' => sanitize_text_field( $order->get_shipping_city() ?: $order->get_billing_city() ), 'ward' => '',
 			),

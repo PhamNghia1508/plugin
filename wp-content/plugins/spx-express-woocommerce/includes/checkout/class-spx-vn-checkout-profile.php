@@ -32,8 +32,8 @@ final class SPX_VN_Checkout_Profile {
 		add_filter( 'default_checkout_billing_country', array( __CLASS__, 'default_country' ), 20 );
 		add_filter( 'default_checkout_shipping_country', array( __CLASS__, 'default_country' ), 20 );
 		add_filter( 'woocommerce_checkout_fields', array( __CLASS__, 'modify_fields' ), PHP_INT_MAX );
-		add_filter( 'woocommerce_billing_fields', array( __CLASS__, 'modify_address_fields' ), PHP_INT_MAX );
-		add_filter( 'woocommerce_shipping_fields', array( __CLASS__, 'modify_address_fields' ), PHP_INT_MAX );
+		add_filter( 'woocommerce_billing_fields', array( __CLASS__, 'modify_billing_address_fields' ), PHP_INT_MAX );
+		add_filter( 'woocommerce_shipping_fields', array( __CLASS__, 'modify_shipping_address_fields' ), PHP_INT_MAX );
 		add_filter( 'woocommerce_get_country_locale', array( __CLASS__, 'force_vn_locale' ), PHP_INT_MAX );
 		add_action( 'woocommerce_after_checkout_validation', array( __CLASS__, 'validate_full_name' ), 10, 2 );
 		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'persist_full_name' ), 30, 2 );
@@ -86,7 +86,7 @@ final class SPX_VN_Checkout_Profile {
 		if ( isset( $fields['order']['order_comments'] ) ) {
 			$fields['order']['order_comments']['label']       = __( 'Ghi chú đơn hàng', 'spx-express-woocommerce' );
 			$fields['order']['order_comments']['placeholder'] = __( 'Ghi chú thêm cho đơn hàng (tùy chọn)', 'spx-express-woocommerce' );
-			$fields['order']['order_comments']['priority']    = 90;
+			$fields['order']['order_comments']['priority']    = 70;
 		}
 		return $fields;
 	}
@@ -99,6 +99,14 @@ final class SPX_VN_Checkout_Profile {
 		return self::transform_address_group( $fields, 'billing' );
 	}
 
+	public static function modify_billing_address_fields( array $fields ): array {
+		return self::transform_address_group( $fields, 'billing' );
+	}
+
+	public static function modify_shipping_address_fields( array $fields ): array {
+		return self::transform_address_group( $fields, 'shipping' );
+	}
+
 	private static function transform_address_group( array $group, string $context ): array {
 		// Unified full-name field (only in billing group; shipping keeps its own).
 		if ( 'billing' === $context ) {
@@ -106,9 +114,13 @@ final class SPX_VN_Checkout_Profile {
 				'type'         => 'text',
 				'label'        => __( 'Họ tên', 'spx-express-woocommerce' ),
 				'placeholder'  => __( 'Nhập đầy đủ họ và tên', 'spx-express-woocommerce' ),
-				'required'     => true,
+				// WooCommerce's built-in required validator would duplicate the
+				// dedicated Vietnamese error added by validate_full_name().
+				'required'     => false,
+				'custom_attributes' => array( 'aria-required' => 'true' ),
+				'label_class'  => array( 'spx-vn-required-label' ),
 				'class'        => array( 'form-row-wide', 'spx-vn-field', 'spx-vn-field--fullname' ),
-				'priority'     => 5,
+				'priority'     => 10,
 				'autocomplete' => 'name',
 			) ) + $group;
 		}
@@ -130,8 +142,8 @@ final class SPX_VN_Checkout_Profile {
 		if ( isset( $group[ $addr_key ] ) ) {
 			$group[ $addr_key ]['label']       = __( 'Địa chỉ', 'spx-express-woocommerce' );
 			$group[ $addr_key ]['placeholder'] = __( 'Số nhà, tên đường, thôn/xóm…', 'spx-express-woocommerce' );
-			$group[ $addr_key ]['priority']    = 60;
-			$group[ $addr_key ]['class']       = self::merge_classes( $group[ $addr_key ]['class'] ?? array(), array( 'form-row-wide', 'spx-vn-field' ) );
+			$group[ $addr_key ]['priority']    = 50;
+			$group[ $addr_key ]['class']       = array( 'form-row-wide', 'spx-vn-field' );
 		}
 
 		// Phone: required + Vietnamese label.
@@ -140,8 +152,8 @@ final class SPX_VN_Checkout_Profile {
 			$group[ $phone_key ]['label']       = __( 'Số điện thoại', 'spx-express-woocommerce' );
 			$group[ $phone_key ]['placeholder'] = __( 'Ví dụ: 0912345678', 'spx-express-woocommerce' );
 			$group[ $phone_key ]['required']    = true;
-			$group[ $phone_key ]['priority']    = 25;
-			$group[ $phone_key ]['class']       = self::merge_classes( $group[ $phone_key ]['class'] ?? array(), array( 'form-row-first', 'spx-vn-field' ) );
+			$group[ $phone_key ]['priority']    = 20;
+			$group[ $phone_key ]['class']       = array( 'form-row-first', 'spx-vn-field' );
 		}
 
 		// Email (billing only): optional for guests.
@@ -149,8 +161,21 @@ final class SPX_VN_Checkout_Profile {
 			$group['billing_email']['label']       = __( 'Địa chỉ email', 'spx-express-woocommerce' );
 			$group['billing_email']['placeholder'] = __( 'tùy chọn — dùng để nhận thông báo đơn hàng', 'spx-express-woocommerce' );
 			$group['billing_email']['required']    = false;
-			$group['billing_email']['priority']    = 26;
-			$group['billing_email']['class']       = self::merge_classes( $group['billing_email']['class'] ?? array(), array( 'form-row-last', 'spx-vn-field' ) );
+			$group['billing_email']['priority']    = 30;
+			$group['billing_email']['class']       = array( 'form-row-last', 'spx-vn-field' );
+		}
+
+		// Register the unified SPX location control as a real WooCommerce field
+		// so priority ordering remains stable after every fragment refresh. Its
+		// custom renderer owns the accessible non-native UI and canonical inputs.
+		if ( 'billing' === $context ) {
+			$group['billing_spx_location'] = array(
+				'type'       => 'spx_location',
+				'label'      => __( 'Khu vực', 'spx-express-woocommerce' ),
+				'required'   => false,
+				'class'      => array( 'form-row-wide', 'spx-vn-field' ),
+				'priority'   => 40,
+			);
 		}
 
 		return $group;
@@ -158,9 +183,12 @@ final class SPX_VN_Checkout_Profile {
 
 	private static function hide_field( array $field ): array {
 		$field['required'] = false;
+		$field['type']     = 'hidden';
 		$field['class']    = self::merge_classes( $field['class'] ?? array(), array( 'spx-vn-hidden-field' ) );
-		// Keep the type = text/select/etc. — WooCommerce still submits + validates
-		// against locale defaults. Only the label + wrapper are hidden via CSS.
+		unset( $field['autocomplete'], $field['validate'] );
+		if ( isset( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
+			unset( $field['custom_attributes']['required'], $field['custom_attributes']['aria-required'] );
+		}
 		if ( isset( $field['label'] ) ) { $field['label'] = ''; }
 		return $field;
 	}
@@ -196,19 +224,22 @@ final class SPX_VN_Checkout_Profile {
 		}
 	}
 
-	/** Split a full Vietnamese name into (first, last) for WC compat. The last
-	 * whitespace-separated word is the given name; the rest is the family name. */
+	/**
+	 * Preserve a Vietnamese full name for WooCommerce compatibility.
+	 *
+	 * Vietnamese names cannot be safely divided into Western first/last-name
+	 * fields. Store the normalized full string in first_name and keep last_name
+	 * empty so displays, emails and labels retain the customer's exact order.
+	 */
 	public static function split_name( string $full ): array {
 		$full  = trim( preg_replace( '/\s+/u', ' ', $full ) );
 		if ( '' === $full ) { return array( '', '' ); }
-		$parts = explode( ' ', $full );
-		if ( count( $parts ) < 2 ) { return array( $full, '' ); }
-		$last  = array_pop( $parts );
-		return array( implode( ' ', $parts ), $last );
+		return array( $full, '' );
 	}
 
 	private static function posted_full_name(): string {
 		if ( ! isset( $_POST[ self::FULL_NAME_KEY ] ) ) { return ''; }
-		return trim( (string) wp_unslash( $_POST[ self::FULL_NAME_KEY ] ) );
+		$full_name = sanitize_text_field( (string) wp_unslash( $_POST[ self::FULL_NAME_KEY ] ) );
+		return trim( (string) preg_replace( '/\s+/u', ' ', $full_name ) );
 	}
 }

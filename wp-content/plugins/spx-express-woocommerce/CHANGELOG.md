@@ -1,5 +1,15 @@
 # Changelog — SPX Express for WooCommerce
 
+## 0.9.0-rc.11 — Vietnam Checkout functional fix
+
+- Loại bỏ nguồn validation Họ tên trùng: first/last name là hidden input thực, non-required; chỉ validator `billing_full_name` phát một lỗi tiếng Việt.
+- Không suy đoán cấu trúc tên Việt Nam: lưu nguyên chuỗi chuẩn hóa vào `billing_first_name`, để trống `billing_last_name`, đồng thời lưu `_spx_billing_full_name` bằng WC_Order CRUD.
+- SPX recipient name ưu tiên `_spx_billing_full_name` qua resolver dùng chung; checkout rate context cũng ưu tiên full name chính xác.
+- Tách callback billing/shipping để không chèn `billing_full_name` trùng vào nhóm shipping.
+- Classic Checkout ordering: Họ tên 10, phone 20, email 30, Khu vực 40, địa chỉ 50, ghi chú 70; Khu vực dùng custom WooCommerce field type, không phải native select.
+- Phone/email cùng hàng desktop và full width mobile; Khu vực có hành động “Đổi khu vực” gọn, giữ gateway sau `update_checkout`.
+- Customer-review theme, offline gateways và preview shipping là staging-only, nằm ngoài plugin ZIP; không gọi SPX Production API.
+
 ## 0.9.0-rc.10 — Vietnam Checkout profile
 
 - **`SPX_VN_Checkout_Profile`** (opt-in via filter `spx_vn_checkout_profile_enabled`, default true): tối ưu Classic Checkout cho khách Việt Nam.
