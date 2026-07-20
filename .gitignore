@@ -19,11 +19,12 @@ debug.log
 *.zip
 *.sha256
 
-# Track only the SPX plugin under the local WordPress tree.
+# Track only the SPX/SuperShip plugin under the local WordPress tree.
 /wp-content/*
 !/wp-content/plugins/
 /wp-content/plugins/*
 !/wp-content/plugins/spx-express-woocommerce/
+!/wp-content/plugins/supership-woocommerce/
 
 # OS/editor noise.
 .DS_Store
