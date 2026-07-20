@@ -63,6 +63,9 @@ final class SuperShip_Plugin {
 
 			// Shipping Method
 			'includes/shipping/class-supership-shipping-method.php',
+
+			// Front-end: tra cứu đơn hàng theo số điện thoại
+			'includes/frontend/class-supership-order-lookup.php',
 		);
 
 		// Load core files (silently skip missing files during initial development).
@@ -87,6 +90,11 @@ final class SuperShip_Plugin {
 		}
 		if ( class_exists( 'SuperShip_Checkout_Address_Fields' ) ) {
 			SuperShip_Checkout_Address_Fields::init();
+		}
+
+		// Order lookup shortcode [supership_order_lookup] - front-end.
+		if ( class_exists( 'SuperShip_Order_Lookup' ) ) {
+			SuperShip_Order_Lookup::init();
 		}
 
 		// Webhook endpoint - must be reachable on the front end (REST API), not admin-gated.

@@ -97,8 +97,42 @@ final class SuperShip_Order_Actions {
 	}
 
 	/**
+	 * Render the real shipping fee (shop-pays mode) so admin knows the internal cost
+	 *
+	 * @param WC_Order $order Order object
+	 */
+	private function render_actual_shipping_fee( WC_Order $order ): void {
+		$actual_fee   = null;
+		$service_name = '';
+
+		foreach ( $order->get_items( 'shipping' ) as $item ) {
+			$fee = $item->get_meta( '_supership_actual_fee' );
+			if ( '' !== $fee && null !== $fee ) {
+				$actual_fee   = (float) $fee;
+				$service_name = (string) $item->get_meta( '_supership_service_name' );
+				break;
+			}
+		}
+
+		if ( null === $actual_fee ) {
+			return;
+		}
+
+		?>
+		<p class="supership-actual-fee" style="background:#fff8e5;border:1px solid #f0c33c;border-radius:4px;padding:8px 10px;">
+			<strong><?php esc_html_e( 'Phí ship thực tế (shop chịu):', 'supership-woocommerce' ); ?></strong>
+			<?php echo wp_kses_post( wc_price( $actual_fee ) ); ?>
+			<?php if ( '' !== $service_name ) : ?>
+				<br><small><?php echo esc_html( sprintf( __( 'Gói dịch vụ: %s', 'supership-woocommerce' ), $service_name ) ); ?></small>
+			<?php endif; ?>
+			<br><small><?php esc_html_e( 'Khách hàng thấy miễn phí vận chuyển ở thanh toán.', 'supership-woocommerce' ); ?></small>
+		</p>
+		<?php
+	}
+
+	/**
 	 * Render metabox content
-	 * 
+	 *
 	 * @param WP_Post|WC_Order $post_or_order Post or Order object
 	 */
 	public function render_metabox( $post_or_order ): void {
@@ -113,6 +147,7 @@ final class SuperShip_Order_Actions {
 		
 		?>
 		<div class="supership-metabox" data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
+			<?php $this->render_actual_shipping_fee( $order ); ?>
 			<?php if ( $has_shipment ) : ?>
 				<?php $this->render_shipment_info( $order, $tracking_number ); ?>
 			<?php else : ?>

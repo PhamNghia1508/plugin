@@ -99,6 +99,14 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 				'default'     => '30000',
 				'desc_tip'    => true,
 			),
+			'shop_pays_shipping' => array(
+				'title'       => __( 'Shop chịu phí ship', 'supership-woocommerce' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Hiển thị miễn phí vận chuyển cho khách, shop tự chịu phí ship', 'supership-woocommerce' ),
+				'description' => __( 'Khách thấy "Miễn phí giao hàng" ở trang thanh toán và không phải trả phí ship. Phí ship thật vẫn được tính từ SuperShip và chỉ hiển thị cho admin trong trang quản lý đơn hàng.', 'supership-woocommerce' ),
+				'default'     => 'no',
+				'desc_tip'    => true,
+			),
 			'free_shipping_min'  => array(
 				'title'       => __( 'Miễn phí ship từ', 'supership-woocommerce' ),
 				'type'        => 'price',
@@ -181,8 +189,25 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 			return;
 		}
 		
+		if ( $this->shop_pays_shipping() ) {
+			// Shop absorbs the fee: customer sees free shipping, real fee kept in hidden meta for admin.
+			$cheapest = $this->get_cheapest_rate( $rates );
+
+			$this->add_rate( array(
+				'id'    => $this->id . ':shop-pays',
+				'label' => __( 'Miễn phí giao hàng', 'supership-woocommerce' ),
+				'cost'  => 0,
+				'meta_data' => array(
+					'_supership_actual_fee'   => $cheapest['total'],
+					'_supership_service_code' => $cheapest['service_code'],
+					'_supership_service_name' => $cheapest['service_name'],
+				),
+			) );
+			return;
+		}
+
 		$show_services = 'yes' === $this->get_option( 'show_services', 'yes' );
-		
+
 		if ( $show_services ) {
 			// Show each service as separate option
 			foreach ( $rates as $rate ) {
@@ -225,12 +250,31 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 		}
 		
 		$amount = (float) $this->get_option( 'fallback_amount', '30000' );
-		
+
+		if ( $this->shop_pays_shipping() ) {
+			$this->add_rate( array(
+				'id'    => $this->id . ':fallback',
+				'label' => __( 'Miễn phí giao hàng', 'supership-woocommerce' ),
+				'cost'  => 0,
+				'meta_data' => array(
+					'_supership_actual_fee' => $amount,
+				),
+			) );
+			return;
+		}
+
 		$this->add_rate( array(
 			'id'    => $this->id . ':fallback',
 			'label' => $this->title,
 			'cost'  => $amount,
 		) );
+	}
+
+	/**
+	 * Whether the shop absorbs the shipping fee (customer sees free shipping)
+	 */
+	private function shop_pays_shipping(): bool {
+		return 'yes' === $this->get_option( 'shop_pays_shipping', 'no' );
 	}
 
 	/**
