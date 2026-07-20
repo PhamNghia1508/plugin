@@ -61,7 +61,7 @@ final class SuperShip_Warehouse_Service {
 		if ( ! is_array( $results ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid warehouse list response', 'supership-woocommerce' ),
+				'error'   => __( 'SuperShip trả về danh sách kho không đọc được', 'supership-woocommerce' ),
 			);
 		}
 
@@ -98,7 +98,7 @@ final class SuperShip_Warehouse_Service {
 
 		return array(
 			'success' => false,
-			'error'   => __( 'Warehouse not found', 'supership-woocommerce' ),
+			'error'   => __( 'Không tìm thấy kho', 'supership-woocommerce' ),
 		);
 	}
 
@@ -158,7 +158,7 @@ final class SuperShip_Warehouse_Service {
 		if ( ! is_array( $results ) || ! isset( $results['code'] ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid create warehouse response', 'supership-woocommerce' ),
+				'error'   => __( 'SuperShip trả về dữ liệu không đọc được khi tạo kho', 'supership-woocommerce' ),
 			);
 		}
 
@@ -183,7 +183,7 @@ final class SuperShip_Warehouse_Service {
 		if ( '' === $code ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Warehouse code is required', 'supership-woocommerce' ),
+				'error'   => __( 'Thiếu mã kho', 'supership-woocommerce' ),
 			);
 		}
 
@@ -200,7 +200,7 @@ final class SuperShip_Warehouse_Service {
 		if ( 1 === count( $body ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'At least one of name, phone or contact must be provided', 'supership-woocommerce' ),
+				'error'   => __( 'Cần nhập ít nhất tên, số điện thoại hoặc người liên hệ', 'supership-woocommerce' ),
 			);
 		}
 
@@ -235,7 +235,7 @@ final class SuperShip_Warehouse_Service {
 	public function delete_warehouse( string $code ): array {
 		return array(
 			'success' => false,
-			'error'   => __( 'SuperShip does not provide a warehouse delete API. Please deactivate the warehouse from the SuperShip dashboard (khachhang.supership.vn).', 'supership-woocommerce' ),
+			'error'   => __( 'SuperShip không hỗ trợ xoá kho qua API. Vui lòng tắt kho trên trang quản trị SuperShip (khachhang.supership.vn).', 'supership-woocommerce' ),
 		);
 	}
 
@@ -247,12 +247,12 @@ final class SuperShip_Warehouse_Service {
 	 */
 	private function validate_warehouse_params( array $params ): array {
 		$required = array(
-			'name'     => __( 'Warehouse name is required', 'supership-woocommerce' ),
-			'phone'    => __( 'Phone number is required', 'supership-woocommerce' ),
-			'address'  => __( 'Address is required', 'supership-woocommerce' ),
-			'province' => __( 'Province is required', 'supership-woocommerce' ),
-			'district' => __( 'District is required', 'supership-woocommerce' ),
-			'commune'  => __( 'Commune is required', 'supership-woocommerce' ),
+			'name'     => __( 'Thiếu tên kho', 'supership-woocommerce' ),
+			'phone'    => __( 'Thiếu số điện thoại', 'supership-woocommerce' ),
+			'address'  => __( 'Thiếu địa chỉ', 'supership-woocommerce' ),
+			'province' => __( 'Thiếu Tỉnh/Thành', 'supership-woocommerce' ),
+			'district' => __( 'Thiếu Quận/Huyện', 'supership-woocommerce' ),
+			'commune'  => __( 'Thiếu Phường/Xã', 'supership-woocommerce' ),
 		);
 
 		foreach ( $required as $field => $message ) {
@@ -280,7 +280,7 @@ final class SuperShip_Warehouse_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Province "%s" not found', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Tỉnh/Thành "%s"', 'supership-woocommerce' ),
 					$params['province']
 				),
 			);
@@ -295,7 +295,7 @@ final class SuperShip_Warehouse_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'District "%s" not found', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Quận/Huyện "%s"', 'supership-woocommerce' ),
 					$params['district']
 				),
 			);
@@ -310,7 +310,7 @@ final class SuperShip_Warehouse_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Commune "%s" not found', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Phường/Xã "%s"', 'supership-woocommerce' ),
 					$params['commune']
 				),
 			);
@@ -356,9 +356,13 @@ final class SuperShip_Warehouse_Service {
 			'contact'      => isset( $item['contact'] ) ? $item['contact'] : '',
 			'address'      => isset( $item['address'] ) ? $item['address'] : '',
 			'formatted_address' => isset( $item['formatted_address'] ) ? $item['formatted_address'] : '',
-			'province'     => isset( $item['province'] ) ? $item['province'] : '',
-			'district'     => isset( $item['district'] ) ? $item['district'] : '',
-			'commune'      => isset( $item['commune'] ) ? $item['commune'] : '',
+			// The warehouse list/detail response names these *_name (e.g. "province_name") -
+			// distinct from the plain "province"/"district"/"commune" keys the create/update
+			// request body uses. Prefer the *_name form, fall back to the short form so this
+			// keeps working if SuperShip ever unifies the naming.
+			'province'     => isset( $item['province_name'] ) ? $item['province_name'] : ( isset( $item['province'] ) ? $item['province'] : '' ),
+			'district'     => isset( $item['district_name'] ) ? $item['district_name'] : ( isset( $item['district'] ) ? $item['district'] : '' ),
+			'commune'      => isset( $item['commune_name'] ) ? $item['commune_name'] : ( isset( $item['commune'] ) ? $item['commune'] : '' ),
 			'status'       => isset( $item['status'] ) ? (int) $item['status'] : 0,
 			'status_name'  => isset( $item['status_name'] ) ? $item['status_name'] : '',
 			'primary'      => isset( $item['primary'] ) ? (int) $item['primary'] : 0,

@@ -82,7 +82,7 @@ final class SuperShip_Shipment_Service {
 		if ( ! is_array( $results ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid shipment response from SuperShip', 'supership-woocommerce' ),
+				'error'   => __( 'SuperShip trả về dữ liệu không đọc được khi tạo vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -104,26 +104,26 @@ final class SuperShip_Shipment_Service {
 	private function validate_params( array $params ): array {
 		$required = array(
 			// Receiver (required)
-			'receiver_name'     => __( 'Receiver name is required', 'supership-woocommerce' ),
-			'receiver_phone'    => __( 'Receiver phone is required', 'supership-woocommerce' ),
-			'receiver_address'  => __( 'Receiver address is required', 'supership-woocommerce' ),
-			'receiver_province' => __( 'Receiver province is required', 'supership-woocommerce' ),
-			'receiver_district' => __( 'Receiver district is required', 'supership-woocommerce' ),
-			'receiver_commune'  => __( 'Receiver commune is required', 'supership-woocommerce' ),
+			'receiver_name'     => __( 'Thiếu tên người nhận', 'supership-woocommerce' ),
+			'receiver_phone'    => __( 'Thiếu số điện thoại người nhận', 'supership-woocommerce' ),
+			'receiver_address'  => __( 'Thiếu địa chỉ người nhận', 'supership-woocommerce' ),
+			'receiver_province' => __( 'Thiếu Tỉnh/Thành của người nhận', 'supership-woocommerce' ),
+			'receiver_district' => __( 'Thiếu Quận/Huyện của người nhận', 'supership-woocommerce' ),
+			'receiver_commune'  => __( 'Thiếu Phường/Xã của người nhận', 'supership-woocommerce' ),
 			
 			// Package details
-			'weight_grams'      => __( 'Package weight is required', 'supership-woocommerce' ),
-			'declared_value'    => __( 'Declared value is required', 'supership-woocommerce' ),
-			'cod_amount'        => __( 'COD amount is required', 'supership-woocommerce' ),
+			'weight_grams'      => __( 'Thiếu cân nặng gói hàng', 'supership-woocommerce' ),
+			'declared_value'    => __( 'Thiếu giá trị khai báo đơn hàng', 'supership-woocommerce' ),
+			'cod_amount'        => __( 'Thiếu số tiền thu hộ (COD)', 'supership-woocommerce' ),
 			
 			// Service config
-			'service'           => __( 'Service type is required', 'supership-woocommerce' ),
-			'config'            => __( 'Package config is required', 'supership-woocommerce' ),
-			'payer'             => __( 'Payer is required', 'supership-woocommerce' ),
-			'product_type'      => __( 'Product type is required', 'supership-woocommerce' ),
+			'service'           => __( 'Chưa chọn dịch vụ giao hàng (xem tab Vận chuyển trong Cài đặt SuperShip)', 'supership-woocommerce' ),
+			'config'            => __( 'Chưa chọn tuỳ chọn giao hàng (xem tab Vận chuyển trong Cài đặt SuperShip)', 'supership-woocommerce' ),
+			'payer'             => __( 'Chưa chọn bên trả phí ship (xem tab Vận chuyển trong Cài đặt SuperShip)', 'supership-woocommerce' ),
+			'product_type'      => __( 'Thiếu loại hàng hoá', 'supership-woocommerce' ),
 			
 			// Idempotency
-			'soc'               => __( 'Sender order code (soc) is required', 'supership-woocommerce' ),
+			'soc'               => __( 'Thiếu mã đơn của shop', 'supership-woocommerce' ),
 		);
 		
 		foreach ( $required as $key => $message ) {
@@ -146,7 +146,7 @@ final class SuperShip_Shipment_Service {
 		if ( ! $has_pickup_code && ! $has_manual_pickup ) {
 			return array(
 				'valid' => false,
-				'error' => __( 'Either pickup_code or full pickup address is required', 'supership-woocommerce' ),
+				'error' => __( 'Chưa chọn kho lấy hàng - vào Cài đặt SuperShip, tab "Kho lấy hàng" để chọn kho mặc định', 'supership-woocommerce' ),
 			);
 		}
 		

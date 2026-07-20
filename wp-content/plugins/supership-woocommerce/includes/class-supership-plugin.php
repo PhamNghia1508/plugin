@@ -112,6 +112,8 @@ final class SuperShip_Plugin {
 		$admin_files = array(
 			'includes/admin/class-supership-admin-settings.php',
 			'includes/admin/class-supership-order-actions.php',
+			'includes/admin/class-supership-shipments-page.php',
+			'includes/admin/class-supership-admin-order-cleanup.php',
 		);
 
 		foreach ( $admin_files as $file ) {
@@ -127,6 +129,14 @@ final class SuperShip_Plugin {
 
 		if ( class_exists( 'SuperShip_Order_Actions' ) ) {
 			( new SuperShip_Order_Actions() )->init();
+		}
+
+		if ( class_exists( 'SuperShip_Shipments_Page' ) ) {
+			SuperShip_Shipments_Page::init();
+		}
+
+		if ( class_exists( 'SuperShip_Admin_Order_Cleanup' ) ) {
+			SuperShip_Admin_Order_Cleanup::init();
 		}
 	}
 

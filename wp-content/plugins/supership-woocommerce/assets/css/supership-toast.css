@@ -1,0 +1,97 @@
+/**
+ * SuperShip - toast + confirm dialog styling.
+ * Scoped to #supership-toasts / .supership-confirm* - safe on any admin screen.
+ */
+
+/* ── Toasts ─────────────────────────────────────────────────────────── */
+#supership-toasts {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 100100; /* Above WP admin bar/menus and blockUI overlays. */
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.supership-toast {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	min-width: 260px;
+	max-width: 400px;
+	background: #fff;
+	color: #1d2327;
+	border: 1px solid #dcdcde;
+	border-left-width: 4px;
+	border-radius: 8px;
+	padding: 12px 16px;
+	box-shadow: 0 6px 24px rgba(0, 0, 0, .16);
+	font-size: 13px;
+	line-height: 1.5;
+	opacity: 0;
+	transform: translateY(8px);
+	transition: opacity .25s ease, transform .25s ease;
+}
+.supership-toast.is-visible { opacity: 1; transform: none; }
+
+.supership-toast__icon {
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.supership-toast--success { border-left-color: #1e7e34; }
+.supership-toast--success .supership-toast__icon { color: #1e7e34; }
+
+.supership-toast--error { border-left-color: #d63638; }
+.supership-toast--error .supership-toast__icon { color: #d63638; }
+
+.supership-toast--info { border-left-color: #2271b1; }
+.supership-toast--info .supership-toast__icon { color: #2271b1; }
+
+/* ── Confirm dialog ─────────────────────────────────────────────────── */
+.supership-confirm-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100200;
+	background: rgba(0, 0, 0, .45);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.supership-confirm {
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, .25);
+	padding: 22px 24px 18px;
+	max-width: 420px;
+	width: 100%;
+}
+
+.supership-confirm__msg {
+	margin: 0 0 18px;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #1d2327;
+}
+
+.supership-confirm__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+}
+
+.supership-confirm__yes.is-danger {
+	background: #d63638;
+	border-color: #d63638;
+	color: #fff;
+}
+.supership-confirm__yes.is-danger:hover,
+.supership-confirm__yes.is-danger:focus {
+	background: #b32d2e;
+	border-color: #b32d2e;
+	color: #fff;
+}

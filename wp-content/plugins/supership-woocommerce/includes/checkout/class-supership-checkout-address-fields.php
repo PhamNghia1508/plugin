@@ -41,6 +41,93 @@ final class SuperShip_Checkout_Address_Fields {
 		add_action( 'woocommerce_checkout_update_order_meta', array( __CLASS__, 'save_commune_from_checkout' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_checkout_assets' ) );
 		add_filter( 'woocommerce_cart_needs_shipping_address', '__return_false' );
+		add_action( 'wp', array( __CLASS__, 'remove_coupon_form' ) );
+		add_filter( 'woocommerce_checkout_posted_data', array( __CLASS__, 'fill_placeholder_email' ) );
+		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'copy_billing_to_shipping' ) );
+		add_filter( 'woocommerce_shipping_package_name', array( __CLASS__, 'rename_shipping_package' ) );
+	}
+
+	/**
+	 * Vietnamese label for the shipping row in cart/checkout totals.
+	 *
+	 * WooCommerce 10.x names the package via _x( 'Shipment', 'shipping
+	 * packages' ) in WC_Cart::get_shipping_packages() - a context ("_x")
+	 * translation that the plain gettext filter below never sees, and one the
+	 * official vi language pack doesn't cover yet - so the row heading stayed
+	 * "Shipment" even on a Vietnamese site. This purpose-built filter works in
+	 * both full page loads and AJAX fragment refreshes.
+	 *
+	 * @param string $name Package name from WooCommerce.
+	 * @return string
+	 */
+	public static function rename_shipping_package( string $name ): string {
+		return __( 'Vận chuyển', 'supership-woocommerce' );
+	}
+
+	/**
+	 * Copy the billing address onto the order's shipping address at creation.
+	 *
+	 * With the "ship to a different address" section removed (see the
+	 * needs_shipping_address filter above), the checkout form only ever posts
+	 * billing_* fields - so orders were being created with an EMPTY shipping
+	 * address, which renders as "No shipping address set" in the admin order
+	 * screen and leaves the fulfillment-facing side of the order blank. One
+	 * address is both in this flow, so mirror it explicitly.
+	 *
+	 * @param WC_Order $order Order being created from checkout.
+	 */
+	public static function copy_billing_to_shipping( WC_Order $order ): void {
+		if ( '' !== $order->get_shipping_address_1() || '' !== $order->get_shipping_city() ) {
+			return; // A real shipping address was posted - leave it alone.
+		}
+
+		$order->set_shipping_first_name( $order->get_billing_first_name() );
+		$order->set_shipping_last_name( $order->get_billing_last_name() );
+		$order->set_shipping_address_1( $order->get_billing_address_1() );
+		$order->set_shipping_city( $order->get_billing_city() );
+		$order->set_shipping_state( $order->get_billing_state() );
+		$order->set_shipping_postcode( $order->get_billing_postcode() );
+		$order->set_shipping_country( $order->get_billing_country() );
+		$order->set_shipping_phone( $order->get_billing_phone() );
+	}
+
+	/**
+	 * Backfill a placeholder billing email for checkouts submitted without one.
+	 *
+	 * The email field is hidden from the customer (see override_checkout_fields()),
+	 * but WooCommerce still stores billing_email on the order and uses it as the
+	 * recipient for customer order emails. An empty value there produces orders
+	 * that look broken in the admin list and silently failing mail sends, so a
+	 * deterministic, clearly-synthetic address derived from the phone number is
+	 * written instead - it identifies the customer in admin search and is
+	 * obviously not a real inbox.
+	 *
+	 * @param array $data Posted checkout data.
+	 * @return array
+	 */
+	public static function fill_placeholder_email( array $data ): array {
+		if ( ! empty( $data['billing_email'] ) ) {
+			return $data;
+		}
+
+		$phone_digits = isset( $data['billing_phone'] ) ? preg_replace( '/\D/', '', $data['billing_phone'] ) : '';
+		$local_part   = '' !== $phone_digits ? $phone_digits : 'khach-' . wp_rand( 100000, 999999 );
+		$domain       = wp_parse_url( home_url(), PHP_URL_HOST );
+
+		$data['billing_email'] = $local_part . '@' . ( $domain ? $domain : 'localhost' );
+
+		return $data;
+	}
+
+	/**
+	 * Coupons add a second decision point ("do I have a code?") to a flow
+	 * we've deliberately reduced to name/address/phone - not worth the extra
+	 * cognitive load for this market. Checkout only; cart keeps its own.
+	 */
+	public static function remove_coupon_form(): void {
+		if ( is_checkout() ) {
+			remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+		}
 	}
 
 	/**
@@ -238,8 +325,15 @@ final class SuperShip_Checkout_Address_Fields {
 			$fields['billing_phone']['required']    = true;
 		}
 
+		// Email: Vietnamese COD shoppers overwhelmingly don't expect to give
+		// one, and nothing in the SuperShip delivery flow needs it (the shipper
+		// coordinates by phone). WooCommerce however treats billing_email as
+		// structurally required - order creation and the customer-facing order
+		// emails both read it - so the field is hidden and de-required here and
+		// backfilled with a deterministic placeholder in fill_placeholder_email().
 		if ( isset( $fields['billing_email'] ) ) {
-			$fields['billing_email']['label'] = __( 'Email', 'supership-woocommerce' );
+			$fields['billing_email']['required'] = false;
+			$fields['billing_email']['class']    = array( 'supership-field-hidden' );
 		}
 
 		$fields['billing_state'] = array_merge(
@@ -458,11 +552,11 @@ final class SuperShip_Checkout_Address_Fields {
 			)
 		);
 
-		wp_register_style( 'supership-checkout-inline', false, array(), SUPERSHIP_WC_VERSION );
-		wp_enqueue_style( 'supership-checkout-inline' );
-		wp_add_inline_style(
-			'supership-checkout-inline',
-			'.supership-field-hidden { display: none !important; }'
+		wp_enqueue_style(
+			'supership-checkout-modern',
+			SUPERSHIP_WC_URL . 'assets/css/checkout-modern.css',
+			array(),
+			SUPERSHIP_WC_VERSION
 		);
 	}
 }

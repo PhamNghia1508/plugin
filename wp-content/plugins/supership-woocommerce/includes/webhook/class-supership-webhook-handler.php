@@ -332,7 +332,7 @@ final class SuperShip_Webhook_Handler {
 		if ( class_exists( 'SuperShip_Status_Mapper' ) && SuperShip_Status_Mapper::should_update_wc_status( $status ) ) {
 			$order->update_status(
 				SuperShip_Status_Mapper::to_wc_status( $status ),
-				sprintf( __( 'SuperShip status update: %s', 'supership-woocommerce' ), $status_name )
+				sprintf( __( 'SuperShip cập nhật trạng thái: %s', 'supership-woocommerce' ), $status_name )
 			);
 
 			$this->add_order_note( $order, $payload );
@@ -383,7 +383,7 @@ final class SuperShip_Webhook_Handler {
 		$order->save();
 
 		$order->add_order_note(
-			sprintf( __( 'SuperShip weight updated: %d grams', 'supership-woocommerce' ), $weight )
+			sprintf( __( 'SuperShip cập nhật cân nặng: %d gram', 'supership-woocommerce' ), $weight )
 		);
 
 		self::log( 'info', sprintf( 'Order #%d: SuperShip weight -> %dg', $order->get_id(), $weight ) );
@@ -480,11 +480,11 @@ final class SuperShip_Webhook_Handler {
 		$note_parts = array();
 
 		if ( isset( $payload['status_name'] ) ) {
-			$note_parts[] = sprintf( __( 'Status: %s', 'supership-woocommerce' ), $payload['status_name'] );
+			$note_parts[] = sprintf( __( 'Trạng thái: %s', 'supership-woocommerce' ), $payload['status_name'] );
 		}
 
 		if ( isset( $payload['reason_text'] ) && '' !== $payload['reason_text'] ) {
-			$note_parts[] = sprintf( __( 'Reason: %s', 'supership-woocommerce' ), $payload['reason_text'] );
+			$note_parts[] = sprintf( __( 'Lý do: %s', 'supership-woocommerce' ), $payload['reason_text'] );
 		}
 
 		if ( ! empty( $note_parts ) ) {

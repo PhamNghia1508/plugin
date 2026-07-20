@@ -78,7 +78,7 @@ final class SuperShip_API_Response {
 			return new self(
 				$http_status,
 				'Error',
-				__( 'Invalid JSON response from SuperShip', 'supership-woocommerce' ),
+				__( 'SuperShip trả về dữ liệu không đọc được', 'supership-woocommerce' ),
 				null,
 				array( 'json_error' => json_last_error_msg() ),
 				$body
@@ -104,7 +104,7 @@ final class SuperShip_API_Response {
 			0,
 			'Error',
 			sprintf(
-				__( 'HTTP request failed: %s', 'supership-woocommerce' ),
+				__( 'Lỗi kết nối: %s', 'supership-woocommerce' ),
 				$error->get_error_message()
 			),
 			null,
@@ -267,23 +267,23 @@ final class SuperShip_API_Response {
 		
 		// Fallback based on HTTP status
 		if ( 0 === $this->http_status ) {
-			return __( 'Network error: Could not connect to SuperShip', 'supership-woocommerce' );
+			return __( 'Lỗi mạng: không kết nối được tới SuperShip', 'supership-woocommerce' );
 		}
 		
 		if ( 401 === $this->http_status ) {
-			return __( 'Authentication failed: Invalid or expired token', 'supership-woocommerce' );
+			return __( 'Xác thực thất bại: token sai hoặc đã hết hạn', 'supership-woocommerce' );
 		}
 		
 		if ( 403 === $this->http_status ) {
-			return __( 'Access denied: Insufficient permissions', 'supership-woocommerce' );
+			return __( 'Bị từ chối: tài khoản chưa được cấp quyền gọi API', 'supership-woocommerce' );
 		}
 		
 		if ( 404 === $this->http_status ) {
-			return __( 'Not found: Resource does not exist', 'supership-woocommerce' );
+			return __( 'Không tìm thấy dữ liệu yêu cầu', 'supership-woocommerce' );
 		}
 		
 		if ( 429 === $this->http_status ) {
-			return __( 'Rate limit exceeded: Too many requests', 'supership-woocommerce' );
+			return __( 'Gọi API quá dồn dập, vui lòng thử lại sau ít phút', 'supership-woocommerce' );
 		}
 		
 		if ( $this->http_status >= 500 ) {

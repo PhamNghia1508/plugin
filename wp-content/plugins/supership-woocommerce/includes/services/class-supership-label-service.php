@@ -38,7 +38,7 @@ final class SuperShip_Label_Service {
 		if ( empty( $tracking_numbers ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'At least one tracking number is required', 'supership-woocommerce' ),
+				'error'   => __( 'Cần ít nhất một mã vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -46,7 +46,7 @@ final class SuperShip_Label_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Invalid paper size: %s', 'supership-woocommerce' ),
+					__( 'Khổ giấy không hợp lệ: %s', 'supership-woocommerce' ),
 					$size
 				),
 			);
@@ -95,7 +95,7 @@ final class SuperShip_Label_Service {
 		if ( ! is_array( $results ) || ! isset( $results['token'] ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid token response from SuperShip', 'supership-woocommerce' ),
+				'error'   => __( 'Không lấy được mã in phiếu từ SuperShip', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -104,7 +104,7 @@ final class SuperShip_Label_Service {
 		if ( '' === $token ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Empty token received from SuperShip', 'supership-woocommerce' ),
+				'error'   => __( 'Không lấy được mã in phiếu từ SuperShip', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -205,7 +205,7 @@ final class SuperShip_Label_Service {
 		if ( ! $result['success'] ) {
 			wp_die(
 				esc_html( $result['error'] ),
-				esc_html__( 'Label Print Error', 'supership-woocommerce' ),
+				esc_html__( 'Lỗi in phiếu gửi', 'supership-woocommerce' ),
 				array( 'response' => 400 )
 			);
 		}

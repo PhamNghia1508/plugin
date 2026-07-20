@@ -39,11 +39,11 @@ final class SuperShip_Admin_Settings {
 		check_ajax_referer( 'supership_admin', 'nonce' );
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Bạn không có quyền thực hiện thao tác này', 'supership-woocommerce' ) ) );
 		}
 
 		if ( ! class_exists( 'SuperShip_Auth_Manager' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Auth manager is not available', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Không khởi tạo được trình quản lý đăng nhập', 'supership-woocommerce' ) ) );
 		}
 
 		$params = array(
@@ -76,11 +76,11 @@ final class SuperShip_Admin_Settings {
 		check_ajax_referer( 'supership_admin', 'nonce' );
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Bạn không có quyền thực hiện thao tác này', 'supership-woocommerce' ) ) );
 		}
 
 		if ( ! class_exists( 'SuperShip_Webhook_Handler' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Webhook handler is not available', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Không tìm thấy bộ xử lý cập nhật tự động', 'supership-woocommerce' ) ) );
 		}
 
 		$result = SuperShip_Webhook_Handler::register_with_supership();
@@ -88,7 +88,7 @@ final class SuperShip_Admin_Settings {
 		if ( $result['success'] ) {
 			wp_send_json_success(
 				array(
-					'message' => __( 'Webhook registered with SuperShip successfully', 'supership-woocommerce' ),
+					'message' => __( 'Đã đăng ký nhận cập nhật tự động từ SuperShip', 'supership-woocommerce' ),
 					'url'     => $result['url'],
 				)
 			);
@@ -148,8 +148,8 @@ final class SuperShip_Admin_Settings {
 	public function add_admin_menu(): void {
 		add_submenu_page(
 			'woocommerce',
-			__( 'SuperShip Settings', 'supership-woocommerce' ),
-			__( 'SuperShip', 'supership-woocommerce' ),
+			__( 'Cài đặt SuperShip', 'supership-woocommerce' ),
+			__( 'Cài đặt SuperShip', 'supership-woocommerce' ),
 			'manage_woocommerce',
 			self::MENU_SLUG,
 			array( $this, 'render_settings_page' )
@@ -255,18 +255,18 @@ final class SuperShip_Admin_Settings {
 		
 		?>
 		<div class="wrap supership-settings">
-			<h1><?php esc_html_e( 'SuperShip Settings', 'supership-woocommerce' ); ?></h1>
-			
+			<h1><?php esc_html_e( 'Cài đặt SuperShip', 'supership-woocommerce' ); ?></h1>
+
 			<?php $this->render_connection_status(); ?>
-			
+
 			<nav class="nav-tab-wrapper woo-nav-tab-wrapper">
 				<?php
 				$tabs = array(
-					'credentials' => __( 'Credentials', 'supership-woocommerce' ),
-					'warehouse'   => __( 'Warehouse', 'supership-woocommerce' ),
-					'shipping'    => __( 'Shipping', 'supership-woocommerce' ),
-					'webhook'     => __( 'Webhook', 'supership-woocommerce' ),
-					'advanced'    => __( 'Advanced', 'supership-woocommerce' ),
+					'credentials' => __( 'Kết nối', 'supership-woocommerce' ),
+					'warehouse'   => __( 'Kho lấy hàng', 'supership-woocommerce' ),
+					'shipping'    => __( 'Vận chuyển', 'supership-woocommerce' ),
+					'webhook'     => __( 'Tự động cập nhật', 'supership-woocommerce' ),
+					'advanced'    => __( 'Nâng cao', 'supership-woocommerce' ),
 				);
 				
 				foreach ( $tabs as $tab => $label ) {
@@ -334,8 +334,8 @@ final class SuperShip_Admin_Settings {
 			?>
 			<div class="notice notice-warning">
 				<p>
-					<strong><?php esc_html_e( 'Not connected to SuperShip', 'supership-woocommerce' ); ?></strong> -
-					<?php esc_html_e( 'Please configure your credentials in the Credentials tab.', 'supership-woocommerce' ); ?>
+					<strong><?php esc_html_e( 'Chưa kết nối với SuperShip', 'supership-woocommerce' ); ?></strong> —
+					<?php esc_html_e( 'Vui lòng nhập thông tin đăng nhập ở tab "Kết nối".', 'supership-woocommerce' ); ?>
 				</p>
 			</div>
 			<?php
@@ -349,15 +349,16 @@ final class SuperShip_Admin_Settings {
 			?>
 			<div class="notice notice-success">
 				<p>
-					<strong><?php esc_html_e( '✓ Đã kết nối với SuperShip (đã kiểm tra token thật)', 'supership-woocommerce' ); ?></strong>
+					<strong><?php esc_html_e( '✓ Đã kết nối với SuperShip', 'supership-woocommerce' ); ?></strong>
 					<?php
 					$remaining = isset( $status['token_info']['time_remaining'] ) ? (int) $status['token_info']['time_remaining'] : 0;
 					if ( $remaining > 0 ) {
 						printf(
-							' - %s',
+							' — %s',
 							sprintf(
-								__( 'Token expires in %s', 'supership-woocommerce' ),
-								human_time_diff( time(), time() + $remaining )
+								/* translators: %s: human-readable time until token expiry */
+								esc_html__( 'Token còn hạn %s nữa', 'supership-woocommerce' ),
+								esc_html( human_time_diff( time(), time() + $remaining ) )
 							)
 						);
 					}
@@ -396,7 +397,7 @@ final class SuperShip_Admin_Settings {
 		if ( ! class_exists( 'SuperShip_HTTP_Client' ) || ! class_exists( 'SuperShip_API_Error_Mapper' ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'SuperShip HTTP client is not available', 'supership-woocommerce' ),
+				'error'   => __( 'Không khởi tạo được trình gọi API SuperShip', 'supership-woocommerce' ),
 			);
 		}
 
@@ -435,13 +436,13 @@ final class SuperShip_Admin_Settings {
 			<table class="form-table">
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Authentication Mode', 'supership-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Cách kết nối', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<fieldset>
 							<label>
 								<input type="radio" class="supership-auth-mode-radio" name="supership_auth_mode" value="personal_token" <?php checked( $auth_mode, 'personal_token' ); ?>>
-								<?php esc_html_e( 'Personal Access Token', 'supership-woocommerce' ); ?>
+								<?php esc_html_e( 'Token truy cập cá nhân', 'supership-woocommerce' ); ?>
 							</label>
 							<br>
 							<label>
@@ -457,7 +458,7 @@ final class SuperShip_Admin_Settings {
 
 				<tr class="supership-auth-field" data-auth-mode="personal_token">
 					<th scope="row">
-						<label for="supership_personal_token"><?php esc_html_e( 'Personal Access Token', 'supership-woocommerce' ); ?></label>
+						<label for="supership_personal_token"><?php esc_html_e( 'Token truy cập cá nhân', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<input type="password"
@@ -510,7 +511,7 @@ final class SuperShip_Admin_Settings {
 
 				<tr class="supership-auth-field" data-auth-mode="password_grant">
 					<th scope="row">
-						<label for="supership_username"><?php esc_html_e( 'Username (Email Shop)', 'supership-woocommerce' ); ?></label>
+						<label for="supership_username"><?php esc_html_e( 'Tên đăng nhập (Email shop)', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<input type="text"
@@ -524,7 +525,7 @@ final class SuperShip_Admin_Settings {
 
 				<tr class="supership-auth-field" data-auth-mode="password_grant">
 					<th scope="row">
-						<label for="supership_password"><?php esc_html_e( 'Password', 'supership-woocommerce' ); ?></label>
+						<label for="supership_password"><?php esc_html_e( 'Mật khẩu', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<input type="password"
@@ -533,7 +534,7 @@ final class SuperShip_Admin_Settings {
 							   value=""
 							   class="regular-text"
 							   autocomplete="new-password"
-							   placeholder="<?php echo esc_attr( $has_password ? $saved_placeholder : __( 'Enter password to update', 'supership-woocommerce' ) ); ?>">
+							   placeholder="<?php echo esc_attr( $has_password ? $saved_placeholder : __( 'Nhập mật khẩu mới để thay đổi', 'supership-woocommerce' ) ); ?>">
 					</td>
 				</tr>
 
@@ -554,7 +555,7 @@ final class SuperShip_Admin_Settings {
 				</tr>
 			</table>
 
-			<?php submit_button( __( 'Save & Test Connection', 'supership-woocommerce' ) ); ?>
+			<?php submit_button( __( 'Lưu & Kiểm tra kết nối', 'supership-woocommerce' ) ); ?>
 		</form>
 
 		<hr>
@@ -666,12 +667,12 @@ final class SuperShip_Admin_Settings {
 			<table class="form-table">
 				<tr>
 					<th scope="row">
-						<label for="supership_default_warehouse"><?php esc_html_e( 'Default Warehouse', 'supership-woocommerce' ); ?></label>
+						<label for="supership_default_warehouse"><?php esc_html_e( 'Kho lấy hàng mặc định', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<?php if ( $result['success'] && ! empty( $result['warehouses'] ) ) : ?>
 							<select id="supership_default_warehouse" name="supership_default_warehouse" class="regular-text">
-								<option value=""><?php esc_html_e( '-- Select Warehouse --', 'supership-woocommerce' ); ?></option>
+								<option value=""><?php esc_html_e( '— Chọn kho lấy hàng —', 'supership-woocommerce' ); ?></option>
 								<?php foreach ( $result['warehouses'] as $warehouse ) : ?>
 									<option value="<?php echo esc_attr( $warehouse['code'] ); ?>" <?php selected( $default_warehouse, $warehouse['code'] ); ?>>
 										<?php echo esc_html( $warehouse['name'] . ' - ' . $warehouse['address'] ); ?>
@@ -679,13 +680,13 @@ final class SuperShip_Admin_Settings {
 								<?php endforeach; ?>
 							</select>
 							<p class="description">
-								<?php esc_html_e( 'Default pickup location for new shipments', 'supership-woocommerce' ); ?>
+								<?php esc_html_e( 'Kho mặc định dùng khi tạo vận đơn mới', 'supership-woocommerce' ); ?>
 							</p>
 						<?php else : ?>
 							<p class="description">
 								<?php
 								printf(
-									__( 'No warehouses found. <a href="%s" target="_blank">Add warehouse in SuperShip Dashboard</a>', 'supership-woocommerce' ),
+									__( 'Chưa có kho nào. <a href="%s" target="_blank">Thêm kho trên trang quản trị SuperShip</a>', 'supership-woocommerce' ),
 									'https://khachhang.supership.vn'
 								);
 								?>
@@ -696,14 +697,14 @@ final class SuperShip_Admin_Settings {
 			</table>
 			
 			<?php if ( $result['success'] && ! empty( $result['warehouses'] ) ) : ?>
-				<h3><?php esc_html_e( 'Available Warehouses', 'supership-woocommerce' ); ?></h3>
+				<h3><?php esc_html_e( 'Danh sách kho', 'supership-woocommerce' ); ?></h3>
 				<table class="wp-list-table widefat fixed striped">
 					<thead>
 						<tr>
-							<th><?php esc_html_e( 'Name', 'supership-woocommerce' ); ?></th>
-							<th><?php esc_html_e( 'Address', 'supership-woocommerce' ); ?></th>
-							<th><?php esc_html_e( 'Phone', 'supership-woocommerce' ); ?></th>
-							<th><?php esc_html_e( 'Pickup Code', 'supership-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Tên kho', 'supership-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Địa chỉ', 'supership-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Số điện thoại', 'supership-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Mã kho', 'supership-woocommerce' ); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -740,7 +741,7 @@ final class SuperShip_Admin_Settings {
 			<table class="form-table">
 				<tr>
 					<th scope="row">
-						<label for="supership_default_service"><?php esc_html_e( 'Default Service', 'supership-woocommerce' ); ?></label>
+						<label for="supership_default_service"><?php esc_html_e( 'Dịch vụ mặc định', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<select id="supership_default_service" name="supership_default_service" class="regular-text">
@@ -752,7 +753,7 @@ final class SuperShip_Admin_Settings {
 
 				<tr>
 					<th scope="row">
-						<label for="supership_default_config"><?php esc_html_e( 'Default Config', 'supership-woocommerce' ); ?></label>
+						<label for="supership_default_config"><?php esc_html_e( 'Tuỳ chọn giao hàng', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<select id="supership_default_config" name="supership_default_config" class="regular-text">
@@ -766,19 +767,19 @@ final class SuperShip_Admin_Settings {
 				
 				<tr>
 					<th scope="row">
-						<label for="supership_default_payer"><?php esc_html_e( 'Default Payer', 'supership-woocommerce' ); ?></label>
+						<label for="supership_default_payer"><?php esc_html_e( 'Bên trả phí ship', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<select id="supership_default_payer" name="supership_default_payer" class="regular-text">
-							<option value="1" <?php selected( $default_payer, '1' ); ?>><?php esc_html_e( 'Sender pays', 'supership-woocommerce' ); ?></option>
-							<option value="2" <?php selected( $default_payer, '2' ); ?>><?php esc_html_e( 'Receiver pays', 'supership-woocommerce' ); ?></option>
+							<option value="1" <?php selected( $default_payer, '1' ); ?>><?php esc_html_e( 'Người gửi trả (shop)', 'supership-woocommerce' ); ?></option>
+							<option value="2" <?php selected( $default_payer, '2' ); ?>><?php esc_html_e( 'Người nhận trả (khách)', 'supership-woocommerce' ); ?></option>
 						</select>
 					</td>
 				</tr>
 				
 				<tr>
 					<th scope="row">
-						<label for="supership_insurance_enabled"><?php esc_html_e( 'Insurance', 'supership-woocommerce' ); ?></label>
+						<label for="supership_insurance_enabled"><?php esc_html_e( 'Bảo hiểm hàng hoá', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<label>
@@ -787,9 +788,9 @@ final class SuperShip_Admin_Settings {
 								   name="supership_insurance_enabled" 
 								   value="yes" 
 								   <?php checked( $insurance_enabled, 'yes' ); ?>>
-							<?php esc_html_e( 'Enable automatic insurance for shipments', 'supership-woocommerce' ); ?>
+							<?php esc_html_e( 'Tự động mua bảo hiểm cho vận đơn', 'supership-woocommerce' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Insurance fee based on declared value', 'supership-woocommerce' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Phí bảo hiểm tính theo giá trị khai báo của đơn hàng', 'supership-woocommerce' ); ?></p>
 					</td>
 				</tr>
 			</table>
@@ -808,13 +809,17 @@ final class SuperShip_Admin_Settings {
 		$registered       = class_exists( 'SuperShip_Webhook_Handler' ) ? SuperShip_Webhook_Handler::get_registered_with_supership() : array( 'success' => false );
 
 		?>
+		<p style="max-width:640px;">
+			<?php esc_html_e( 'Khi đơn hàng có biến động bên SuperShip (đã lấy hàng, đang giao, đã giao, hoàn...), SuperShip sẽ tự báo về website và trạng thái đơn tự cập nhật - bạn không cần bấm gì cả. Thiết lập một lần duy nhất bằng nút "Đăng ký" bên dưới.', 'supership-woocommerce' ); ?>
+		</p>
+
 		<form method="post" action="options.php">
 			<?php settings_fields( 'supership_webhook' ); ?>
 
 			<table class="form-table">
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Webhook URL của bạn', 'supership-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Địa chỉ nhận cập nhật', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<input type="text"
@@ -822,7 +827,7 @@ final class SuperShip_Admin_Settings {
 							   class="large-text code"
 							   readonly>
 						<button type="button" class="button" onclick="navigator.clipboard.writeText('<?php echo esc_js( $webhook_url ); ?>')">
-							<?php esc_html_e( 'Copy', 'supership-woocommerce' ); ?>
+							<?php esc_html_e( 'Sao chép', 'supership-woocommerce' ); ?>
 						</button>
 						<p class="description">
 							<?php esc_html_e( 'URL này chứa một mã bí mật riêng của site bạn (do plugin tự sinh) - SuperShip không cung cấp cơ chế xác thực webhook nên plugin tự bảo vệ bằng cách này. Không chia sẻ URL này công khai.', 'supership-woocommerce' ); ?>
@@ -855,14 +860,14 @@ final class SuperShip_Admin_Settings {
 							<span class="supership-register-webhook-result"></span>
 						</p>
 						<p class="description">
-							<?php esc_html_e( 'Gọi trực tiếp API POST /v1/partner/webhooks/create của SuperShip - không cần vào dashboard SuperShip để dán URL thủ công.', 'supership-woocommerce' ); ?>
+							<?php esc_html_e( 'Chỉ cần bấm một lần - plugin tự đăng ký với SuperShip, bạn không phải vào trang SuperShip dán gì thủ công.', 'supership-woocommerce' ); ?>
 						</p>
 					</td>
 				</tr>
 
 				<tr>
 					<th scope="row">
-						<label for="supership_webhook_enabled"><?php esc_html_e( 'Webhook Status', 'supership-woocommerce' ); ?></label>
+						<label for="supership_webhook_enabled"><?php esc_html_e( 'Trạng thái tự động cập nhật', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<label>
@@ -871,7 +876,7 @@ final class SuperShip_Admin_Settings {
 								   name="supership_webhook_enabled"
 								   value="yes"
 								   <?php checked( $webhook_enabled, 'yes' ); ?>>
-							<?php esc_html_e( 'Enable webhook processing', 'supership-woocommerce' ); ?>
+							<?php esc_html_e( 'Cho phép SuperShip tự động báo trạng thái về website', 'supership-woocommerce' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Khi tắt, SuperShip vẫn nhận HTTP 200 (tránh bị retry) nhưng plugin sẽ bỏ qua nội dung, không cập nhật đơn hàng.', 'supership-woocommerce' ); ?></p>
 					</td>
@@ -927,7 +932,7 @@ final class SuperShip_Admin_Settings {
 			<table class="form-table">
 				<tr>
 					<th scope="row">
-						<label for="supership_debug_mode"><?php esc_html_e( 'Debug Mode', 'supership-woocommerce' ); ?></label>
+						<label for="supership_debug_mode"><?php esc_html_e( 'Chế độ ghi nhật ký', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<label>
@@ -936,15 +941,15 @@ final class SuperShip_Admin_Settings {
 								   name="supership_debug_mode" 
 								   value="yes" 
 								   <?php checked( $debug_mode, 'yes' ); ?>>
-							<?php esc_html_e( 'Enable debug logging', 'supership-woocommerce' ); ?>
+							<?php esc_html_e( 'Ghi lại chi tiết các lần gọi API', 'supership-woocommerce' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Logs API requests/responses to WooCommerce logs', 'supership-woocommerce' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Lưu nội dung gọi/nhận API vào nhật ký WooCommerce (WooCommerce → Trạng thái → Nhật ký). Chỉ nên bật khi cần tìm lỗi.', 'supership-woocommerce' ); ?></p>
 					</td>
 				</tr>
 				
 				<tr>
 					<th scope="row">
-						<label for="supership_auto_tracking_enabled"><?php esc_html_e( 'Auto Tracking', 'supership-woocommerce' ); ?></label>
+						<label for="supership_auto_tracking_enabled"><?php esc_html_e( 'Tự động kiểm tra trạng thái', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<label>
@@ -953,15 +958,15 @@ final class SuperShip_Admin_Settings {
 								   name="supership_auto_tracking_enabled" 
 								   value="yes" 
 								   <?php checked( $auto_tracking, 'yes' ); ?>>
-							<?php esc_html_e( 'Enable automatic tracking updates', 'supership-woocommerce' ); ?>
+							<?php esc_html_e( 'Tự động kiểm tra trạng thái vận đơn theo định kỳ', 'supership-woocommerce' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Automatically fetch tracking updates via WP Cron', 'supership-woocommerce' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Dùng WP Cron để định kỳ hỏi SuperShip trạng thái mới nhất của các vận đơn chưa kết thúc', 'supership-woocommerce' ); ?></p>
 					</td>
 				</tr>
 				
 				<tr>
 					<th scope="row">
-						<label for="supership_auto_tracking_interval"><?php esc_html_e( 'Tracking Interval', 'supership-woocommerce' ); ?></label>
+						<label for="supership_auto_tracking_interval"><?php esc_html_e( 'Tần suất kiểm tra', 'supership-woocommerce' ); ?></label>
 					</th>
 					<td>
 						<input type="number" 
@@ -971,8 +976,8 @@ final class SuperShip_Admin_Settings {
 							   min="15" 
 							   max="1440" 
 							   class="small-text"> 
-						<?php esc_html_e( 'minutes', 'supership-woocommerce' ); ?>
-						<p class="description"><?php esc_html_e( 'How often to check for tracking updates (15-1440 minutes)', 'supership-woocommerce' ); ?></p>
+						<?php esc_html_e( 'phút', 'supership-woocommerce' ); ?>
+						<p class="description"><?php esc_html_e( 'Bao lâu kiểm tra một lần (từ 15 đến 1440 phút)', 'supership-woocommerce' ); ?></p>
 					</td>
 				</tr>
 			</table>

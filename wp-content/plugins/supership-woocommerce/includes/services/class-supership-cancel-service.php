@@ -36,7 +36,7 @@ final class SuperShip_Cancel_Service {
 		if ( '' === $tracking_number ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Tracking number is required', 'supership-woocommerce' ),
+				'error'   => __( 'Thiếu mã vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -59,7 +59,7 @@ final class SuperShip_Cancel_Service {
 		if ( ! is_array( $results ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid cancel response from SuperShip', 'supership-woocommerce' ),
+				'error'   => __( 'SuperShip trả về dữ liệu không đọc được khi huỷ vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -82,7 +82,7 @@ final class SuperShip_Cancel_Service {
 		if ( empty( $tracking_numbers ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'At least one tracking number is required', 'supership-woocommerce' ),
+				'error'   => __( 'Cần ít nhất một mã vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -170,18 +170,18 @@ final class SuperShip_Cancel_Service {
 	 */
 	public function get_cancel_eligibility_message( int $status ): string {
 		if ( $this->can_cancel( $status ) ) {
-			return __( 'This shipment can be cancelled', 'supership-woocommerce' );
+			return __( 'Vận đơn này có thể huỷ', 'supership-woocommerce' );
 		}
 		
 		if ( 0 === $status ) {
-			return __( 'This shipment is already cancelled', 'supership-woocommerce' );
+			return __( 'Vận đơn này đã được huỷ trước đó', 'supership-woocommerce' );
 		}
 		
 		// Delivered/returned states
 		if ( $status >= 12 && $status <= 22 ) {
-			return __( 'This shipment cannot be cancelled (already delivered or returned)', 'supership-woocommerce' );
+			return __( 'Không thể huỷ - đơn đã giao hoặc đã hoàn', 'supership-woocommerce' );
 		}
 		
-		return __( 'This shipment cannot be cancelled', 'supership-woocommerce' );
+		return __( 'Vận đơn này không thể huỷ', 'supership-woocommerce' );
 	}
 }

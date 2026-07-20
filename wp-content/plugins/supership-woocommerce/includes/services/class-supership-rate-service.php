@@ -86,7 +86,7 @@ final class SuperShip_Rate_Service {
 		if ( ! is_array( $results ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid rate response from SuperShip', 'supership-woocommerce' ),
+				'error'   => __( 'SuperShip trả về dữ liệu không đọc được khi tính phí', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -107,11 +107,11 @@ final class SuperShip_Rate_Service {
 	 */
 	private function validate_params( array $params ): array {
 		$required = array(
-			'sender_province'   => __( 'Sender province is required', 'supership-woocommerce' ),
-			'sender_district'   => __( 'Sender district is required', 'supership-woocommerce' ),
-			'receiver_province' => __( 'Receiver province is required', 'supership-woocommerce' ),
-			'receiver_district' => __( 'Receiver district is required', 'supership-woocommerce' ),
-			'weight_grams'      => __( 'Package weight is required', 'supership-woocommerce' ),
+			'sender_province'   => __( 'Thiếu Tỉnh/Thành của kho gửi', 'supership-woocommerce' ),
+			'sender_district'   => __( 'Thiếu Quận/Huyện của kho gửi', 'supership-woocommerce' ),
+			'receiver_province' => __( 'Thiếu Tỉnh/Thành của người nhận', 'supership-woocommerce' ),
+			'receiver_district' => __( 'Thiếu Quận/Huyện của người nhận', 'supership-woocommerce' ),
+			'weight_grams'      => __( 'Thiếu cân nặng gói hàng', 'supership-woocommerce' ),
 		);
 		
 		foreach ( $required as $key => $message ) {
@@ -128,14 +128,14 @@ final class SuperShip_Rate_Service {
 		if ( $weight <= 0 ) {
 			return array(
 				'valid' => false,
-				'error' => __( 'Package weight must be greater than 0', 'supership-woocommerce' ),
+				'error' => __( 'Cân nặng phải lớn hơn 0', 'supership-woocommerce' ),
 			);
 		}
 		
 		if ( $weight > 30000 ) { // 30kg limit (adjust if SuperShip has different limit)
 			return array(
 				'valid' => false,
-				'error' => __( 'Package weight exceeds maximum limit (30kg)', 'supership-woocommerce' ),
+				'error' => __( 'Gói hàng vượt giới hạn 30kg', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -155,7 +155,7 @@ final class SuperShip_Rate_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Sender province "%s" not found in SuperShip database', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Tỉnh/Thành kho gửi "%s" trong danh mục SuperShip', 'supership-woocommerce' ),
 					$params['sender_province']
 				),
 			);
@@ -170,7 +170,7 @@ final class SuperShip_Rate_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Sender district "%s" not found in SuperShip database', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Quận/Huyện kho gửi "%s" trong danh mục SuperShip', 'supership-woocommerce' ),
 					$params['sender_district']
 				),
 			);
@@ -182,7 +182,7 @@ final class SuperShip_Rate_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Receiver province "%s" not found in SuperShip database', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Tỉnh/Thành "%s" trong danh mục SuperShip', 'supership-woocommerce' ),
 					$params['receiver_province']
 				),
 			);
@@ -197,7 +197,7 @@ final class SuperShip_Rate_Service {
 			return array(
 				'success' => false,
 				'error'   => sprintf(
-					__( 'Receiver district "%s" not found in SuperShip database', 'supership-woocommerce' ),
+					__( 'Không tìm thấy Quận/Huyện "%s" trong danh mục SuperShip', 'supership-woocommerce' ),
 					$params['receiver_district']
 				),
 			);

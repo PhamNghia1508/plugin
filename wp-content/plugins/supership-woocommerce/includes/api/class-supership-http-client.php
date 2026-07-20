@@ -91,7 +91,7 @@ final class SuperShip_HTTP_Client implements SuperShip_Http_Client_Interface {
 		if ( null === $url ) {
 			return SuperShip_API_Response::config_error(
 				'invalid_endpoint',
-				__( 'The SuperShip endpoint path or host is not allowed.', 'supership-woocommerce' )
+				__( 'Địa chỉ API không nằm trong danh sách cho phép.', 'supership-woocommerce' )
 			);
 		}
 		
@@ -140,7 +140,7 @@ final class SuperShip_HTTP_Client implements SuperShip_Http_Client_Interface {
 		if ( null === $url ) {
 			return SuperShip_API_Response::config_error(
 				'invalid_endpoint',
-				__( 'The SuperShip endpoint path or host is not allowed.', 'supership-woocommerce' )
+				__( 'Địa chỉ API không nằm trong danh sách cho phép.', 'supership-woocommerce' )
 			);
 		}
 		
@@ -156,7 +156,7 @@ final class SuperShip_HTTP_Client implements SuperShip_Http_Client_Interface {
 		if ( false === $json ) {
 			return SuperShip_API_Response::config_error(
 				'json_encode_failed',
-				__( 'Failed to encode request body as JSON.', 'supership-woocommerce' )
+				__( 'Không đóng gói được dữ liệu gửi đi.', 'supership-woocommerce' )
 			);
 		}
 		

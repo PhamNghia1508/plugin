@@ -32,7 +32,7 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 		$this->id                 = 'supership';
 		$this->instance_id        = absint( $instance_id );
 		$this->method_title       = __( 'SuperShip', 'supership-woocommerce' );
-		$this->method_description = __( 'Real-time shipping rates from SuperShip', 'supership-woocommerce' );
+		$this->method_description = __( 'Phí vận chuyển tính trực tiếp từ SuperShip theo địa chỉ nhận hàng', 'supership-woocommerce' );
 		$this->supports           = array(
 			'shipping-zones',
 			'instance-settings',
@@ -64,45 +64,45 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 	public function init_form_fields(): void {
 		$this->instance_form_fields = array(
 			'title'              => array(
-				'title'       => __( 'Method Title', 'supership-woocommerce' ),
+				'title'       => __( 'Tên hiển thị', 'supership-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'supership-woocommerce' ),
+				'description' => __( 'Tên phương thức giao hàng mà khách nhìn thấy ở trang thanh toán.', 'supership-woocommerce' ),
 				'default'     => __( 'SuperShip', 'supership-woocommerce' ),
 				'desc_tip'    => true,
 			),
 			'enabled'            => array(
-				'title'   => __( 'Enable/Disable', 'supership-woocommerce' ),
+				'title'   => __( 'Bật/Tắt', 'supership-woocommerce' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable SuperShip shipping', 'supership-woocommerce' ),
+				'label'   => __( 'Bật giao hàng qua SuperShip', 'supership-woocommerce' ),
 				'default' => 'yes',
 			),
 			'show_services'      => array(
-				'title'       => __( 'Service Options', 'supership-woocommerce' ),
+				'title'       => __( 'Gói dịch vụ', 'supership-woocommerce' ),
 				'type'        => 'checkbox',
-				'label'       => __( 'Show multiple service options to customers', 'supership-woocommerce' ),
-				'description' => __( 'Display Standard and Express options separately', 'supership-woocommerce' ),
+				'label'       => __( 'Cho khách chọn giữa nhiều gói dịch vụ', 'supership-woocommerce' ),
+				'description' => __( 'Hiện riêng từng gói (Tiêu chuẩn, Tốc hành...) để khách tự chọn. Tắt thì chỉ hiện gói rẻ nhất.', 'supership-woocommerce' ),
 				'default'     => 'yes',
 				'desc_tip'    => true,
 			),
 			'fallback_enabled'   => array(
-				'title'       => __( 'Fallback Rate', 'supership-woocommerce' ),
+				'title'       => __( 'Phí dự phòng', 'supership-woocommerce' ),
 				'type'        => 'checkbox',
-				'label'       => __( 'Enable fallback flat rate if API fails', 'supership-woocommerce' ),
-				'description' => __( 'Show a fixed rate when SuperShip API is unavailable', 'supership-woocommerce' ),
+				'label'       => __( 'Dùng phí cố định khi không tính được phí từ SuperShip', 'supership-woocommerce' ),
+				'description' => __( 'Khi SuperShip không phản hồi (mất mạng, bảo trì...), khách vẫn đặt hàng được với mức phí cố định bên dưới thay vì bị kẹt ở trang thanh toán.', 'supership-woocommerce' ),
 				'default'     => 'yes',
 				'desc_tip'    => true,
 			),
 			'fallback_amount'    => array(
-				'title'       => __( 'Fallback Amount', 'supership-woocommerce' ),
+				'title'       => __( 'Mức phí dự phòng', 'supership-woocommerce' ),
 				'type'        => 'price',
-				'description' => __( 'Flat rate amount when API fails', 'supership-woocommerce' ),
+				'description' => __( 'Số tiền phí ship cố định dùng khi không tính được phí thật.', 'supership-woocommerce' ),
 				'default'     => '30000',
 				'desc_tip'    => true,
 			),
 			'free_shipping_min'  => array(
-				'title'       => __( 'Free Shipping Minimum', 'supership-woocommerce' ),
+				'title'       => __( 'Miễn phí ship từ', 'supership-woocommerce' ),
 				'type'        => 'price',
-				'description' => __( 'Minimum order amount for free shipping (0 = disabled)', 'supership-woocommerce' ),
+				'description' => __( 'Đơn hàng từ số tiền này trở lên được miễn phí giao hàng (để 0 nếu không dùng).', 'supership-woocommerce' ),
 				'default'     => '0',
 				'desc_tip'    => true,
 			),
@@ -145,7 +145,7 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 		if ( $this->is_free_shipping_eligible( $package ) ) {
 			$this->add_rate( array(
 				'id'    => $this->id . ':free',
-				'label' => __( 'Free Shipping', 'supership-woocommerce' ),
+				'label' => __( 'Miễn phí giao hàng', 'supership-woocommerce' ),
 				'cost'  => 0,
 			) );
 			return;

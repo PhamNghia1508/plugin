@@ -247,18 +247,18 @@ final class SuperShip_Status_Mapper {
 	 */
 	public static function get_customer_message( int $supership_status, string $tracking_number = '' ): string {
 		$statuses = self::get_supership_statuses();
-		$status_name = $statuses[ $supership_status ] ?? __( 'Unknown', 'supership-woocommerce' );
+		$status_name = $statuses[ $supership_status ] ?? __( 'Chưa rõ', 'supership-woocommerce' );
 		
 		if ( '' !== $tracking_number ) {
 			return sprintf(
-				__( 'Your order (%s) status: %s', 'supership-woocommerce' ),
+				__( 'Đơn hàng %s của bạn hiện đang: %s', 'supership-woocommerce' ),
 				$tracking_number,
 				$status_name
 			);
 		}
 		
 		return sprintf(
-			__( 'Shipment status: %s', 'supership-woocommerce' ),
+			__( 'Trạng thái vận đơn: %s', 'supership-woocommerce' ),
 			$status_name
 		);
 	}

@@ -142,7 +142,7 @@ final class SuperShip_Auth_Manager {
 		
 		// Check SuperShip response format
 		if ( 'Success' !== ( $data['status'] ?? '' ) ) {
-			$error_msg = $data['message'] ?? __( 'Unknown error', 'supership-woocommerce' );
+			$error_msg = $data['message'] ?? __( 'Lỗi không xác định', 'supership-woocommerce' );
 			return array(
 				'success' => false,
 				'message' => sprintf(
@@ -170,7 +170,7 @@ final class SuperShip_Auth_Manager {
 		if ( ! $saved ) {
 			return array(
 				'success' => false,
-				'message' => __( 'Failed to save SuperShip access token.', 'supership-woocommerce' ),
+				'message' => __( 'Không lưu được token SuperShip.', 'supership-woocommerce' ),
 			);
 		}
 		

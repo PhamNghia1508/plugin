@@ -49,7 +49,7 @@ final class SuperShip_Tracking_Scheduler {
 			'interval' => $minutes * MINUTE_IN_SECONDS,
 			'display'  => sprintf(
 				/* translators: %d: interval in minutes */
-				__( 'Every %d minutes (SuperShip tracking)', 'supership-woocommerce' ),
+				__( 'Mỗi %d phút (theo dõi vận đơn SuperShip)', 'supership-woocommerce' ),
 				$minutes
 			),
 		);

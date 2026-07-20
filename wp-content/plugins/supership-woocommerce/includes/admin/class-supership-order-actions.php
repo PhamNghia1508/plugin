@@ -20,6 +20,7 @@ final class SuperShip_Order_Actions {
 	 * Initialize order actions
 	 */
 	public function init(): void {
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_toast_assets' ) );
 		// Add metabox
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox' ) );
 		
@@ -36,10 +37,45 @@ final class SuperShip_Order_Actions {
 	/**
 	 * Add metabox to order edit page
 	 */
+	/**
+	 * Toast + confirm-dialog assets for the order edit screens (both order
+	 * storage modes). The metabox's inline JS uses window.SuperShipToast for
+	 * feedback instead of the browser's alert()/confirm().
+	 *
+	 * @param string $hook Current admin page hook (unused - screen id is checked).
+	 */
+	public function enqueue_toast_assets( string $hook ): void {
+		$screen  = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$targets = array( 'shop_order' );
+
+		if ( function_exists( 'wc_get_page_screen_id' ) ) {
+			$targets[] = wc_get_page_screen_id( 'shop-order' );
+		}
+
+		if ( ! $screen || ! in_array( $screen->id, array_unique( $targets ), true ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'supership-toast',
+			SUPERSHIP_WC_URL . 'assets/css/supership-toast.css',
+			array(),
+			SUPERSHIP_WC_VERSION
+		);
+
+		wp_enqueue_script(
+			'supership-toast',
+			SUPERSHIP_WC_URL . 'assets/js/supership-toast.js',
+			array(),
+			SUPERSHIP_WC_VERSION,
+			true
+		);
+	}
+
 	public function add_metabox(): void {
 		add_meta_box(
 			'supership-shipment',
-			__( 'SuperShip Shipment', 'supership-woocommerce' ),
+			__( 'Vận đơn SuperShip', 'supership-woocommerce' ),
 			array( $this, 'render_metabox' ),
 			'shop_order',
 			'side',
@@ -51,7 +87,7 @@ final class SuperShip_Order_Actions {
 		     && Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			add_meta_box(
 				'supership-shipment',
-				__( 'SuperShip Shipment', 'supership-woocommerce' ),
+				__( 'Vận đơn SuperShip', 'supership-woocommerce' ),
 				array( $this, 'render_metabox' ),
 				wc_get_page_screen_id( 'shop-order' ),
 				'side',
@@ -86,68 +122,99 @@ final class SuperShip_Order_Actions {
 		
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
+			var nonce = '<?php echo esc_js( wp_create_nonce( 'supership_order_actions' ) ); ?>';
+
+			// Graceful fallbacks if the toast script somehow didn't load.
+			function toast(msg, type)  { window.SuperShipToast ? SuperShipToast.show(msg, type) : window.alert(msg); }
+			function flash(msg, type)  { if (window.SuperShipToast) { SuperShipToast.flash(msg, type); } }
+			function ask(msg, opts)    {
+				return window.SuperShipToast
+					? SuperShipToast.confirm(msg, opts)
+					: Promise.resolve(window.confirm(msg));
+			}
+
 			// Create shipment
 			$('.supership-create-shipment').on('click', function(e) {
 				e.preventDefault();
 				var $btn = $(this);
-				var orderId = $btn.data('order-id');
-				
-				$btn.prop('disabled', true).text('<?php esc_attr_e( 'Creating...', 'supership-woocommerce' ); ?>');
-				
+
+				$btn.prop('disabled', true).text('<?php esc_attr_e( 'Đang tạo...', 'supership-woocommerce' ); ?>');
+
 				$.post(ajaxurl, {
 					action: 'supership_create_shipment',
-					order_id: orderId,
-					nonce: '<?php echo esc_js( wp_create_nonce( 'supership_order_actions' ) ); ?>'
+					order_id: $btn.data('order-id'),
+					nonce: nonce
 				}, function(response) {
 					if (response.success) {
+						flash('<?php echo esc_js( __( 'Đã tạo vận đơn thành công. Kiểm tra mã vận đơn trong ô SuperShip.', 'supership-woocommerce' ) ); ?>', 'success');
 						location.reload();
 					} else {
-						alert(response.data.message || '<?php esc_js( __( 'Failed to create shipment', 'supership-woocommerce' ) ); ?>');
-						$btn.prop('disabled', false).text('<?php esc_attr_e( 'Create Shipment', 'supership-woocommerce' ); ?>');
+						toast(response.data && response.data.message || '<?php echo esc_js( __( 'Tạo vận đơn thất bại', 'supership-woocommerce' ) ); ?>', 'error');
+						$btn.prop('disabled', false).text('<?php esc_attr_e( 'Tạo vận đơn', 'supership-woocommerce' ); ?>');
 					}
+				}).fail(function() {
+					toast('<?php echo esc_js( __( 'Lỗi kết nối - vui lòng thử lại.', 'supership-woocommerce' ) ); ?>', 'error');
+					$btn.prop('disabled', false).text('<?php esc_attr_e( 'Tạo vận đơn', 'supership-woocommerce' ); ?>');
 				});
 			});
-			
+
 			// Cancel shipment
 			$('.supership-cancel-shipment').on('click', function(e) {
 				e.preventDefault();
-				if (!confirm('<?php esc_js( __( 'Are you sure you want to cancel this shipment?', 'supership-woocommerce' ) ); ?>')) {
-					return;
-				}
-				
 				var $btn = $(this);
-				var orderId = $btn.data('order-id');
-				
-				$btn.prop('disabled', true);
-				
-				$.post(ajaxurl, {
-					action: 'supership_cancel_shipment',
-					order_id: orderId,
-					nonce: '<?php echo esc_js( wp_create_nonce( 'supership_order_actions' ) ); ?>'
-				}, function(response) {
-					if (response.success) {
-						location.reload();
-					} else {
-						alert(response.data.message || '<?php esc_js( __( 'Failed to cancel shipment', 'supership-woocommerce' ) ); ?>');
-						$btn.prop('disabled', false);
+
+				ask('<?php echo esc_js( __( 'Huỷ vận đơn này? SuperShip sẽ ngừng lấy/giao đơn hàng.', 'supership-woocommerce' ) ); ?>', {
+					yes: '<?php echo esc_js( __( 'Huỷ vận đơn', 'supership-woocommerce' ) ); ?>',
+					no: '<?php echo esc_js( __( 'Không', 'supership-woocommerce' ) ); ?>',
+					danger: true
+				}).then(function(confirmed) {
+					if (!confirmed) {
+						return;
 					}
+
+					$btn.prop('disabled', true);
+
+					$.post(ajaxurl, {
+						action: 'supership_cancel_shipment',
+						order_id: $btn.data('order-id'),
+						nonce: nonce
+					}, function(response) {
+						if (response.success) {
+							flash('<?php echo esc_js( __( 'Đã huỷ vận đơn.', 'supership-woocommerce' ) ); ?>', 'success');
+							location.reload();
+						} else {
+							toast(response.data && response.data.message || '<?php echo esc_js( __( 'Huỷ vận đơn thất bại', 'supership-woocommerce' ) ); ?>', 'error');
+							$btn.prop('disabled', false);
+						}
+					}).fail(function() {
+						toast('<?php echo esc_js( __( 'Lỗi kết nối - vui lòng thử lại.', 'supership-woocommerce' ) ); ?>', 'error');
+						$btn.prop('disabled', false);
+					});
 				});
 			});
-			
+
 			// Refresh tracking
 			$('.supership-refresh-tracking').on('click', function(e) {
 				e.preventDefault();
 				var $btn = $(this);
-				var orderId = $btn.data('order-id');
-				
+
 				$btn.prop('disabled', true);
-				
+
 				$.post(ajaxurl, {
 					action: 'supership_refresh_tracking',
-					order_id: orderId,
-					nonce: '<?php echo esc_js( wp_create_nonce( 'supership_order_actions' ) ); ?>'
+					order_id: $btn.data('order-id'),
+					nonce: nonce
 				}, function(response) {
-					location.reload();
+					if (response && response.success) {
+						flash('<?php echo esc_js( __( 'Đã cập nhật trạng thái mới nhất từ SuperShip.', 'supership-woocommerce' ) ); ?>', 'success');
+						location.reload();
+					} else {
+						toast(response && response.data && response.data.message || '<?php echo esc_js( __( 'Cập nhật thất bại', 'supership-woocommerce' ) ); ?>', 'error');
+						$btn.prop('disabled', false);
+					}
+				}).fail(function() {
+					toast('<?php echo esc_js( __( 'Lỗi kết nối - vui lòng thử lại.', 'supership-woocommerce' ) ); ?>', 'error');
+					$btn.prop('disabled', false);
 				});
 			});
 		});
@@ -168,16 +235,16 @@ final class SuperShip_Order_Actions {
 		?>
 		<div class="supership-shipment-info">
 			<p>
-				<strong><?php esc_html_e( 'Tracking Number:', 'supership-woocommerce' ); ?></strong><br>
+				<strong><?php esc_html_e( 'Mã vận đơn:', 'supership-woocommerce' ); ?></strong><br>
 				<code style="font-size: 14px;"><?php echo esc_html( $tracking_number ); ?></code>
 				<button type="button" class="button-link" onclick="navigator.clipboard.writeText('<?php echo esc_js( $tracking_number ); ?>')">
-					<?php esc_html_e( 'Copy', 'supership-woocommerce' ); ?>
+					<?php esc_html_e( 'Sao chép', 'supership-woocommerce' ); ?>
 				</button>
 			</p>
 			
 			<?php if ( $status_name ) : ?>
 				<p>
-					<strong><?php esc_html_e( 'Status:', 'supership-woocommerce' ); ?></strong><br>
+					<strong><?php esc_html_e( 'Trạng thái:', 'supership-woocommerce' ); ?></strong><br>
 					<span class="supership-status" style="color: <?php echo esc_attr( SuperShip_Status_Mapper::get_status_color( (int) $status ) ); ?>">
 						<?php echo esc_html( $status_name ); ?>
 					</span>
@@ -190,20 +257,20 @@ final class SuperShip_Order_Actions {
 				<a href="<?php echo esc_url( $this->get_label_url( $order ) ); ?>" 
 				   class="button" 
 				   target="_blank">
-					<?php esc_html_e( 'Print Label', 'supership-woocommerce' ); ?>
+					<?php esc_html_e( 'In phiếu gửi', 'supership-woocommerce' ); ?>
 				</a>
 				
 				<button type="button" 
 						class="button supership-refresh-tracking" 
 						data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
-					<?php esc_html_e( 'Refresh', 'supership-woocommerce' ); ?>
+					<?php esc_html_e( 'Cập nhật', 'supership-woocommerce' ); ?>
 				</button>
 				
 				<?php if ( SuperShip_Status_Mapper::get_status_category( (int) $status ) !== 'cancelled' ) : ?>
 					<button type="button" 
 							class="button button-secondary supership-cancel-shipment" 
 							data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
-						<?php esc_html_e( 'Cancel', 'supership-woocommerce' ); ?>
+						<?php esc_html_e( 'Huỷ vận đơn', 'supership-woocommerce' ); ?>
 					</button>
 				<?php endif; ?>
 			</p>
@@ -219,13 +286,13 @@ final class SuperShip_Order_Actions {
 	private function render_create_shipment_form( WC_Order $order ): void {
 		?>
 		<div class="supership-create-form">
-			<p><?php esc_html_e( 'No shipment created yet.', 'supership-woocommerce' ); ?></p>
+			<p><?php esc_html_e( 'Chưa tạo vận đơn cho đơn hàng này.', 'supership-woocommerce' ); ?></p>
 			
 			<p>
 				<button type="button" 
 						class="button button-primary supership-create-shipment" 
 						data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
-					<?php esc_html_e( 'Create Shipment', 'supership-woocommerce' ); ?>
+					<?php esc_html_e( 'Tạo vận đơn', 'supership-woocommerce' ); ?>
 				</button>
 			</p>
 		</div>
@@ -242,13 +309,13 @@ final class SuperShip_Order_Actions {
 		$order = wc_get_order( $order_id );
 		
 		if ( ! $order ) {
-			wp_send_json_error( array( 'message' => __( 'Order not found', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Không tìm thấy đơn hàng', 'supership-woocommerce' ) ) );
 		}
 		
 		$result = $this->create_shipment_for_order( $order );
 		
 		if ( $result['success'] ) {
-			wp_send_json_success( array( 'message' => __( 'Shipment created successfully', 'supership-woocommerce' ) ) );
+			wp_send_json_success( array( 'message' => __( 'Đã tạo vận đơn thành công', 'supership-woocommerce' ) ) );
 		} else {
 			wp_send_json_error( array( 'message' => $result['error'] ) );
 		}
@@ -264,21 +331,21 @@ final class SuperShip_Order_Actions {
 		$order = wc_get_order( $order_id );
 		
 		if ( ! $order ) {
-			wp_send_json_error( array( 'message' => __( 'Order not found', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Không tìm thấy đơn hàng', 'supership-woocommerce' ) ) );
 		}
 		
 		$tracking_number = $order->get_meta( '_supership_tracking_number' );
 		
 		if ( empty( $tracking_number ) ) {
-			wp_send_json_error( array( 'message' => __( 'No shipment to cancel', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Đơn này chưa có vận đơn để huỷ', 'supership-woocommerce' ) ) );
 		}
 		
 		$cancel_service = new SuperShip_Cancel_Service();
 		$result = $cancel_service->cancel( $tracking_number );
 		
 		if ( $result['success'] ) {
-			$order->add_order_note( __( 'SuperShip shipment cancelled', 'supership-woocommerce' ) );
-			wp_send_json_success( array( 'message' => __( 'Shipment cancelled successfully', 'supership-woocommerce' ) ) );
+			$order->add_order_note( __( 'Đã huỷ vận đơn SuperShip', 'supership-woocommerce' ) );
+			wp_send_json_success( array( 'message' => __( 'Đã huỷ vận đơn thành công', 'supership-woocommerce' ) ) );
 		} else {
 			wp_send_json_error( array( 'message' => $result['error'] ) );
 		}
@@ -294,13 +361,13 @@ final class SuperShip_Order_Actions {
 		$order = wc_get_order( $order_id );
 		
 		if ( ! $order ) {
-			wp_send_json_error( array( 'message' => __( 'Order not found', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Không tìm thấy đơn hàng', 'supership-woocommerce' ) ) );
 		}
 		
 		$tracking_number = $order->get_meta( '_supership_tracking_number' );
 		
 		if ( empty( $tracking_number ) ) {
-			wp_send_json_error( array( 'message' => __( 'No tracking number', 'supership-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Đơn này chưa có mã vận đơn', 'supership-woocommerce' ) ) );
 		}
 		
 		$tracking_service = new SuperShip_Tracking_Service();
@@ -315,7 +382,7 @@ final class SuperShip_Order_Actions {
 			}
 			$order->save();
 
-			wp_send_json_success( array( 'message' => __( 'Tracking updated', 'supership-woocommerce' ) ) );
+			wp_send_json_success( array( 'message' => __( 'Đã cập nhật trạng thái vận đơn', 'supership-woocommerce' ) ) );
 		} else {
 			wp_send_json_error( array( 'message' => $result['error'] ) );
 		}
@@ -390,7 +457,7 @@ final class SuperShip_Order_Actions {
 		
 		// Add order note
 		$order->add_order_note( sprintf(
-			__( 'SuperShip shipment created. Tracking: %s', 'supership-woocommerce' ),
+			__( 'Đã tạo vận đơn SuperShip. Mã vận đơn: %s', 'supership-woocommerce' ),
 			$shipment['tracking_number']
 		) );
 		
@@ -500,7 +567,7 @@ final class SuperShip_Order_Actions {
 	 * @return array Modified actions
 	 */
 	public function add_order_actions( array $actions ): array {
-		$actions['supership_create_shipment'] = __( 'Create SuperShip shipment', 'supership-woocommerce' );
+		$actions['supership_create_shipment'] = __( 'Tạo vận đơn SuperShip', 'supership-woocommerce' );
 		return $actions;
 	}
 

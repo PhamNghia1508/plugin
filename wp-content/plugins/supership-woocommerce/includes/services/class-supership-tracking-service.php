@@ -40,7 +40,7 @@ final class SuperShip_Tracking_Service {
 		if ( '' === $tracking_number ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Tracking number is required', 'supership-woocommerce' ),
+				'error'   => __( 'Thiếu mã vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		
@@ -65,7 +65,7 @@ final class SuperShip_Tracking_Service {
 		if ( ! is_array( $results ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Invalid tracking response from SuperShip', 'supership-woocommerce' ),
+				'error'   => __( 'SuperShip trả về dữ liệu không đọc được khi tra cứu vận đơn', 'supership-woocommerce' ),
 			);
 		}
 		

@@ -1,0 +1,164 @@
+/**
+ * SuperShip - Shipments (Vận đơn) admin page.
+ *
+ * Scoped under .supership-shipments so nothing leaks into other admin screens.
+ */
+
+.supership-shipments {
+	--ss-brand: #c8102e;
+	--ss-border: #dcdcde;
+	--ss-muted: #646970;
+}
+
+/* ── Sync button feedback ───────────────────────────────────────────── */
+.supership-shipments .supership-sync-status {
+	margin-left: 10px;
+	font-size: 13px;
+	color: var(--ss-muted);
+	vertical-align: middle;
+}
+.supership-shipments .supership-sync-status.is-done { color: #1e7e34; }
+.supership-shipments .supership-sync-status.is-error { color: #d63638; }
+
+/* ── Summary cards / group filter ───────────────────────────────────── */
+.supership-summary {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: 12px;
+	margin: 20px 0 18px;
+}
+
+.supership-card {
+	display: block;
+	background: #fff;
+	border: 1px solid var(--ss-border);
+	border-left: 4px solid #c3c4c7;
+	border-radius: 6px;
+	padding: 14px 16px;
+	text-decoration: none;
+	color: inherit;
+	transition: box-shadow .15s ease, border-color .15s ease;
+}
+.supership-card:hover {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+	color: inherit;
+}
+.supership-card.is-active {
+	border-color: var(--ss-brand);
+	box-shadow: 0 0 0 1px var(--ss-brand);
+}
+
+.supership-card__count {
+	display: block;
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #1d2327;
+}
+.supership-card__label {
+	display: block;
+	margin-top: 2px;
+	font-size: 12.5px;
+	color: var(--ss-muted);
+}
+
+.supership-card--pending    { border-left-color: #8c8f94; }
+.supership-card--transit    { border-left-color: #2271b1; }
+.supership-card--delivering { border-left-color: #dba617; }
+.supership-card--delivered  { border-left-color: #1e7e34; }
+.supership-card--problem    { border-left-color: #d63638; }
+
+/* ── Search bar ─────────────────────────────────────────────────────── */
+.supership-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 14px;
+}
+.supership-search input[type="search"] {
+	width: 340px;
+	max-width: 100%;
+}
+
+/* ── Table ──────────────────────────────────────────────────────────── */
+.supership-table .col-order    { width: 9%; }
+.supership-table .col-customer { width: 21%; }
+.supership-table .col-code     { width: 17%; }
+.supership-table .col-status   { width: 22%; }
+.supership-table .col-total    { width: 11%; }
+.supership-table .col-date     { width: 10%; }
+.supership-table .col-actions  { width: 10%; }
+
+.supership-table .supership-phone {
+	display: block;
+	font-size: 12px;
+	color: var(--ss-muted);
+}
+
+.supership-table code {
+	background: #f0f0f1;
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 12.5px;
+}
+
+/* ── Status badge ───────────────────────────────────────────────────── */
+.supership-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.5;
+	background: #f0f0f1;
+	color: #3c434a;
+}
+.supership-badge--pending    { background: #f0f0f1; color: #3c434a; }
+.supership-badge--transit    { background: #e5f0f8; color: #135e96; }
+.supership-badge--delivering { background: #fcf3d8; color: #8a6116; }
+.supership-badge--delivered  { background: #e9f7ee; color: #1e7e34; }
+.supership-badge--problem    { background: #fcebea; color: #b32d2e; }
+
+.supership-group {
+	display: block;
+	margin-top: 3px;
+	font-size: 11.5px;
+	color: var(--ss-muted);
+}
+
+/* ── Empty state ────────────────────────────────────────────────────── */
+.supership-empty {
+	background: #fff;
+	border: 1px solid var(--ss-border);
+	border-radius: 8px;
+	padding: 40px 32px;
+	margin-top: 20px;
+	text-align: center;
+}
+.supership-empty h2 { margin-top: 0; }
+.supership-empty p {
+	color: var(--ss-muted);
+	max-width: 560px;
+	margin: 0 auto 10px;
+}
+.supership-empty .button { margin-top: 12px; }
+
+.supership-empty--small { padding: 28px 20px; }
+.supership-empty--small p { margin-bottom: 0; }
+
+/* ── "Vận đơn" column in the Orders list ────────────────────────────── */
+.wp-list-table .column-supership { width: 16%; }
+.wp-list-table .supership-cell-none { color: #a7aaad; }
+.wp-list-table .supership-cell-code {
+	display: block;
+	margin-top: 3px;
+	font-size: 11.5px;
+	color: #646970;
+	font-family: Consolas, Monaco, monospace;
+}
+
+/* ── Small screens ──────────────────────────────────────────────────── */
+@media (max-width: 782px) {
+	.supership-search input[type="search"] { width: 100%; }
+	.supership-summary { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+}
