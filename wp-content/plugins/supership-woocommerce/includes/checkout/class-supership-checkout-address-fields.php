@@ -552,11 +552,28 @@ final class SuperShip_Checkout_Address_Fields {
 			)
 		);
 
-		wp_enqueue_style(
-			'supership-checkout-modern',
-			SUPERSHIP_WC_URL . 'assets/css/checkout-modern.css',
-			array(),
-			SUPERSHIP_WC_VERSION
+		// checkout-modern.css (the full opinionated redesign) is intentionally
+		// NOT enqueued here: it hard-codes a 2-column CSS Grid onto
+		// form.checkout assuming WooCommerce's default/Storefront checkout
+		// markup. Themes that restructure the checkout template (Flatsome,
+		// Astra, etc.) don't match that assumption, so the grid rules fight
+		// the theme's own layout - confirmed live on a Flatsome store, where
+		// #order_review collapsed into a narrow floating column instead of
+		// filling its half of the page. Only the one rule every install
+		// actually depends on (hiding the fields we deliberately removed from
+		// view - company, address line 2, postcode, country, email, last
+		// name) is safe to load everywhere, since it does nothing but
+		// display:none a handful of specific fields.
+		// Registered with `false` as the src (no file to fetch) so this
+		// works even on themes that dequeue WooCommerce's own stylesheets -
+		// wp_add_inline_style() silently no-ops if its target handle isn't
+		// actually registered, which 'woocommerce-general' isn't guaranteed
+		// to be.
+		wp_register_style( 'supership-checkout-hidden-fields', false, array(), SUPERSHIP_WC_VERSION );
+		wp_enqueue_style( 'supership-checkout-hidden-fields' );
+		wp_add_inline_style(
+			'supership-checkout-hidden-fields',
+			'.supership-field-hidden { display: none !important; }'
 		);
 	}
 }
