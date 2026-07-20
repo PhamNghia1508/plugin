@@ -1,5 +1,9 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.2 — Sửa lỗi vỡ layout checkout trên theme tùy biến
+
+- **Sửa checkout bị đè/vỡ layout trên Flatsome (và các theme có sẵn bố cục checkout riêng):** bản trước ép `display:grid` hai cột + thẻ bọc + sticky lên form checkout, đá nhau với layout riêng của theme khiến các khối chồng lên nhau (đè cả lên header). Nay CSS chỉ tô đẹp **các trường** (ô nhập, nhãn, dropdown, nút Đặt hàng, badge COD) — **không đụng tới bố cục cột**, để theme tự lo. Nhờ vậy checkout hiển thị đúng trên mọi theme.
+
 ## 1.0.1 — Sửa lỗi cân nặng + tương thích giao diện theme
 
 - **Sửa lỗi tính cân nặng theo đơn vị site (bug nghiêm trọng):** trước đây code luôn nhân cân nặng với 1000 (giả định đơn vị "kg"). Nếu site cấu hình đơn vị khối lượng là "g" (gram), một sản phẩm nhập 1000 (=1kg) bị tính thành 1.000.000g = 1 tấn → vượt giới hạn 50kg của SuperShip → không tạo được vận đơn ("Trường weight không được lớn hơn 50000"). Nay dùng `wc_get_weight()` của WooCommerce để đổi đúng từ đơn vị site (kg/g/lbs/oz) sang gram. Sửa ở cả 2 chỗ: tính cước checkout và tạo vận đơn.
