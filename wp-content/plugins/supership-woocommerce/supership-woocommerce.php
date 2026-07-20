@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SuperShip for WooCommerce
  * Description: Kết nối WooCommerce với SuperShip (Việt Nam): địa chỉ SuperShip ở checkout, tính cước tự động, tạo vận đơn, tracking, in nhãn và đồng bộ trạng thái đơn hàng.
- * Version: 0.1.0
+ * Version: 1.0.0
  * Requires PHP: 7.4
  * Requires at least: 5.8
  * WC requires at least: 6.0
@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUPERSHIP_WC_VERSION', '0.1.0' );
+define( 'SUPERSHIP_WC_VERSION', '1.0.0' );
 define( 'SUPERSHIP_WC_FILE', __FILE__ );
 define( 'SUPERSHIP_WC_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SUPERSHIP_WC_URL', plugin_dir_url( __FILE__ ) );
@@ -43,6 +43,10 @@ register_activation_hook( __FILE__, static function () {
 	require_once SUPERSHIP_WC_PATH . 'includes/auth/class-supership-auth-config.php';
 	require_once SUPERSHIP_WC_PATH . 'includes/auth/class-supership-auth-manager.php';
 	SuperShip_Auth_Manager::maybe_migrate();
+
+	// Tự tạo trang "Tra cứu đơn hàng" để chủ shop không phải dán shortcode thủ công.
+	require_once SUPERSHIP_WC_PATH . 'includes/frontend/class-supership-order-lookup.php';
+	SuperShip_Order_Lookup::install();
 } );
 register_deactivation_hook( __FILE__, static function () {
 	$scheduler = SUPERSHIP_WC_PATH . 'includes/tracking/class-supership-tracking-scheduler.php';

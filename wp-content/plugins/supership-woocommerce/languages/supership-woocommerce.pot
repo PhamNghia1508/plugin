@@ -1,0 +1,1549 @@
+# Copyright (C) 2026 
+# This file is distributed under the same license as the SuperShip for WooCommerce plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: SuperShip for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/supership-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-20T15:15:25+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: supership-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: supership-woocommerce.php
+msgid "SuperShip for WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+#: supership-woocommerce.php
+msgid "Kết nối WooCommerce với SuperShip (Việt Nam): địa chỉ SuperShip ở checkout, tính cước tự động, tạo vận đơn, tracking, in nhãn và đồng bộ trạng thái đơn hàng."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:42
+#: includes/admin/class-supership-admin-settings.php:79
+msgid "Bạn không có quyền thực hiện thao tác này"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:46
+msgid "Không khởi tạo được trình quản lý đăng nhập"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:64
+msgid "Đăng ký thành công! Đã tự động lưu Personal Access Token - đang tải lại trang..."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:83
+msgid "Không tìm thấy bộ xử lý cập nhật tự động"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:91
+msgid "Đã đăng ký nhận cập nhật tự động từ SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:151
+#: includes/admin/class-supership-admin-settings.php:152
+#: includes/admin/class-supership-admin-settings.php:258
+msgid "Cài đặt SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:265
+msgid "Kết nối"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:266
+msgid "Kho lấy hàng"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:267
+#: includes/checkout/class-supership-checkout-address-fields.php:64
+#: includes/checkout/class-supership-checkout-address-fields.php:424
+#: includes/checkout/class-supership-checkout-address-fields.php:425
+#: includes/frontend/class-supership-order-lookup.php:309
+msgid "Vận chuyển"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:268
+msgid "Tự động cập nhật"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:269
+msgid "Nâng cao"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:337
+msgid "Chưa kết nối với SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:338
+msgid "Vui lòng nhập thông tin đăng nhập ở tab \"Kết nối\"."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:352
+msgid "✓ Đã kết nối với SuperShip"
+msgstr ""
+
+#. translators: %s: human-readable time until token expiry
+#: includes/admin/class-supership-admin-settings.php:360
+#, php-format
+msgid "Token còn hạn %s nữa"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:373
+msgid "✗ Token đã lưu nhưng SuperShip từ chối"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:375
+msgid "Kiểm tra lại Token trong tab Credentials - có thể đã sai, hết hạn, hoặc bị dán thiếu/thừa ký tự. Trong lúc này, cước vận chuyển sẽ dùng mức phí dự phòng (fallback), không phải giá tính thật từ SuperShip."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:400
+msgid "Không khởi tạo được trình gọi API SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:430
+msgid "•••••••• (đã lưu - để trống nếu không đổi)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:439
+msgid "Cách kết nối"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:445
+#: includes/admin/class-supership-admin-settings.php:461
+msgid "Token truy cập cá nhân"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:450
+msgid "Password Grant (Sàn TMĐT / đa khách hàng)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:454
+msgid "Personal Token dành cho 1 shop (khuyến nghị - đa số dùng cách này). Password Grant chỉ dành cho Sàn TMĐT/phần mềm có nhiều khách hàng cần kết nối SuperShip."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:470
+msgid "Dán Personal Access Token vào đây"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:474
+#, php-format
+msgid "Lấy token tại mục <a href=\"%s\" target=\"_blank\">API trên SuperShip Dashboard</a>. Chưa có tài khoản? Xem mục \"Đăng ký tài khoản mới\" bên dưới."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:484
+msgid "Client ID"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:493
+msgid "Client ID do SuperShip cấp cho Đối Tác."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:499
+msgid "Client Secret"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:514
+msgid "Tên đăng nhập (Email shop)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:528
+#: includes/admin/class-supership-admin-settings.php:590
+msgid "Mật khẩu"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:537
+msgid "Nhập mật khẩu mới để thay đổi"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:543
+#: includes/admin/class-supership-admin-settings.php:594
+msgid "Mã Bí Mật (Partner Code)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:553
+msgid "Chỉ dành cho Đối Tác Thương Mại Điện Tử lớn với SuperShip - áp dụng cho cả 2 chế độ xác thực (gửi kèm khi tạo đơn/kho hàng và bật Webhook tự động). Bỏ trống nếu không có."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:558
+msgid "Lưu & Kiểm tra kết nối"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:565
+msgid "Chưa có tài khoản SuperShip? Đăng ký tài khoản mới ▾"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:570
+msgid "Lưu ý: API đăng ký của SuperShip yêu cầu bắt buộc phải có Mã Bí Mật (Partner Code) - chỉ dùng được nếu bạn đã được SuperShip cấp mã này. Nếu chưa có, vui lòng tự tạo tài khoản trực tiếp tại khachhang.supership.vn rồi lấy Personal Access Token dán ở trên."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:574
+msgid "Tên Shop/Công Ty"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:578
+msgid "Họ tên người đại diện"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:582
+#: includes/admin/class-supership-admin-settings.php:706
+#: includes/checkout/class-supership-checkout-address-fields.php:239
+#: includes/checkout/class-supership-checkout-address-fields.php:321
+msgid "Số điện thoại"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:586
+msgid "Email"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:600
+msgid "Đăng ký"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:626
+#: includes/admin/class-supership-admin-settings.php:897
+msgid "Đang đăng ký..."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:643
+#: includes/admin/class-supership-admin-settings.php:908
+msgid "Đăng ký thất bại"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:647
+#: includes/admin/class-supership-admin-settings.php:912
+msgid "Lỗi kết nối"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:670
+msgid "Kho lấy hàng mặc định"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:675
+msgid "— Chọn kho lấy hàng —"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:683
+msgid "Kho mặc định dùng khi tạo vận đơn mới"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:689
+#, php-format
+msgid "Chưa có kho nào. <a href=\"%s\" target=\"_blank\">Thêm kho trên trang quản trị SuperShip</a>"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:700
+msgid "Danh sách kho"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:704
+msgid "Tên kho"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:705
+msgid "Địa chỉ"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:707
+msgid "Mã kho"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:744
+msgid "Dịch vụ mặc định"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:748
+msgid "Tốc Hành (mã 1 - giá trị duy nhất được SuperShip tài liệu hóa)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:750
+msgid "API tạo đơn nhận field \"service\" dạng mã (String). Hiện SuperShip chỉ công bố mã \"1\" = Tốc Hành."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:756
+msgid "Tuỳ chọn giao hàng"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:760
+msgid "1 - Cho xem không cho thử"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:761
+msgid "2 - Cho thử hàng"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:762
+msgid "3 - Không cho xem hàng"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:764
+msgid "Quyền xem/thử hàng khi giao (field \"config\" trong API tạo đơn)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:770
+msgid "Bên trả phí ship"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:774
+msgid "Người gửi trả (shop)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:775
+msgid "Người nhận trả (khách)"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:782
+msgid "Bảo hiểm hàng hoá"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:791
+msgid "Tự động mua bảo hiểm cho vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:793
+msgid "Phí bảo hiểm tính theo giá trị khai báo của đơn hàng"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:813
+msgid "Khi đơn hàng có biến động bên SuperShip (đã lấy hàng, đang giao, đã giao, hoàn...), SuperShip sẽ tự báo về website và trạng thái đơn tự cập nhật - bạn không cần bấm gì cả. Thiết lập một lần duy nhất bằng nút \"Đăng ký\" bên dưới."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:822
+msgid "Địa chỉ nhận cập nhật"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:830
+#: includes/admin/class-supership-order-actions.php:276
+msgid "Sao chép"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:833
+msgid "URL này chứa một mã bí mật riêng của site bạn (do plugin tự sinh) - SuperShip không cung cấp cơ chế xác thực webhook nên plugin tự bảo vệ bằng cách này. Không chia sẻ URL này công khai."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:840
+msgid "Trạng thái đăng ký tại SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:845
+msgid "Chưa có webhook nào được đăng ký với SuperShip."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:847
+msgid "Đã đăng ký đúng URL hiện tại."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:849
+msgid "URL đã đăng ký KHÁC với URL hiện tại - bấm nút bên dưới để cập nhật:"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:853
+#, php-format
+msgid "Không kiểm tra được trạng thái đăng ký: %s"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:858
+msgid "Đăng ký / Cập nhật Webhook với SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:863
+msgid "Chỉ cần bấm một lần - plugin tự đăng ký với SuperShip, bạn không phải vào trang SuperShip dán gì thủ công."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:870
+msgid "Trạng thái tự động cập nhật"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:879
+msgid "Cho phép SuperShip tự động báo trạng thái về website"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:881
+msgid "Khi tắt, SuperShip vẫn nhận HTTP 200 (tránh bị retry) nhưng plugin sẽ bỏ qua nội dung, không cập nhật đơn hàng."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:935
+msgid "Chế độ ghi nhật ký"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:944
+msgid "Ghi lại chi tiết các lần gọi API"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:946
+msgid "Lưu nội dung gọi/nhận API vào nhật ký WooCommerce (WooCommerce → Trạng thái → Nhật ký). Chỉ nên bật khi cần tìm lỗi."
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:952
+msgid "Tự động kiểm tra trạng thái"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:961
+msgid "Tự động kiểm tra trạng thái vận đơn theo định kỳ"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:963
+msgid "Dùng WP Cron để định kỳ hỏi SuperShip trạng thái mới nhất của các vận đơn chưa kết thúc"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:969
+msgid "Tần suất kiểm tra"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:979
+msgid "phút"
+msgstr ""
+
+#: includes/admin/class-supership-admin-settings.php:980
+msgid "Bao lâu kiểm tra một lần (từ 15 đến 1440 phút)"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:78
+#: includes/admin/class-supership-order-actions.php:90
+#: includes/admin/class-supership-shipments-page.php:202
+#: includes/admin/class-supership-shipments-page.php:203
+#: includes/admin/class-supership-shipments-page.php:478
+msgid "Vận đơn SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:123
+msgid "Phí ship thực tế (shop chịu):"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:126
+#, php-format
+msgid "Gói dịch vụ: %s"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:128
+msgid "Khách hàng thấy miễn phí vận chuyển ở thanh toán."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:176
+msgid "Đang tạo..."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:184
+msgid "Đã tạo vận đơn thành công. Kiểm tra mã vận đơn trong ô SuperShip."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:187
+msgid "Tạo vận đơn thất bại"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:188
+#: includes/admin/class-supership-order-actions.php:192
+#: includes/admin/class-supership-order-actions.php:330
+msgid "Tạo vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:191
+#: includes/admin/class-supership-order-actions.php:225
+#: includes/admin/class-supership-order-actions.php:251
+msgid "Lỗi kết nối - vui lòng thử lại."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:201
+msgid "Huỷ vận đơn này? SuperShip sẽ ngừng lấy/giao đơn hàng."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:202
+#: includes/admin/class-supership-order-actions.php:308
+msgid "Huỷ vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:203
+msgid "Không"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:218
+msgid "Đã huỷ vận đơn."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:221
+msgid "Huỷ vận đơn thất bại"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:244
+msgid "Đã cập nhật trạng thái mới nhất từ SuperShip."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:247
+msgid "Cập nhật thất bại"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:273
+msgid "Mã vận đơn:"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:282
+msgid "Trạng thái:"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:295
+#: includes/admin/class-supership-shipments-page.php:621
+msgid "In phiếu gửi"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:301
+msgid "Cập nhật"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:324
+msgid "Chưa tạo vận đơn cho đơn hàng này."
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:347
+#: includes/admin/class-supership-order-actions.php:369
+#: includes/admin/class-supership-order-actions.php:399
+msgid "Không tìm thấy đơn hàng"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:353
+msgid "Đã tạo vận đơn thành công"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:375
+msgid "Đơn này chưa có vận đơn để huỷ"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:382
+msgid "Đã huỷ vận đơn SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:383
+msgid "Đã huỷ vận đơn thành công"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:405
+msgid "Đơn này chưa có mã vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:420
+msgid "Đã cập nhật trạng thái vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:441
+msgid "Lịch trình:"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:495
+#, php-format
+msgid "Đã tạo vận đơn SuperShip. Mã vận đơn: %s"
+msgstr ""
+
+#: includes/admin/class-supership-order-actions.php:605
+msgid "Tạo vận đơn SuperShip"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:80
+#: includes/admin/class-supership-shipments-page.php:681
+msgid "Bạn không có quyền thực hiện thao tác này."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:88
+msgid "Đơn này chưa có mã vận đơn."
+msgstr ""
+
+#. translators: %s: error detail
+#: includes/admin/class-supership-shipments-page.php:99
+#, php-format
+msgid "Không lấy được phiếu gửi từ SuperShip: %s"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:100
+#: includes/auth/class-supership-auth-manager.php:145
+msgid "Lỗi không xác định"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:141
+#: includes/admin/class-supership-shipments-page.php:147
+msgid "Vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:185
+#: includes/admin/class-supership-shipments-page.php:586
+#: includes/tracking/class-supership-status-mapper.php:250
+msgid "Chưa rõ"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:274
+msgid "Đang cập nhật..."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:275
+msgid "Cập nhật thất bại. Vui lòng thử lại."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:289
+msgid "Chờ lấy hàng"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:293
+msgid "Đang vận chuyển"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:297
+msgid "Đang giao"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:301
+msgid "Đã giao"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:305
+msgid "Hoàn / Sự cố"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:480
+msgid "Cập nhật trạng thái"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:487
+msgid "Chưa có vận đơn nào"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:489
+msgid "Vận đơn sẽ xuất hiện ở đây sau khi bạn tạo vận đơn SuperShip cho một đơn hàng."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:492
+msgid "Cách tạo: mở một đơn hàng trong WooCommerce, tìm ô \"SuperShip\" bên phải và bấm \"Tạo vận đơn\"."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:495
+msgid "Tới danh sách đơn hàng"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:507
+msgid "Tất cả"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:530
+msgid "Tìm mã vận đơn, tên khách, số điện thoại..."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:532
+msgid "Tìm"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:535
+msgid "Xoá tìm kiếm"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:542
+msgid "Không tìm thấy vận đơn nào khớp với bộ lọc."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:548
+msgid "Đơn hàng"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:549
+msgid "Người nhận"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:550
+#: includes/frontend/class-supership-order-lookup.php:317
+msgid "Mã vận đơn"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:551
+msgid "Trạng thái"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:552
+msgid "Giá trị đơn"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:553
+msgid "Ngày tạo"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:554
+msgid "Thao tác"
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:599
+msgid "(không có tên)"
+msgstr ""
+
+#. translators: %s: number of shipments
+#: includes/admin/class-supership-shipments-page.php:643
+#, php-format
+msgid "%s vận đơn"
+msgid_plural "%s vận đơn"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-supership-shipments-page.php:685
+msgid "Không tìm thấy bộ đồng bộ theo dõi đơn."
+msgstr ""
+
+#: includes/admin/class-supership-shipments-page.php:690
+msgid "Đã cập nhật xong."
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:81
+msgid "SuperShip trả về dữ liệu không đọc được"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:107
+#, php-format
+msgid "Lỗi kết nối: %s"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:270
+msgid "Lỗi mạng: không kết nối được tới SuperShip"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:274
+msgid "Xác thực thất bại: token sai hoặc đã hết hạn"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:278
+msgid "Bị từ chối: tài khoản chưa được cấp quyền gọi API"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:282
+msgid "Không tìm thấy dữ liệu yêu cầu"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:286
+msgid "Gọi API quá dồn dập, vui lòng thử lại sau ít phút"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:290
+msgid "SuperShip server error: Please try again later"
+msgstr ""
+
+#: includes/api/class-supership-api-response.php:294
+#, php-format
+msgid "SuperShip API error (HTTP %d)"
+msgstr ""
+
+#: includes/api/class-supership-http-client.php:94
+#: includes/api/class-supership-http-client.php:143
+msgid "Địa chỉ API không nằm trong danh sách cho phép."
+msgstr ""
+
+#: includes/api/class-supership-http-client.php:102
+#: includes/api/class-supership-http-client.php:151
+msgid "SuperShip access token is not available."
+msgstr ""
+
+#: includes/api/class-supership-http-client.php:159
+msgid "Không đóng gói được dữ liệu gửi đi."
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:92
+msgid "SuperShip credentials are not configured."
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:123
+#, php-format
+msgid "SuperShip login failed: %s"
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:137
+#, php-format
+msgid "SuperShip login failed with status %d"
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:149
+#, php-format
+msgid "SuperShip login error: %s"
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:159
+msgid "SuperShip did not return an access token."
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:173
+msgid "Không lưu được token SuperShip."
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:220
+msgid "Vui lòng điền đầy đủ thông tin, bao gồm cả Mã Bí Mật (Partner Code) - trường này là bắt buộc để đăng ký qua API."
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:252
+#, php-format
+msgid "Đăng ký thất bại: %s"
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:264
+#, php-format
+msgid "Đăng ký thất bại (HTTP %d)"
+msgstr ""
+
+#: includes/auth/class-supership-auth-manager.php:277
+msgid "SuperShip không trả về access token."
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:218
+#: includes/checkout/class-supership-checkout-address-fields.php:342
+msgid "Tỉnh/Thành phố"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:227
+#: includes/checkout/class-supership-checkout-address-fields.php:352
+msgid "Quận/Huyện"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:233
+#: includes/checkout/class-supership-checkout-address-fields.php:315
+msgid "Địa chỉ cụ thể"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:234
+#: includes/checkout/class-supership-checkout-address-fields.php:316
+msgid "Số nhà, tên đường, tòa nhà..."
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:281
+msgid "Họ và tên người nhận"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:282
+msgid "Nguyễn Văn A"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:322
+msgid "0901 234 567"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:344
+msgid "— Chọn Tỉnh/Thành —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:354
+msgid "— Chọn Tỉnh/Thành trước —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:361
+#: includes/checkout/class-supership-checkout-address-fields.php:490
+msgid "Phường/Xã"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:364
+msgid "— Chọn Quận/Huyện trước —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:382
+msgid "Ghi chú đơn hàng"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:383
+msgid "Ví dụ: giao giờ hành chính, gọi trước khi giao..."
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:410
+#: includes/checkout/class-supership-checkout-address-fields.php:411
+msgid "Thông tin giao hàng"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:412
+msgid "Đơn hàng của bạn"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:413
+msgid "Đặt hàng"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:414
+msgid "Bạn có mã giảm giá?"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:415
+msgid "Bấm vào đây để nhập mã"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:416
+msgid "Sản phẩm"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:417
+msgid "Tạm tính"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:418
+msgid "Tổng cộng"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:419
+msgid "Thông tin thêm"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:420
+msgid "Mã giảm giá"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:421
+msgid "Áp dụng"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:422
+msgid "(không bắt buộc)"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:423
+msgid "không bắt buộc"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:426
+msgid "Không tìm thấy phương thức vận chuyển phù hợp"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:427
+msgid "Hiện chưa có phương thức thanh toán nào khả dụng. Vui lòng liên hệ với chúng tôi để được hỗ trợ."
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:547
+msgid "— Chọn Quận/Huyện —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:548
+msgid "— Chọn Phường/Xã —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:549
+msgid "— Đang tải... —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-address-fields.php:550
+msgid "— Không tải được, thử lại —"
+msgstr ""
+
+#: includes/checkout/class-supership-checkout-areas-rest-controller.php:162
+msgid "SuperShip address service is not available"
+msgstr ""
+
+#: includes/class-supership-plugin.php:170
+msgid "SuperShip for WooCommerce requires WooCommerce to be installed and active."
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:72
+msgid "Tra cứu đơn hàng"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:112
+msgid "Phiên làm việc đã hết hạn, vui lòng thử lại."
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:114
+msgid "Bạn đã tra cứu quá nhiều lần. Vui lòng thử lại sau ít phút."
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:118
+msgid "Số điện thoại không hợp lệ."
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:228
+msgid "Nhập số điện thoại bạn đã dùng khi đặt hàng để xem tình trạng giao hàng mới nhất."
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:234
+msgid "Số điện thoại đặt hàng"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:241
+msgid "VD: 0912 345 678"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:246
+msgid "Tra cứu"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:264
+msgid "Không tìm thấy đơn hàng nào với số điện thoại này."
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:265
+msgid "Kiểm tra lại số điện thoại bạn đã dùng khi đặt hàng nhé."
+msgstr ""
+
+#. translators: %s: number of orders found
+#: includes/frontend/class-supership-order-lookup.php:277
+#, php-format
+msgid "Tìm thấy %s đơn hàng"
+msgid_plural "Tìm thấy %s đơn hàng"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/frontend/class-supership-order-lookup.php:311
+msgid "Đã tạo vận đơn"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:311
+msgid "Đang chuẩn bị hàng"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:323
+msgid "Trạng thái đơn"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:328
+msgid "Tổng tiền"
+msgstr ""
+
+#: includes/frontend/class-supership-order-lookup.php:357
+msgid "Xem hành trình đơn hàng"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:39
+#: includes/services/class-supership-tracking-service.php:43
+msgid "Thiếu mã vận đơn"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:62
+msgid "SuperShip trả về dữ liệu không đọc được khi huỷ vận đơn"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:85
+#: includes/services/class-supership-label-service.php:41
+msgid "Cần ít nhất một mã vận đơn"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:173
+msgid "Vận đơn này có thể huỷ"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:177
+msgid "Vận đơn này đã được huỷ trước đó"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:182
+msgid "Không thể huỷ - đơn đã giao hoặc đã hoàn"
+msgstr ""
+
+#: includes/services/class-supership-cancel-service.php:185
+msgid "Vận đơn này không thể huỷ"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:49
+#, php-format
+msgid "Khổ giấy không hợp lệ: %s"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:98
+#: includes/services/class-supership-label-service.php:107
+msgid "Không lấy được mã in phiếu từ SuperShip"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:167
+msgid "A5 (148×210mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:168
+msgid "K46 (100×150mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:169
+msgid "T2 (100×100mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:170
+msgid "K50 (75×120mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:171
+msgid "K75 (75×105mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:172
+msgid "K80 (80×80mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:173
+msgid "S8 (80×120mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:174
+msgid "S9 (80×100mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:175
+msgid "S10 (80×88mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:176
+msgid "S11 (80×60mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:177
+msgid "S12 (100×70mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:178
+msgid "S13 (100×80mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:179
+msgid "S14 (110×80mm)"
+msgstr ""
+
+#: includes/services/class-supership-label-service.php:208
+msgid "Lỗi in phiếu gửi"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:89
+msgid "SuperShip trả về dữ liệu không đọc được khi tính phí"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:110
+msgid "Thiếu Tỉnh/Thành của kho gửi"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:111
+msgid "Thiếu Quận/Huyện của kho gửi"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:112
+#: includes/services/class-supership-shipment-service.php:110
+msgid "Thiếu Tỉnh/Thành của người nhận"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:113
+#: includes/services/class-supership-shipment-service.php:111
+msgid "Thiếu Quận/Huyện của người nhận"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:114
+#: includes/services/class-supership-shipment-service.php:115
+msgid "Thiếu cân nặng gói hàng"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:131
+msgid "Cân nặng phải lớn hơn 0"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:138
+msgid "Gói hàng vượt giới hạn 30kg"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:158
+#, php-format
+msgid "Không tìm thấy Tỉnh/Thành kho gửi \"%s\" trong danh mục SuperShip"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:173
+#, php-format
+msgid "Không tìm thấy Quận/Huyện kho gửi \"%s\" trong danh mục SuperShip"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:185
+#, php-format
+msgid "Không tìm thấy Tỉnh/Thành \"%s\" trong danh mục SuperShip"
+msgstr ""
+
+#: includes/services/class-supership-rate-service.php:200
+#, php-format
+msgid "Không tìm thấy Quận/Huyện \"%s\" trong danh mục SuperShip"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:85
+msgid "SuperShip trả về dữ liệu không đọc được khi tạo vận đơn"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:107
+msgid "Thiếu tên người nhận"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:108
+msgid "Thiếu số điện thoại người nhận"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:109
+msgid "Thiếu địa chỉ người nhận"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:112
+msgid "Thiếu Phường/Xã của người nhận"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:116
+msgid "Thiếu giá trị khai báo đơn hàng"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:117
+msgid "Thiếu số tiền thu hộ (COD)"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:120
+msgid "Chưa chọn dịch vụ giao hàng (xem tab Vận chuyển trong Cài đặt SuperShip)"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:121
+msgid "Chưa chọn tuỳ chọn giao hàng (xem tab Vận chuyển trong Cài đặt SuperShip)"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:122
+msgid "Chưa chọn bên trả phí ship (xem tab Vận chuyển trong Cài đặt SuperShip)"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:123
+msgid "Thiếu loại hàng hoá"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:126
+msgid "Thiếu mã đơn của shop"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:149
+msgid "Chưa chọn kho lấy hàng - vào Cài đặt SuperShip, tab \"Kho lấy hàng\" để chọn kho mặc định"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:209
+#, php-format
+msgid "%s province \"%s\" not found"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:222
+#, php-format
+msgid "%s district \"%s\" not found"
+msgstr ""
+
+#: includes/services/class-supership-shipment-service.php:235
+#, php-format
+msgid "%s commune \"%s\" not found"
+msgstr ""
+
+#: includes/services/class-supership-tracking-service.php:68
+msgid "SuperShip trả về dữ liệu không đọc được khi tra cứu vận đơn"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:34
+#: includes/shipping/class-supership-shipping-method.php:70
+msgid "SuperShip"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:35
+msgid "Phí vận chuyển tính trực tiếp từ SuperShip theo địa chỉ nhận hàng"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:67
+msgid "Tên hiển thị"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:69
+msgid "Tên phương thức giao hàng mà khách nhìn thấy ở trang thanh toán."
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:74
+msgid "Bật/Tắt"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:76
+msgid "Bật giao hàng qua SuperShip"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:80
+msgid "Gói dịch vụ"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:82
+msgid "Cho khách chọn giữa nhiều gói dịch vụ"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:83
+msgid "Hiện riêng từng gói (Tiêu chuẩn, Tốc hành...) để khách tự chọn. Tắt thì chỉ hiện gói rẻ nhất."
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:88
+msgid "Phí dự phòng"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:90
+msgid "Dùng phí cố định khi không tính được phí từ SuperShip"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:91
+msgid "Khi SuperShip không phản hồi (mất mạng, bảo trì...), khách vẫn đặt hàng được với mức phí cố định bên dưới thay vì bị kẹt ở trang thanh toán."
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:96
+msgid "Mức phí dự phòng"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:98
+msgid "Số tiền phí ship cố định dùng khi không tính được phí thật."
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:103
+msgid "Shop chịu phí ship"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:105
+msgid "Hiển thị miễn phí vận chuyển cho khách, shop tự chịu phí ship"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:106
+msgid "Khách thấy \"Miễn phí giao hàng\" ở trang thanh toán và không phải trả phí ship. Phí ship thật vẫn được tính từ SuperShip và chỉ hiển thị cho admin trong trang quản lý đơn hàng."
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:111
+msgid "Miễn phí ship từ"
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:113
+msgid "Đơn hàng từ số tiền này trở lên được miễn phí giao hàng (để 0 nếu không dùng)."
+msgstr ""
+
+#: includes/shipping/class-supership-shipping-method.php:156
+#: includes/shipping/class-supership-shipping-method.php:198
+#: includes/shipping/class-supership-shipping-method.php:257
+msgid "Miễn phí giao hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:31
+msgid "Huỷ"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:32
+msgid "Chờ Duyệt"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:33
+msgid "Chờ Lấy Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:34
+msgid "Đang Lấy Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:35
+msgid "Đã Lấy Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:36
+msgid "Hoãn Lấy Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:37
+msgid "Không Lấy Được"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:38
+msgid "Đang Nhập Kho"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:39
+msgid "Đã Nhập Kho"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:40
+msgid "Đang Chuyển Kho Giao"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:41
+msgid "Đã Chuyển Kho Giao"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:42
+msgid "Đang Giao Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:43
+msgid "Đã Giao Hàng Toàn Bộ"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:44
+msgid "Đã Giao Hàng Một Phần"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:45
+msgid "Hoãn Giao Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:46
+msgid "Không Giao Được"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:47
+msgid "Đã Đối Soát Giao Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:48
+msgid "Đã Đối Soát Trả Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:49
+msgid "Đang Chuyển Kho Trả"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:50
+msgid "Đã Chuyển Kho Trả"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:51
+msgid "Đang Trả Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:52
+msgid "Đã Trả Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:53
+msgid "Hoãn Trả Hàng"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:54
+msgid "Đang Vận Chuyển"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:55
+msgid "Xác Nhận Hoàn"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:56
+msgid "Hàng Thất Lạc"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:57
+msgid "Không Trả Được"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:58
+msgid "Đã Bồi Hoàn"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:254
+#, php-format
+msgid "Đơn hàng %s của bạn hiện đang: %s"
+msgstr ""
+
+#: includes/tracking/class-supership-status-mapper.php:261
+#, php-format
+msgid "Trạng thái vận đơn: %s"
+msgstr ""
+
+#. translators: %d: interval in minutes
+#: includes/tracking/class-supership-tracking-scheduler.php:52
+#, php-format
+msgid "Mỗi %d phút (theo dõi vận đơn SuperShip)"
+msgstr ""
+
+#. translators: %s: SuperShip status name
+#: includes/tracking/class-supership-tracking-scheduler.php:152
+#, php-format
+msgid "SuperShip tracking sync: %s"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:64
+msgid "SuperShip trả về danh sách kho không đọc được"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:101
+msgid "Không tìm thấy kho"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:161
+msgid "SuperShip trả về dữ liệu không đọc được khi tạo kho"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:186
+msgid "Thiếu mã kho"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:203
+msgid "Cần nhập ít nhất tên, số điện thoại hoặc người liên hệ"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:238
+msgid "SuperShip không hỗ trợ xoá kho qua API. Vui lòng tắt kho trên trang quản trị SuperShip (khachhang.supership.vn)."
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:250
+msgid "Thiếu tên kho"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:251
+msgid "Thiếu số điện thoại"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:252
+msgid "Thiếu địa chỉ"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:253
+msgid "Thiếu Tỉnh/Thành"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:254
+msgid "Thiếu Quận/Huyện"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:255
+msgid "Thiếu Phường/Xã"
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:283
+#, php-format
+msgid "Không tìm thấy Tỉnh/Thành \"%s\""
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:298
+#, php-format
+msgid "Không tìm thấy Quận/Huyện \"%s\""
+msgstr ""
+
+#: includes/warehouse/class-supership-warehouse-service.php:313
+#, php-format
+msgid "Không tìm thấy Phường/Xã \"%s\""
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:140
+#: includes/webhook/class-supership-webhook-handler.php:176
+msgid "SuperShip HTTP client is not available"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:210
+msgid "Webhook processing is disabled"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:221
+msgid "Invalid webhook payload"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:247
+#, php-format
+msgid "Unknown webhook type: %s"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:259
+msgid "Webhook processed successfully"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:277
+#, php-format
+msgid "Missing required field: %s"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:305
+msgid "Status field is missing"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:335
+#, php-format
+msgid "SuperShip cập nhật trạng thái: %s"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:386
+#, php-format
+msgid "SuperShip cập nhật cân nặng: %d gram"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:483
+#, php-format
+msgid "Trạng thái: %s"
+msgstr ""
+
+#: includes/webhook/class-supership-webhook-handler.php:487
+#, php-format
+msgid "Lý do: %s"
+msgstr ""

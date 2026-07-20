@@ -1,6 +1,31 @@
-# Changelog — SPX Express for WooCommerce
+# Changelog — SuperShip for WooCommerce
 
-## 0.9.0-rc.11 — Vietnam Checkout functional fix
+## 1.0.0 — Bản phát hành chính thức
+
+Bản hoàn chỉnh sẵn sàng bàn giao, thuần Việt, tối ưu cho người dùng không chuyên kỹ thuật.
+
+**Cài đặt là dùng được ngay**
+- Tự động tạo trang **"Tra cứu đơn hàng"** khi kích hoạt plugin (không cần dán shortcode thủ công). Idempotent: khôi phục nếu bị bỏ thùng rác, dùng lại trang có sẵn nếu chủ shop đã tạo.
+- Nâng version lên 1.0.0; dọn file ngôn ngữ cũ của SPX, sinh `supership-woocommerce.pot` đúng text-domain (359 chuỗi).
+- `uninstall.php` dọn sạch mọi option/transient/cron của plugin khi gỡ, giữ lại order meta để bảo toàn lịch sử đơn.
+
+**Khách hàng (front-end)**
+- Trang thanh toán thiết kế lại theo phong cách thẻ hiện đại, thuần Việt, dropdown Tỉnh → Quận/Huyện → Phường/Xã tự động từ dữ liệu SuperShip, thanh toán COD.
+- Chế độ "Shop chịu phí ship": khách thấy miễn phí vận chuyển, phí thật lưu ẩn cho admin xem.
+- Trang tra cứu đơn bằng số điện thoại: giao diện thẻ, badge trạng thái theo màu, và **timeline hành trình đơn hàng** (đơn đang ở đâu, khi nào).
+
+**Chủ shop (admin)**
+- Trang **Vận đơn SuperShip**: 5 nhóm trạng thái lọc nhanh (đếm bằng SQL), tìm kiếm theo mã vận đơn / tên / SĐT, in phiếu từng dòng, phân trang tại SQL cho hiệu năng ổn định.
+- Cột "Vận đơn" trong danh sách đơn; ô tạo/in/huỷ/cập nhật vận đơn trong từng đơn.
+- Toàn bộ trang cài đặt và thông báo lỗi thuần Việt, chỉ rõ chỗ khắc phục.
+- Thông báo dạng toast + hộp xác nhận đẹp thay cho alert()/confirm() của trình duyệt.
+- Dọn gọn màn hình sửa đơn: ẩn các ô không liên quan tới giao hàng.
+
+**Sửa lỗi tích hợp**
+- Sửa lỗi phí ship luôn rơi về mức cố định 30.000đ do đọc sai tên trường kho (`province_name`/`district_name`).
+- Đơn tạo từ checkout tự điền địa chỉ giao hàng (trước đây trống do đã bỏ mục "giao địa chỉ khác").
+
+## 0.9.0-rc.11 — Vietnam Checkout functional fix (SPX Express, lịch sử)
 
 - Loại bỏ nguồn validation Họ tên trùng: first/last name là hidden input thực, non-required; chỉ validator `billing_full_name` phát một lỗi tiếng Việt.
 - Không suy đoán cấu trúc tên Việt Nam: lưu nguyên chuỗi chuẩn hóa vào `billing_first_name`, để trống `billing_last_name`, đồng thời lưu `_spx_billing_full_name` bằng WC_Order CRUD.
