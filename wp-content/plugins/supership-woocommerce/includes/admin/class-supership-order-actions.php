@@ -611,22 +611,38 @@ final class SuperShip_Order_Actions {
 	}
 
 	/**
-	 * Calculate order weight
-	 * 
+	 * Calculate order weight in grams
+	 *
+	 * Reads the store's actual WooCommerce weight unit (Settings > Products >
+	 * Measurements) instead of assuming kg - see the identical fix in
+	 * SuperShip_Shipping_Method::calculate_package_weight() for the full
+	 * rationale (a "g"-configured store would otherwise get its weights
+	 * multiplied by 1000 twice, tripping SuperShip's 50000g/shipment cap).
+	 *
 	 * @param WC_Order $order Order object
 	 * @return int Weight in grams
 	 */
 	private function calculate_order_weight( WC_Order $order ): int {
+		static $grams_per_unit = array(
+			'kg'  => 1000,
+			'g'   => 1,
+			'lbs' => 453.592,
+			'oz'  => 28.3495,
+		);
+
+		$unit   = get_option( 'woocommerce_weight_unit', 'kg' );
+		$factor = $grams_per_unit[ $unit ] ?? 1000;
+
 		$weight = 0;
-		
+
 		foreach ( $order->get_items() as $item ) {
 			$product = $item->get_product();
 			if ( $product ) {
-				$weight += (float) $product->get_weight() * $item->get_quantity() * 1000;
+				$weight += (float) $product->get_weight() * $item->get_quantity() * $factor;
 			}
 		}
-		
-		return max( 100, (int) $weight );
+
+		return max( 100, (int) round( $weight ) );
 	}
 
 	/**

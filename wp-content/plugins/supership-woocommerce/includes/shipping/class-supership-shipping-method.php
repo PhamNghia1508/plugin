@@ -308,23 +308,37 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 
 	/**
 	 * Calculate package weight in grams
-	 * 
+	 *
+	 * Reads the store's actual WooCommerce weight unit (Settings > Products >
+	 * Measurements) instead of assuming kg - a store configured for "g" would
+	 * otherwise have its product weights multiplied by 1000 twice, producing
+	 * absurd totals that SuperShip's API rejects (max 50000g/shipment).
+	 *
 	 * @param array $package Shipping package
 	 * @return int Weight in grams
 	 */
 	private function calculate_package_weight( array $package ): int {
+		static $grams_per_unit = array(
+			'kg'  => 1000,
+			'g'   => 1,
+			'lbs' => 453.592,
+			'oz'  => 28.3495,
+		);
+
+		$unit   = get_option( 'woocommerce_weight_unit', 'kg' );
+		$factor = $grams_per_unit[ $unit ] ?? 1000;
+
 		$weight = 0;
-		
+
 		foreach ( $package['contents'] as $item ) {
 			$product = $item['data'];
 			$product_weight = (float) $product->get_weight();
-			
-			// Convert to grams (WooCommerce uses kg by default in Vietnam)
-			$weight += $product_weight * $item['quantity'] * 1000;
+
+			$weight += $product_weight * $item['quantity'] * $factor;
 		}
-		
+
 		// Minimum weight: 100g
-		return max( 100, (int) $weight );
+		return max( 100, (int) round( $weight ) );
 	}
 
 	/**
