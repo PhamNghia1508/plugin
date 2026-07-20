@@ -314,17 +314,20 @@ class SuperShip_Shipping_Method extends WC_Shipping_Method {
 	 */
 	private function calculate_package_weight( array $package ): int {
 		$weight = 0;
-		
+
 		foreach ( $package['contents'] as $item ) {
 			$product = $item['data'];
-			$product_weight = (float) $product->get_weight();
-			
-			// Convert to grams (WooCommerce uses kg by default in Vietnam)
-			$weight += $product_weight * $item['quantity'] * 1000;
+
+			// Respect the store's configured weight unit. wc_get_weight()
+			// converts the product weight (stored in the site unit) to grams.
+			// The old code hard-coded *1000 assuming kg, so a store set to "g"
+			// over-counted 1000x and tripped SuperShip's 50kg limit.
+			$grams = wc_get_weight( (float) $product->get_weight(), 'g' );
+			$weight += $grams * $item['quantity'];
 		}
-		
+
 		// Minimum weight: 100g
-		return max( 100, (int) $weight );
+		return max( 100, (int) round( $weight ) );
 	}
 
 	/**

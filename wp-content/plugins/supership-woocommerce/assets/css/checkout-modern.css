@@ -63,27 +63,15 @@
 	.woocommerce-checkout form.checkout { grid-template-columns: 1fr; }
 }
 
-/* Left column wrapper: pure layout, no surface of its own. WooCommerce's
- * own stylesheet floats .col-1/.col-2 side by side at 48% width; a flex
- * column here (plus the ID-scoped width reset below, which outranks it)
- * stacks them full-width instead. */
-.woocommerce-checkout #customer_details {
-	display: flex;
-	flex-direction: column;
-	float: none;
-	width: auto;
-	margin: 0;
-}
-
-.woocommerce-checkout #customer_details .col-1,
-.woocommerce-checkout #customer_details .col-2 {
-	float: none;
-	width: 100%;
-	max-width: 100%;
-}
-
-.woocommerce-checkout .col-1,
-.woocommerce-checkout .col-2,
+/* The card surface is drawn on the two CANONICAL WooCommerce checkout
+ * containers - #customer_details (left) and #order_review (right) - not on
+ * the inner .col-1/.col-2. Those inner columns only exist in WooCommerce's
+ * default form-checkout.php; themes like Flatsome render the customer block
+ * without a .col-1 wrapper, which left the whole left column card-less before.
+ * #customer_details / #order_review are output by WooCommerce core on every
+ * theme, so the cards render consistently everywhere. All customer fields
+ * (billing + order notes) share one clean left card. */
+.woocommerce-checkout #customer_details,
 .woocommerce-checkout #order_review {
 	background: var(--ss-card);
 	border: 1px solid var(--ss-border);
@@ -93,11 +81,12 @@
 	float: none;
 	width: auto;
 	margin: 0;
+	box-sizing: border-box;
 }
 
-.woocommerce-checkout .col-1 { margin-bottom: 20px; }
-
-/* Inner field wrappers stay transparent - the .col-* above is the card. */
+/* Inner columns/wrappers: pure layout, no surface of their own. */
+.woocommerce-checkout #customer_details .col-1,
+.woocommerce-checkout #customer_details .col-2,
 .woocommerce-checkout .woocommerce-billing-fields,
 .woocommerce-checkout .woocommerce-additional-fields {
 	background: none;
@@ -107,7 +96,13 @@
 	margin: 0;
 	float: none;
 	width: auto;
+	max-width: 100%;
 }
+
+/* Breathing room between the billing block and the order-notes block that
+ * now share the single left card. */
+.woocommerce-checkout #customer_details .col-2,
+.woocommerce-checkout .woocommerce-additional-fields { margin-top: 18px; }
 
 .woocommerce-checkout .woocommerce-billing-fields__field-wrapper,
 .woocommerce-checkout .woocommerce-additional-fields__field-wrapper { margin: 0; }
@@ -332,8 +327,7 @@
 /* ── Small-screen polish ─────────────────────────────────────────────── */
 @media (max-width: 480px) {
 	.woocommerce-checkout { padding: 8px 12px 40px; }
-	.woocommerce-checkout .col-1,
-	.woocommerce-checkout .col-2,
+	.woocommerce-checkout #customer_details,
 	.woocommerce-checkout #order_review { padding: 18px 16px 16px; }
 	.woocommerce-checkout table.shop_table th {
 		font-size: 10.5px;

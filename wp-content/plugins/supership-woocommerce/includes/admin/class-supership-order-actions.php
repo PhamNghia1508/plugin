@@ -618,15 +618,19 @@ final class SuperShip_Order_Actions {
 	 */
 	private function calculate_order_weight( WC_Order $order ): int {
 		$weight = 0;
-		
+
 		foreach ( $order->get_items() as $item ) {
 			$product = $item->get_product();
 			if ( $product ) {
-				$weight += (float) $product->get_weight() * $item->get_quantity() * 1000;
+				// Convert from the store's weight unit to grams (see the same
+				// fix in SuperShip_Shipping_Method::calculate_package_weight).
+				// Previously hard-coded *1000 (kg), which broke stores set to "g".
+				$grams   = wc_get_weight( (float) $product->get_weight(), 'g' );
+				$weight += $grams * $item->get_quantity();
 			}
 		}
-		
-		return max( 100, (int) $weight );
+
+		return max( 100, (int) round( $weight ) );
 	}
 
 	/**
