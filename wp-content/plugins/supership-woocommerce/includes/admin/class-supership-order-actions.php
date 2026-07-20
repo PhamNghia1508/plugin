@@ -178,6 +178,7 @@ final class SuperShip_Order_Actions {
 				$.post(ajaxurl, {
 					action: 'supership_create_shipment',
 					order_id: $btn.data('order-id'),
+					commune: $('.supership-commune-input').val() || '',
 					nonce: nonce
 				}, function(response) {
 					if (response.success) {
@@ -302,10 +303,16 @@ final class SuperShip_Order_Actions {
 				</button>
 				
 				<?php if ( SuperShip_Status_Mapper::get_status_category( (int) $status ) !== 'cancelled' ) : ?>
-					<button type="button" 
-							class="button button-secondary supership-cancel-shipment" 
+					<button type="button"
+							class="button button-secondary supership-cancel-shipment"
 							data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
 						<?php esc_html_e( 'Huỷ vận đơn', 'supership-woocommerce' ); ?>
+					</button>
+				<?php else : ?>
+					<button type="button"
+							class="button button-primary supership-create-shipment"
+							data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
+						<?php esc_html_e( 'Tạo vận đơn mới', 'supership-woocommerce' ); ?>
 					</button>
 				<?php endif; ?>
 			</p>
@@ -322,15 +329,64 @@ final class SuperShip_Order_Actions {
 		?>
 		<div class="supership-create-form">
 			<p><?php esc_html_e( 'Chưa tạo vận đơn cho đơn hàng này.', 'supership-woocommerce' ); ?></p>
-			
+
+			<?php $this->render_missing_commune_field( $order ); ?>
+
 			<p>
-				<button type="button" 
-						class="button button-primary supership-create-shipment" 
+				<button type="button"
+						class="button button-primary supership-create-shipment"
 						data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
 					<?php esc_html_e( 'Tạo vận đơn', 'supership-woocommerce' ); ?>
 				</button>
 			</p>
 		</div>
+		<?php
+	}
+
+	/**
+	 * When the order has no Phường/Xã (e.g. placed through the block-based
+	 * checkout, which doesn't collect it), SuperShip refuses to create the
+	 * shipment. Render a commune picker right in the metabox so the admin can
+	 * fill it in without leaving the page. Prefers a dropdown of canonical
+	 * commune names from the Areas API; falls back to a text input when the
+	 * order's province/district can't be resolved.
+	 *
+	 * @param WC_Order $order Order object
+	 */
+	private function render_missing_commune_field( WC_Order $order ): void {
+		$commune = (string) $order->get_meta( '_shipping_commune' );
+		if ( '' !== $commune ) {
+			return;
+		}
+
+		$communes = array();
+		if ( class_exists( 'SuperShip_Address_Repository' ) ) {
+			$repo     = new SuperShip_Address_Repository();
+			$province = $repo->find_province_by_name( $order->get_shipping_state() ? $order->get_shipping_state() : $order->get_billing_state() );
+			if ( ! empty( $province['code'] ) ) {
+				$district = $repo->find_district_by_name( $province['code'], $order->get_shipping_city() ? $order->get_shipping_city() : $order->get_billing_city() );
+				if ( ! empty( $district['code'] ) ) {
+					$communes = $repo->get_communes( $district['code'] );
+				}
+			}
+		}
+
+		?>
+		<p class="supership-missing-commune" style="background:#fcf9e8;border:1px solid #f0c33c;border-radius:4px;padding:8px 10px;">
+			<strong><?php esc_html_e( 'Thiếu Phường/Xã người nhận', 'supership-woocommerce' ); ?></strong><br>
+			<small><?php esc_html_e( 'SuperShip cần Phường/Xã để tạo vận đơn. Chọn bên dưới rồi bấm Tạo vận đơn.', 'supership-woocommerce' ); ?></small><br>
+			<?php if ( ! empty( $communes ) ) : ?>
+				<select class="supership-commune-input" style="width:100%;margin-top:6px;">
+					<option value=""><?php esc_html_e( '— Chọn Phường/Xã —', 'supership-woocommerce' ); ?></option>
+					<?php foreach ( $communes as $c ) : ?>
+						<option value="<?php echo esc_attr( $c['name'] ); ?>"><?php echo esc_html( $c['name'] ); ?></option>
+					<?php endforeach; ?>
+				</select>
+			<?php else : ?>
+				<input type="text" class="supership-commune-input" style="width:100%;margin-top:6px;"
+					placeholder="<?php esc_attr_e( 'VD: Phường Võ Thị Sáu', 'supership-woocommerce' ); ?>" />
+			<?php endif; ?>
+		</p>
 		<?php
 	}
 
@@ -346,7 +402,15 @@ final class SuperShip_Order_Actions {
 		if ( ! $order ) {
 			wp_send_json_error( array( 'message' => __( 'Không tìm thấy đơn hàng', 'supership-woocommerce' ) ) );
 		}
-		
+
+		// Commune supplied inline from the metabox (orders from the block
+		// checkout don't collect Phường/Xã) - save it before creating.
+		$commune = isset( $_POST['commune'] ) ? sanitize_text_field( wp_unslash( $_POST['commune'] ) ) : '';
+		if ( '' !== $commune && '' === (string) $order->get_meta( '_shipping_commune' ) ) {
+			$order->update_meta_data( '_shipping_commune', $commune );
+			$order->save();
+		}
+
 		$result = $this->create_shipment_for_order( $order );
 		
 		if ( $result['success'] ) {
@@ -379,7 +443,12 @@ final class SuperShip_Order_Actions {
 		$result = $cancel_service->cancel( $tracking_number );
 		
 		if ( $result['success'] ) {
+			// Sync the cached shipment status so the metabox reflects the
+			// cancellation immediately (0 = Huỷ in SuperShip_Status_Mapper).
+			$order->update_meta_data( '_supership_status', 0 );
+			$order->update_meta_data( '_supership_status_name', __( 'Huỷ', 'supership-woocommerce' ) );
 			$order->add_order_note( __( 'Đã huỷ vận đơn SuperShip', 'supership-woocommerce' ) );
+			$order->save();
 			wp_send_json_success( array( 'message' => __( 'Đã huỷ vận đơn thành công', 'supership-woocommerce' ) ) );
 		} else {
 			wp_send_json_error( array( 'message' => $result['error'] ) );

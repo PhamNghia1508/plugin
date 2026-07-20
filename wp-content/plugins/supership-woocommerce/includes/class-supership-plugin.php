@@ -60,6 +60,7 @@ final class SuperShip_Plugin {
 			// Checkout (cascading Tỉnh/Thành - Quận/Huyện - Phường/Xã dropdowns)
 			'includes/checkout/class-supership-checkout-areas-rest-controller.php',
 			'includes/checkout/class-supership-checkout-address-fields.php',
+			'includes/checkout/class-supership-blocks-commune-field.php',
 
 			// Shipping Method
 			'includes/shipping/class-supership-shipping-method.php',
@@ -90,6 +91,9 @@ final class SuperShip_Plugin {
 		}
 		if ( class_exists( 'SuperShip_Checkout_Address_Fields' ) ) {
 			SuperShip_Checkout_Address_Fields::init();
+		}
+		if ( class_exists( 'SuperShip_Blocks_Commune_Field' ) ) {
+			SuperShip_Blocks_Commune_Field::init();
 		}
 
 		// Order lookup shortcode [supership_order_lookup] - front-end.
