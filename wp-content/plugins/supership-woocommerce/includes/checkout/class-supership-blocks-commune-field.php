@@ -43,6 +43,11 @@ final class SuperShip_Blocks_Commune_Field {
 			return;
 		}
 
+		// Note: the Additional Checkout Fields API rejects a 'placeholder'
+		// attribute (WooCommerce logs a "called incorrectly" notice and the
+		// registration is dropped) - only a documented allow-list is accepted
+		// (autocomplete, autocapitalize, pattern, title, maxLength, aria-*...).
+		// The label already reads "Phường/Xã", so no placeholder is needed.
 		woocommerce_register_additional_checkout_field(
 			array(
 				'id'       => self::FIELD_ID,
@@ -50,9 +55,6 @@ final class SuperShip_Blocks_Commune_Field {
 				'location' => 'address',
 				'type'     => 'text',
 				'required' => true,
-				'attributes' => array(
-					'placeholder' => __( 'VD: Phường Võ Thị Sáu', 'supership-woocommerce' ),
-				),
 			)
 		);
 	}
