@@ -303,10 +303,9 @@ class SuperShip_Order_Lookup {
 	 * @param WC_Order $order Đơn hàng
 	 */
 	private static function render_order_card( WC_Order $order ): void {
-		$date        = $order->get_date_created();
-		$tracking    = (string) $order->get_meta( '_supership_tracking_number' );
-		$status_name = (string) $order->get_meta( '_supership_status_name' );
-		$tone        = self::get_shipping_tone( $order, $tracking );
+		$date     = $order->get_date_created();
+		$tracking = (string) $order->get_meta( '_supership_tracking_number' );
+		$current  = self::resolve_current_status( $order, $tracking );
 		?>
 		<div class="supership-lookup-card">
 			<div class="supership-lookup-card__head">
@@ -320,8 +319,8 @@ class SuperShip_Order_Lookup {
 
 			<div class="supership-lookup-card__row">
 				<span class="supership-lookup-card__label"><?php esc_html_e( 'Vận chuyển', 'supership-woocommerce' ); ?></span>
-				<span class="supership-lookup-badge supership-lookup-badge--<?php echo esc_attr( $tone ); ?>">
-					<?php echo esc_html( '' !== $tracking ? ( '' !== $status_name ? $status_name : __( 'Đã tạo vận đơn', 'supership-woocommerce' ) ) : __( 'Đang chuẩn bị hàng', 'supership-woocommerce' ) ); ?>
+				<span class="supership-lookup-badge supership-lookup-badge--<?php echo esc_attr( $current['tone'] ); ?>">
+					<?php echo esc_html( $current['name'] ); ?>
 				</span>
 			</div>
 
@@ -432,25 +431,72 @@ class SuperShip_Order_Lookup {
 	}
 
 	/**
-	 * Tông màu badge vận chuyển: xanh lá = đã giao, vàng = đang giao,
-	 * đỏ = huỷ/hoàn/sự cố, xanh dương = đang trên đường, xám = chưa có vận đơn.
+	 * Trạng thái hiển thị trên badge headline.
+	 *
+	 * Ưu tiên CHẶNG MỚI NHẤT trong hành trình (đúng cái khách thấy ở dòng đầu
+	 * timeline ngay bên dưới), thay vì trạng thái tổng của SuperShip. Lý do:
+	 * trạng thái tổng đôi khi "chạy trước" chặng thực tế - vd tổng trả về
+	 * "Đang Vận Chuyển" (đơn đã vào hệ thống) trong khi chặng mới nhất mới là
+	 * "Chờ Lấy Hàng" - khiến badge và timeline đá nhau, gây khó hiểu cho khách.
 	 *
 	 * @param WC_Order $order    Đơn hàng.
 	 * @param string   $tracking Mã vận đơn ('' nếu chưa có).
-	 * @return string Hậu tố class CSS.
+	 * @return array{name:string,tone:string}
 	 */
-	private static function get_shipping_tone( WC_Order $order, string $tracking ): string {
+	private static function resolve_current_status( WC_Order $order, string $tracking ): array {
 		if ( '' === $tracking ) {
-			return 'none';
+			return array(
+				'name' => __( 'Đang chuẩn bị hàng', 'supership-woocommerce' ),
+				'tone' => 'none',
+			);
 		}
 
+		$name = '';
+		$code = (int) $order->get_meta( '_supership_status' );
+
+		// Chặng mới nhất: mảng journeys lưu cũ -> mới, nên phần tử cuối là mới nhất.
+		$journeys = $order->get_meta( '_supership_journeys' );
+		if ( is_array( $journeys ) && ! empty( $journeys ) ) {
+			$latest = end( $journeys );
+			if ( is_array( $latest ) && ! empty( $latest['status'] ) ) {
+				$name = (string) $latest['status'];
+				// Suy ngược ra mã trạng thái từ tên chặng để lấy đúng màu badge.
+				if ( class_exists( 'SuperShip_Status_Mapper' ) ) {
+					$match = array_search( $name, SuperShip_Status_Mapper::get_supership_statuses(), true );
+					if ( false !== $match ) {
+						$code = (int) $match;
+					}
+				}
+			}
+		}
+
+		// Không có hành trình -> dùng trạng thái tổng đã lưu.
+		if ( '' === $name ) {
+			$name = (string) $order->get_meta( '_supership_status_name' );
+			if ( '' === $name ) {
+				$name = __( 'Đã tạo vận đơn', 'supership-woocommerce' );
+			}
+		}
+
+		return array(
+			'name' => $name,
+			'tone' => self::tone_from_code( $code ),
+		);
+	}
+
+	/**
+	 * Tông màu badge từ mã trạng thái SuperShip: xanh lá = đã giao, vàng =
+	 * đang giao, đỏ = huỷ/hoàn/sự cố, xanh dương = đang trên đường.
+	 *
+	 * @param int $code Mã trạng thái SuperShip.
+	 * @return string Hậu tố class CSS.
+	 */
+	private static function tone_from_code( int $code ): string {
 		if ( ! class_exists( 'SuperShip_Status_Mapper' ) ) {
 			return 'transit';
 		}
 
-		$category = SuperShip_Status_Mapper::get_status_category( (int) $order->get_meta( '_supership_status' ) );
-
-		switch ( $category ) {
+		switch ( SuperShip_Status_Mapper::get_status_category( $code ) ) {
 			case 'delivered':
 				return 'delivered';
 			case 'delivering':

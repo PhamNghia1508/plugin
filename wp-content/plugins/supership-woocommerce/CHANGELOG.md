@@ -1,5 +1,9 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.5 — Badge trạng thái khớp với hành trình
+
+- **Sửa badge tra cứu đá nhau với timeline:** trước đây badge lấy "trạng thái tổng" của SuperShip (đôi khi chạy trước, vd hiện "Đang Vận Chuyển" trong khi chặng thực tế mới là "Chờ Lấy Hàng"), còn timeline lấy chặng thực tế → 2 chỗ ghi khác nhau, gây khó hiểu. Nay badge lấy đúng CHẶNG MỚI NHẤT trong hành trình, luôn khớp với dòng đầu timeline khách thấy ngay bên dưới. Màu badge cũng suy theo chặng đó.
+
 ## 1.0.4 — Bản hợp nhất hoàn chỉnh
 
 Gộp toàn bộ công việc từ 2 nhánh phát triển song song thành một nguồn duy nhất, không thiếu fix nào:
