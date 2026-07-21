@@ -1,5 +1,12 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.4 — Bản hợp nhất hoàn chỉnh
+
+Gộp toàn bộ công việc từ 2 nhánh phát triển song song thành một nguồn duy nhất, không thiếu fix nào:
+
+- **Ẩn field bền hơn (thêm inline):** ngoài file CSS chính, rule ẩn field (company/địa chỉ 2/mã bưu điện/quốc gia/email/họ) còn được nạp inline trên handle riêng — để dù theme có gỡ stylesheet của plugin/WooCommerce thì các field đã bỏ vẫn không hiện lại.
+- Đã bao gồm tất cả fix của 1.0.1–1.0.3: cân nặng theo đơn vị site, CSS không vỡ layout theme, nút số lượng không bị đè, chữ dropdown không bị cắt, trang tra cứu hiện sản phẩm, tự tạo trang tra cứu khi kích hoạt.
+
 ## 1.0.3 — Tinh chỉnh checkout + tra cứu hiện sản phẩm
 
 - **Sửa nút tăng/giảm số lượng bị đè trong bảng đơn hàng:** ô số lượng của WooCommerce cũng mang class `.input-text`, nên bị rule `width:100%` kéo phồng làm nút +/− chồng lên số. Nay CSS trường chỉ áp trong `.form-row` và loại trừ `.qty`.
