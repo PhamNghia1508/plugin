@@ -552,11 +552,27 @@ final class SuperShip_Checkout_Address_Fields {
 			)
 		);
 
+		// Visual polish (inputs, dropdowns, COD badge, place-order button...).
+		// This stylesheet is deliberately theme-friendly: it styles the *fields*
+		// only and does NOT impose page/column layout (no grid on form.checkout,
+		// no card wrappers), so it can't fight a theme's own checkout layout -
+		// the earlier grid-based version broke Flatsome's layout, which is why
+		// it was rewritten to be layout-neutral.
 		wp_enqueue_style(
 			'supership-checkout-modern',
 			SUPERSHIP_WC_URL . 'assets/css/checkout-modern.css',
 			array(),
 			SUPERSHIP_WC_VERSION
 		);
+
+		// Field-hiding is CRITICAL (it removes company/address_2/postcode/
+		// country/email/last-name from the VN checkout). Ship it a second time
+		// as a tiny inline rule on its own registered handle, so that even on
+		// themes that dequeue plugin/WooCommerce stylesheets, the removed fields
+		// never reappear. A `false` src carries only the inline CSS - no HTTP
+		// request.
+		wp_register_style( 'supership-checkout-hidden-fields', false, array(), SUPERSHIP_WC_VERSION );
+		wp_enqueue_style( 'supership-checkout-hidden-fields' );
+		wp_add_inline_style( 'supership-checkout-hidden-fields', '.supership-field-hidden{display:none !important;}' );
 	}
 }
