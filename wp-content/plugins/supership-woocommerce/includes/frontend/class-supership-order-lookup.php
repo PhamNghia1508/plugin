@@ -538,9 +538,13 @@ class SuperShip_Order_Lookup {
 				display: block; font-weight: 600; font-size: 14px;
 				color: #1a1f27; margin-bottom: 8px;
 			}
-			.supership-lookup-row { display: flex; gap: 10px; }
+			.supership-lookup-row { display: flex; gap: 10px; align-items: stretch; }
+			/* Ô nhập và nút cùng chiều cao 48px; box-sizing:border-box để viền
+			   1.5px của ô nhập không làm nó cao/thấp lệch so với nút (nút không
+			   viền). Nhờ vậy 2 cái luôn bằng nhau, kể cả khi theme thêm style. */
 			.supership-lookup-row input {
-				flex: 1; min-width: 0; padding: 13px 16px; font-size: 15px;
+				flex: 1; min-width: 0; height: 48px; box-sizing: border-box;
+				padding: 0 16px; font-size: 15px; line-height: normal;
 				border: 1.5px solid #e5e7eb; border-radius: 8px;
 				transition: border-color .15s ease, box-shadow .15s ease;
 			}
@@ -549,9 +553,10 @@ class SuperShip_Order_Lookup {
 				box-shadow: 0 0 0 3px rgba(200, 16, 46, .12);
 			}
 			.supership-lookup-row button {
-				padding: 13px 26px; border: 0; border-radius: 8px;
+				height: 48px; box-sizing: border-box; flex-shrink: 0;
+				padding: 0 26px; border: 0; border-radius: 8px;
 				background: #c8102e; color: #fff; font-size: 15px; font-weight: 700;
-				cursor: pointer; transition: background-color .15s ease;
+				line-height: normal; cursor: pointer; transition: background-color .15s ease;
 				white-space: nowrap;
 			}
 			.supership-lookup-row button:hover { background: #a10d25; }

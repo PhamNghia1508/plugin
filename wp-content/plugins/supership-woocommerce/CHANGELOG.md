@@ -1,5 +1,9 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.7 — Cân đối nút tra cứu
+
+- **Nút "Tra cứu" và ô nhập số điện thoại nay bằng chiều cao nhau** (cùng 48px, dùng box-sizing:border-box để viền ô nhập không làm lệch) — trước đây nút cao hơn ô nhập nhìn không cân.
+
 ## 1.0.6 — Chốt chặn thanh toán trước khi tạo vận đơn
 
 Với đơn thanh toán QR/chuyển khoản (không có webhook xác minh tự động), plugin nay bắt buộc chủ shop đối soát thủ công trước khi đi đơn:
