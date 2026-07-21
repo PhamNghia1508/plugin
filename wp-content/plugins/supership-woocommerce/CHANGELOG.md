@@ -1,5 +1,11 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.3 — Tinh chỉnh checkout + tra cứu hiện sản phẩm
+
+- **Sửa nút tăng/giảm số lượng bị đè trong bảng đơn hàng:** ô số lượng của WooCommerce cũng mang class `.input-text`, nên bị rule `width:100%` kéo phồng làm nút +/− chồng lên số. Nay CSS trường chỉ áp trong `.form-row` và loại trừ `.qty`.
+- **Sửa chữ trong dropdown (Tỉnh/Quận/Phường) bị cắt nửa dưới:** thêm chiều cao + line-height cho `<select>` để chữ không bị theme cắt.
+- **Trang tra cứu đơn hàng nay hiện danh sách sản phẩm** (tên + số lượng + ảnh nhỏ) trong mỗi thẻ đơn, giúp khách nhận ra đơn ngay.
+
 ## 1.0.2 — Sửa lỗi vỡ layout checkout trên theme tùy biến
 
 - **Sửa checkout bị đè/vỡ layout trên Flatsome (và các theme có sẵn bố cục checkout riêng):** bản trước ép `display:grid` hai cột + thẻ bọc + sticky lên form checkout, đá nhau với layout riêng của theme khiến các khối chồng lên nhau (đè cả lên header). Nay CSS chỉ tô đẹp **các trường** (ô nhập, nhãn, dropdown, nút Đặt hàng, badge COD) — **không đụng tới bố cục cột**, để theme tự lo. Nhờ vậy checkout hiển thị đúng trên mọi theme.

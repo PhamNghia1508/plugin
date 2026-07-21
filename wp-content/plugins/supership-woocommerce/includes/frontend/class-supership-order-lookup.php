@@ -316,6 +316,8 @@ class SuperShip_Order_Lookup {
 				</span>
 			</div>
 
+			<?php self::render_order_products( $order ); ?>
+
 			<div class="supership-lookup-card__row">
 				<span class="supership-lookup-card__label"><?php esc_html_e( 'Vận chuyển', 'supership-woocommerce' ); ?></span>
 				<span class="supership-lookup-badge supership-lookup-badge--<?php echo esc_attr( $tone ); ?>">
@@ -342,6 +344,37 @@ class SuperShip_Order_Lookup {
 
 			<?php self::render_journey( $order ); ?>
 		</div>
+		<?php
+	}
+
+	/**
+	 * Danh sách sản phẩm trong đơn (tên + số lượng + ảnh nhỏ) để khách nhận ra
+	 * ngay đơn nào là đơn nào khi có nhiều đơn.
+	 *
+	 * @param WC_Order $order Đơn hàng.
+	 */
+	private static function render_order_products( WC_Order $order ): void {
+		$items = $order->get_items();
+
+		if ( empty( $items ) ) {
+			return;
+		}
+		?>
+		<ul class="supership-lookup-products">
+			<?php foreach ( $items as $item ) : ?>
+				<?php
+				$product = $item->get_product();
+				$thumb   = ( $product && $product->get_image_id() ) ? $product->get_image( array( 44, 44 ) ) : '';
+				?>
+				<li class="supership-lookup-product">
+					<?php if ( $thumb ) : ?>
+						<span class="supership-lookup-product__thumb"><?php echo wp_kses_post( $thumb ); ?></span>
+					<?php endif; ?>
+					<span class="supership-lookup-product__name"><?php echo esc_html( $item->get_name() ); ?></span>
+					<span class="supership-lookup-product__qty">×<?php echo esc_html( $item->get_quantity() ); ?></span>
+				</li>
+			<?php endforeach; ?>
+		</ul>
 		<?php
 	}
 
@@ -504,6 +537,19 @@ class SuperShip_Order_Lookup {
 			}
 			.supership-lookup-card__number { font-size: 17px; color: #1a1f27; }
 			.supership-lookup-card__date { color: #6b7280; font-size: 13px; }
+
+			.supership-lookup-products { list-style: none; margin: 10px 0 4px; padding: 0; }
+			.supership-lookup-product {
+				display: flex; align-items: center; gap: 10px;
+				padding: 6px 0; font-size: 13.5px; color: #1a1f27;
+			}
+			.supership-lookup-product__thumb { flex-shrink: 0; line-height: 0; }
+			.supership-lookup-product__thumb img {
+				width: 44px; height: 44px; object-fit: cover;
+				border-radius: 8px; border: 1px solid #e5e7eb; display: block;
+			}
+			.supership-lookup-product__name { flex: 1; line-height: 1.4; }
+			.supership-lookup-product__qty { flex-shrink: 0; color: #6b7280; font-weight: 600; }
 
 			.supership-lookup-card__row {
 				display: flex; justify-content: space-between; align-items: center;

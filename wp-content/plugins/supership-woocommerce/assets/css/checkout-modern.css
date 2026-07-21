@@ -42,9 +42,12 @@
 .woocommerce-checkout .form-row label .required { color: var(--ss-brand); text-decoration: none; margin-left: 2px; }
 .woocommerce-checkout .form-row label .optional { color: var(--ss-muted); font-weight: 400; }
 
-.woocommerce-checkout .input-text,
+/* :not(.qty) is important - WooCommerce's quantity input also carries the
+ * .input-text class; styling it width:100% blows the stepper apart and the
+ * +/- buttons overlap the number in the order review. Leave .qty to the theme. */
+.woocommerce-checkout .form-row .input-text:not(.qty),
 .woocommerce-checkout .form-row select,
-.woocommerce-checkout textarea {
+.woocommerce-checkout .form-row textarea {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 11px 14px;
@@ -56,12 +59,21 @@
 	transition: border-color .15s ease, box-shadow .15s ease;
 }
 
-.woocommerce-checkout .input-text::placeholder,
-.woocommerce-checkout textarea::placeholder { color: #9ca3af; }
+/* Native <select> needs an explicit height + line-height, or the option text
+ * gets vertically clipped (bottom half hidden) when a theme caps the height. */
+.woocommerce-checkout .form-row select {
+	height: auto;
+	min-height: 46px;
+	line-height: 1.5;
+	padding-right: 34px; /* room for the dropdown arrow */
+}
 
-.woocommerce-checkout .input-text:focus,
+.woocommerce-checkout .form-row .input-text::placeholder,
+.woocommerce-checkout .form-row textarea::placeholder { color: #9ca3af; }
+
+.woocommerce-checkout .form-row .input-text:not(.qty):focus,
 .woocommerce-checkout .form-row select:focus,
-.woocommerce-checkout textarea:focus {
+.woocommerce-checkout .form-row textarea:focus {
 	outline: none;
 	border-color: var(--ss-brand);
 	box-shadow: 0 0 0 3px rgba(200, 16, 46, .12);
