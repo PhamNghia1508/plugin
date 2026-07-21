@@ -1,5 +1,14 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.6 — Chốt chặn thanh toán trước khi tạo vận đơn
+
+Với đơn thanh toán QR/chuyển khoản (không có webhook xác minh tự động), plugin nay bắt buộc chủ shop đối soát thủ công trước khi đi đơn:
+
+- **COD:** luôn tạo được vận đơn (thu tiền khi giao).
+- **QR/chuyển khoản chưa xác nhận** (đơn đang "Tạm giữ/Chờ thanh toán"): **không cho tạo vận đơn**. Ô SuperShip hiện trạng thái "⏳ Chờ xác nhận thanh toán" + hướng dẫn: đối soát thấy đã nhận tiền → đổi đơn sang "Đang xử lý" → nút Tạo vận đơn mới hiện ra.
+- **QR/chuyển khoản đã xác nhận** (đơn "Đang xử lý/Hoàn thành"): tạo vận đơn bình thường (đơn trả trước, không thu COD).
+- Chặn ở cả server (dù bypass giao diện vẫn không tạo được) lẫn giao diện.
+
 ## 1.0.5 — Badge trạng thái khớp với hành trình
 
 - **Sửa badge tra cứu đá nhau với timeline:** trước đây badge lấy "trạng thái tổng" của SuperShip (đôi khi chạy trước, vd hiện "Đang Vận Chuyển" trong khi chặng thực tế mới là "Chờ Lấy Hàng"), còn timeline lấy chặng thực tế → 2 chỗ ghi khác nhau, gây khó hiểu. Nay badge lấy đúng CHẶNG MỚI NHẤT trong hành trình, luôn khớp với dòng đầu timeline khách thấy ngay bên dưới. Màu badge cũng suy theo chặng đó.

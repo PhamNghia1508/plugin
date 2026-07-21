@@ -326,19 +326,27 @@ final class SuperShip_Order_Actions {
 	 * @param WC_Order $order Order object
 	 */
 	private function render_create_shipment_form( WC_Order $order ): void {
+		$is_ready = $this->is_payment_ready( $order );
 		?>
 		<div class="supership-create-form">
 			<p><?php esc_html_e( 'Chưa tạo vận đơn cho đơn hàng này.', 'supership-woocommerce' ); ?></p>
 
-			<?php $this->render_missing_commune_field( $order ); ?>
+			<?php $this->render_payment_status( $order ); ?>
 
-			<p>
-				<button type="button"
-						class="button button-primary supership-create-shipment"
-						data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
-					<?php esc_html_e( 'Tạo vận đơn', 'supership-woocommerce' ); ?>
-				</button>
-			</p>
+			<?php if ( ! $is_ready ) : ?>
+				<div class="supership-payment-wait" style="background:#fcebea;border:1px solid #f5c6cb;border-radius:4px;padding:8px 10px;font-size:12px;color:#611a15;">
+					<?php esc_html_e( 'Đơn thanh toán chuyển khoản/QR chưa được xác nhận. Sau khi đối soát thấy đã nhận tiền, đổi trạng thái đơn sang "Đang xử lý" rồi nút "Tạo vận đơn" sẽ hiện ra.', 'supership-woocommerce' ); ?>
+				</div>
+			<?php else : ?>
+				<?php $this->render_missing_commune_field( $order ); ?>
+				<p>
+					<button type="button"
+							class="button button-primary supership-create-shipment"
+							data-order-id="<?php echo esc_attr( $order->get_id() ); ?>">
+						<?php esc_html_e( 'Tạo vận đơn', 'supership-woocommerce' ); ?>
+					</button>
+				</p>
+			<?php endif; ?>
 		</div>
 		<?php
 	}
@@ -540,8 +548,20 @@ final class SuperShip_Order_Actions {
 	 * @return array {success: bool, error?: string}
 	 */
 	private function create_shipment_for_order( WC_Order $order ): array {
+		// Payment gate: don't ship an unpaid prepaid order. COD collects on
+		// delivery so it's always shippable; a QR/bank-transfer order has no
+		// webhook to auto-confirm payment, so it must sit unpaid (on-hold/
+		// pending) until the shop owner reconciles the transfer and moves it to
+		// a paid status ("Đang xử lý"). Only then is it safe to create the label.
+		if ( ! $this->is_payment_ready( $order ) ) {
+			return array(
+				'success' => false,
+				'error'   => __( 'Đơn thanh toán chuyển khoản/QR này chưa được xác nhận đã nhận tiền. Hãy đối soát, đổi trạng thái đơn sang "Đang xử lý" rồi mới tạo vận đơn.', 'supership-woocommerce' ),
+			);
+		}
+
 		$shipment_service = new SuperShip_Shipment_Service();
-		
+
 		// Build shipment params
 		$params = $this->build_shipment_params( $order );
 		
@@ -564,8 +584,59 @@ final class SuperShip_Order_Actions {
 			__( 'Đã tạo vận đơn SuperShip. Mã vận đơn: %s', 'supership-woocommerce' ),
 			$shipment['tracking_number']
 		) );
-		
+
 		return array( 'success' => true );
+	}
+
+	/**
+	 * Whether an order is safe to ship from a payment standpoint.
+	 *
+	 * COD is collected on delivery, so it's always shippable. Every other
+	 * method (VietQR / bank transfer) is prepaid and has no webhook to confirm
+	 * receipt automatically, so it's only shippable once the order sits in a
+	 * paid status - i.e. the shop owner has reconciled the transfer and moved
+	 * it to "Đang xử lý" / "Hoàn thành".
+	 *
+	 * @param WC_Order $order Order object.
+	 * @return bool
+	 */
+	private function is_payment_ready( WC_Order $order ): bool {
+		if ( 'cod' === $order->get_payment_method() ) {
+			return true;
+		}
+
+		return $order->is_paid();
+	}
+
+	/**
+	 * Payment state shown in the "create shipment" box, so the owner knows
+	 * whether a QR/transfer order has been reconciled before shipping.
+	 *
+	 * @param WC_Order $order Order object.
+	 */
+	private function render_payment_status( WC_Order $order ): void {
+		$is_cod   = 'cod' === $order->get_payment_method();
+		$is_ready = $this->is_payment_ready( $order );
+		$method   = $order->get_payment_method_title();
+		$method   = '' !== $method ? $method : __( 'Chưa chọn', 'supership-woocommerce' );
+
+		if ( $is_cod ) {
+			$state_text  = __( 'COD - thu tiền khi giao', 'supership-woocommerce' );
+			$state_color = '#1e7e34';
+		} elseif ( $is_ready ) {
+			$state_text  = __( '✓ Đã xác nhận thanh toán', 'supership-woocommerce' );
+			$state_color = '#1e7e34';
+		} else {
+			$state_text  = __( '⏳ Chờ xác nhận thanh toán', 'supership-woocommerce' );
+			$state_color = '#b32d2e';
+		}
+		?>
+		<p class="supership-payment-status" style="margin:0 0 8px;font-size:12px;">
+			<strong><?php esc_html_e( 'Thanh toán:', 'supership-woocommerce' ); ?></strong>
+			<?php echo esc_html( $method ); ?><br>
+			<span style="color:<?php echo esc_attr( $state_color ); ?>;font-weight:600;"><?php echo esc_html( $state_text ); ?></span>
+		</p>
+		<?php
 	}
 
 	/**
