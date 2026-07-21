@@ -1,5 +1,9 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.8 — Hành trình hiện ngay khi tạo vận đơn
+
+- **Sửa lỗi vận đơn vừa tạo chưa có hành trình:** trước đây tạo vận đơn xong chỉ lưu mã + trạng thái, còn hành trình (timeline) phải chờ lần đồng bộ đầu (webhook/cron) mới có — nên có đơn hiện badge nhưng chưa có link "Xem hành trình". Nay tạo vận đơn xong plugin lấy luôn hành trình ngay (best-effort), timeline hiện tức thì trên cả trang đơn lẫn trang tra cứu.
+
 ## 1.0.7 — Cân đối nút tra cứu
 
 - **Nút "Tra cứu" và ô nhập số điện thoại nay bằng chiều cao nhau** (cùng 48px, dùng box-sizing:border-box để viền ô nhập không làm lệch) — trước đây nút cao hơn ô nhập nhìn không cân.

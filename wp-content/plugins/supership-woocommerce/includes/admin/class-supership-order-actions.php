@@ -585,7 +585,46 @@ final class SuperShip_Order_Actions {
 			$shipment['tracking_number']
 		) );
 
+		// Pull the initial journey/status straight away so the tracking timeline
+		// shows on the order + lookup page immediately, instead of only after the
+		// first webhook/cron sync (which is why a just-created shipment used to
+		// show a status badge but no "Xem hành trình" list yet).
+		$this->prime_tracking( $order, (string) $shipment['tracking_number'] );
+
 		return array( 'success' => true );
+	}
+
+	/**
+	 * Best-effort initial tracking fetch right after a shipment is created, so
+	 * the journey timeline is available without waiting for the scheduled sync.
+	 * Silently does nothing on failure - the cron/webhook will fill it in later.
+	 *
+	 * @param WC_Order $order           Order object.
+	 * @param string   $tracking_number SuperShip tracking number.
+	 */
+	private function prime_tracking( WC_Order $order, string $tracking_number ): void {
+		if ( '' === $tracking_number || ! class_exists( 'SuperShip_Tracking_Service' ) ) {
+			return;
+		}
+
+		$result = ( new SuperShip_Tracking_Service() )->get_tracking( $tracking_number );
+		if ( empty( $result['success'] ) || empty( $result['tracking'] ) ) {
+			return;
+		}
+
+		$tracking = $result['tracking'];
+
+		if ( isset( $tracking['status'] ) ) {
+			$order->update_meta_data( '_supership_status', $tracking['status'] );
+		}
+		if ( ! empty( $tracking['status_name'] ) ) {
+			$order->update_meta_data( '_supership_status_name', $tracking['status_name'] );
+		}
+		if ( ! empty( $tracking['journeys'] ) && is_array( $tracking['journeys'] ) ) {
+			$order->update_meta_data( '_supership_journeys', $tracking['journeys'] );
+		}
+
+		$order->save();
 	}
 
 	/**
