@@ -455,6 +455,22 @@ final class SuperShip_Order_Actions {
 			// cancellation immediately (0 = Huỷ in SuperShip_Status_Mapper).
 			$order->update_meta_data( '_supership_status', 0 );
 			$order->update_meta_data( '_supership_status_name', __( 'Huỷ', 'supership-woocommerce' ) );
+
+			// Append a "Đã huỷ" step to the journey too, so the customer-facing
+			// lookup badge (which reads the latest journey entry) flips to
+			// cancelled instantly - without the admin having to click "Cập nhật"
+			// first. The next real tracking sync from SuperShip replaces this
+			// with the carrier's own cancellation event. Status stays 0 so the
+			// badge colour is red regardless of the text.
+			$journeys   = $order->get_meta( '_supership_journeys' );
+			$journeys   = is_array( $journeys ) ? $journeys : array();
+			$journeys[] = array(
+				'time'   => current_time( 'c' ),
+				'status' => __( 'Đã huỷ', 'supership-woocommerce' ),
+				'note'   => __( 'Vận đơn đã được huỷ', 'supership-woocommerce' ),
+			);
+			$order->update_meta_data( '_supership_journeys', $journeys );
+
 			$order->add_order_note( __( 'Đã huỷ vận đơn SuperShip', 'supership-woocommerce' ) );
 			$order->save();
 			wp_send_json_success( array( 'message' => __( 'Đã huỷ vận đơn thành công', 'supership-woocommerce' ) ) );

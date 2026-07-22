@@ -1,5 +1,9 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.9 — Huỷ vận đơn cập nhật tra cứu tức thì
+
+- **Sửa lỗi huỷ vận đơn không đổi ngay ở trang tra cứu:** trước đây huỷ vận đơn chỉ đổi trạng thái, phải bấm "Cập nhật" thủ công thì trang tra cứu mới hiện "Đã huỷ" (vì badge tra cứu đọc theo chặng hành trình). Nay khi huỷ, plugin ghi luôn chặng "Đã huỷ" vào hành trình → trang tra cứu đổi sang "Đã huỷ" (đỏ) tức thì, không cần bấm gì.
+
 ## 1.0.8 — Hành trình hiện ngay khi tạo vận đơn
 
 - **Sửa lỗi vận đơn vừa tạo chưa có hành trình:** trước đây tạo vận đơn xong chỉ lưu mã + trạng thái, còn hành trình (timeline) phải chờ lần đồng bộ đầu (webhook/cron) mới có — nên có đơn hiện badge nhưng chưa có link "Xem hành trình". Nay tạo vận đơn xong plugin lấy luôn hành trình ngay (best-effort), timeline hiện tức thì trên cả trang đơn lẫn trang tra cứu.
