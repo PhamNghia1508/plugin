@@ -1,5 +1,9 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.0.10 — Ô nhập số điện thoại to hơn trên điện thoại
+
+- **Ô nhập số điện thoại ở trang tra cứu nay cao 56px trên màn hình nhỏ** (bằng nút "Tra cứu"), dễ bấm bằng ngón tay. Cỡ chữ để 16px để iOS Safari không tự phóng to cả trang khi khách bấm vào ô.
+
 ## 1.0.9 — Huỷ vận đơn cập nhật tra cứu tức thì
 
 - **Sửa lỗi huỷ vận đơn không đổi ngay ở trang tra cứu:** trước đây huỷ vận đơn chỉ đổi trạng thái, phải bấm "Cập nhật" thủ công thì trang tra cứu mới hiện "Đã huỷ" (vì badge tra cứu đọc theo chặng hành trình). Nay khi huỷ, plugin ghi luôn chặng "Đã huỷ" vào hành trình → trang tra cứu đổi sang "Đã huỷ" (đỏ) tức thì, không cần bấm gì.

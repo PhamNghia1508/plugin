@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SuperShip for WooCommerce
  * Description: Kết nối WooCommerce với SuperShip (Việt Nam): địa chỉ SuperShip ở checkout, tính cước tự động, tạo vận đơn, tracking, in nhãn và đồng bộ trạng thái đơn hàng.
- * Version: 1.0.9
+ * Version: 1.0.10
  * Requires PHP: 7.4
  * Requires at least: 5.8
  * WC requires at least: 6.0
@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUPERSHIP_WC_VERSION', '1.0.9' );
+define( 'SUPERSHIP_WC_VERSION', '1.0.10' );
 define( 'SUPERSHIP_WC_FILE', __FILE__ );
 define( 'SUPERSHIP_WC_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SUPERSHIP_WC_URL', plugin_dir_url( __FILE__ ) );

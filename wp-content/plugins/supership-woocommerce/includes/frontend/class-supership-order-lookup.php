@@ -660,8 +660,13 @@ class SuperShip_Order_Lookup {
 			.supership-lookup-timeline__note { font-size: 12.5px; color: #6b7280; }
 
 			@media (max-width: 480px) {
+				/* Trên điện thoại ô nhập và nút xếp dọc, nên cho cả hai cao hơn
+				   (56px) cho dễ bấm bằng ngón tay. Cỡ chữ ô nhập để 16px là cố ý:
+				   iOS Safari tự phóng to cả trang khi focus vào input có chữ nhỏ
+				   hơn 16px. */
 				.supership-lookup-row { flex-direction: column; }
-				.supership-lookup-row button { width: 100%; }
+				.supership-lookup-row input,
+				.supership-lookup-row button { width: 100%; height: 56px; font-size: 16px; }
 			}
 		</style>
 		<?php
