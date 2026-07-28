@@ -1,0 +1,227 @@
+/**
+ * Affiliate front-end styling.
+ *
+ * Scoped under .wc-aff-* so it can't leak into the theme. Deliberately
+ * layout-neutral: it styles its own components only and never touches the
+ * theme's page/column structure.
+ */
+
+.wc-aff-box,
+.wc-aff-dashboard {
+	--wc-aff-brand: #c8102e;
+	--wc-aff-brand-dark: #a10d25;
+	--wc-aff-ink: #1a1f27;
+	--wc-aff-muted: #6b7280;
+	--wc-aff-border: #e5e7eb;
+	max-width: 720px;
+	margin: 0 auto;
+	color: var(--wc-aff-ink);
+}
+
+.wc-aff-box {
+	background: #fff;
+	border: 1px solid var(--wc-aff-border);
+	border-radius: 12px;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 4px 14px rgba(16, 24, 40, .06);
+	padding: 28px 26px;
+	max-width: 460px;
+}
+
+.wc-aff-title { margin: 0 0 6px; font-size: 20px; font-weight: 700; }
+.wc-aff-subtitle { margin: 28px 0 6px; font-size: 16px; font-weight: 700; }
+.wc-aff-lead { margin: 0 0 18px; color: var(--wc-aff-muted); font-size: 14px; line-height: 1.55; }
+.wc-aff-hint { margin: 0 0 14px; color: var(--wc-aff-muted); font-size: 13.5px; line-height: 1.55; }
+
+/* ── Forms ──────────────────────────────────────────────────────────── */
+.wc-aff-form label {
+	display: block;
+	margin: 14px 0 6px;
+	font-size: 13.5px;
+	font-weight: 600;
+}
+
+.wc-aff-form input[type="text"],
+.wc-aff-form input[type="email"],
+.wc-aff-form input[type="password"] {
+	width: 100%;
+	box-sizing: border-box;
+	height: 48px;
+	padding: 0 14px;
+	font-size: 15px;
+	border: 1.5px solid var(--wc-aff-border);
+	border-radius: 8px;
+	background: #fff;
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.wc-aff-form input:focus {
+	outline: none;
+	border-color: var(--wc-aff-brand);
+	box-shadow: 0 0 0 3px rgba(200, 16, 46, .12);
+}
+
+.wc-aff-btn,
+.wc-aff-form button {
+	display: inline-block;
+	margin-top: 18px;
+	padding: 0 26px;
+	height: 48px;
+	line-height: 48px;
+	border: 0;
+	border-radius: 8px;
+	background: var(--wc-aff-brand);
+	color: #fff;
+	font-size: 15px;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+.wc-aff-btn:hover,
+.wc-aff-form button:hover { background: var(--wc-aff-brand-dark); color: #fff; }
+
+.wc-aff-foot { margin: 16px 0 0; font-size: 13.5px; color: var(--wc-aff-muted); }
+.wc-aff-foot a { color: var(--wc-aff-brand-dark); font-weight: 600; }
+
+/* ── Notices ────────────────────────────────────────────────────────── */
+.wc-aff-notice {
+	border-radius: 8px;
+	padding: 14px 16px;
+	margin: 0 0 16px;
+	font-size: 14px;
+	line-height: 1.55;
+}
+.wc-aff-notice p { margin: 6px 0 0; }
+.wc-aff-notice ul { margin: 0; padding-left: 18px; }
+.wc-aff-notice--error { background: #fdecea; border: 1px solid #f5c6cb; color: #611a15; }
+.wc-aff-notice--success { background: #e9f7ee; border: 1px solid #bfe6cd; color: #14532d; }
+.wc-aff-notice--info { background: #eef4fb; border: 1px solid #cfe0f3; color: #1e3a5f; }
+
+/* ── Dashboard ──────────────────────────────────────────────────────── */
+.wc-aff-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.wc-aff-code {
+	background: #f0f0f1;
+	border-radius: 5px;
+	padding: 3px 9px;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: .04em;
+}
+
+.wc-aff-logout { font-size: 13.5px; color: var(--wc-aff-muted); text-decoration: underline; }
+
+.wc-aff-stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: 14px;
+	margin: 20px 0 4px;
+}
+
+.wc-aff-stat {
+	background: #fff;
+	border: 1px solid var(--wc-aff-border);
+	border-left: 4px solid var(--wc-aff-brand);
+	border-radius: 10px;
+	padding: 16px 18px;
+}
+.wc-aff-stat__value { display: block; font-size: 22px; font-weight: 800; color: var(--wc-aff-brand); }
+.wc-aff-stat__label { display: block; margin-top: 2px; font-size: 12.5px; color: var(--wc-aff-muted); }
+
+/* ── Product referral links ─────────────────────────────────────────── */
+.wc-aff-products { list-style: none; margin: 0; padding: 0; }
+
+.wc-aff-product {
+	background: #fff;
+	border: 1px solid var(--wc-aff-border);
+	border-radius: 10px;
+	padding: 14px 16px;
+	margin-bottom: 12px;
+}
+
+.wc-aff-product__info {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 12px;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+}
+.wc-aff-product__name { font-weight: 600; font-size: 14.5px; line-height: 1.45; }
+.wc-aff-product__commission { font-size: 13px; color: var(--wc-aff-brand); font-weight: 700; white-space: nowrap; }
+
+.wc-aff-product__link { display: flex; gap: 8px; align-items: stretch; }
+
+.wc-aff-linkbox {
+	flex: 1;
+	min-width: 0;
+	height: 42px;
+	box-sizing: border-box;
+	padding: 0 12px;
+	font-size: 13px;
+	color: var(--wc-aff-muted);
+	background: #f7f7f8;
+	border: 1.5px solid var(--wc-aff-border);
+	border-radius: 8px;
+}
+
+.wc-aff-copy {
+	flex-shrink: 0;
+	height: 42px;
+	padding: 0 18px;
+	border: 0;
+	border-radius: 8px;
+	background: var(--wc-aff-brand);
+	color: #fff;
+	font-size: 13.5px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+.wc-aff-copy:hover { background: var(--wc-aff-brand-dark); }
+.wc-aff-copy.is-copied { background: #1e7e34; }
+
+/* ── History table ──────────────────────────────────────────────────── */
+.wc-aff-table-wrap { overflow-x: auto; }
+
+.wc-aff-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.wc-aff-table th {
+	text-align: left;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: .03em;
+	color: var(--wc-aff-muted);
+	padding: 10px 8px 10px 0;
+	border-bottom: 1.5px solid var(--wc-aff-border);
+	white-space: nowrap;
+}
+.wc-aff-table td { padding: 12px 8px 12px 0; border-bottom: 1px solid var(--wc-aff-border); }
+
+.wc-aff-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.wc-aff-badge--pending { background: #fcf3d8; color: #8a6116; }
+.wc-aff-badge--paid { background: #e9f7ee; color: #1e7e34; }
+.wc-aff-badge--void { background: #f0f0f1; color: #6b7280; }
+
+/* ── Mobile ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+	.wc-aff-box { padding: 22px 18px; }
+	.wc-aff-product__link { flex-direction: column; }
+	.wc-aff-copy { width: 100%; height: 46px; }
+	.wc-aff-linkbox { height: 46px; }
+	/* 16px keeps iOS Safari from zooming the whole page on focus. */
+	.wc-aff-form input { font-size: 16px; }
+}

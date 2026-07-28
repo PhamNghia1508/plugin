@@ -25,6 +25,7 @@ debug.log
 /wp-content/plugins/*
 !/wp-content/plugins/spx-express-woocommerce/
 !/wp-content/plugins/supership-woocommerce/
+!/wp-content/plugins/affiliate-plugin/
 
 # OS/editor noise.
 .DS_Store
