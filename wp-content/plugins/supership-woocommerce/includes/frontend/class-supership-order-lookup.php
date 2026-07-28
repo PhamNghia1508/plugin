@@ -539,23 +539,32 @@ class SuperShip_Order_Lookup {
 				color: #1a1f27; margin-bottom: 8px;
 			}
 			.supership-lookup-row { display: flex; gap: 10px; align-items: stretch; }
-			/* Ô nhập và nút cùng chiều cao 48px; box-sizing:border-box để viền
-			   1.5px của ô nhập không làm nó cao/thấp lệch so với nút (nút không
-			   viền). Nhờ vậy 2 cái luôn bằng nhau, kể cả khi theme thêm style. */
-			.supership-lookup-row input {
-				flex: 1; min-width: 0; height: 48px; box-sizing: border-box;
-				padding: 0 16px; font-size: 15px; line-height: normal;
+			/* Ô nhập và nút cùng chiều cao; box-sizing:border-box để viền 1.5px
+			   của ô nhập không làm nó lệch so với nút (nút không viền).
+			   Selector cố ý dài (form > row > input[type=tel]) để thắng CSS của
+			   theme: nhiều theme thương mại (Flatsome...) đặt chiều cao/padding
+			   cho input với độ ưu tiên cao hơn selector 1 lớp, khiến ô nhập bị
+			   bóp thấp hơn nút. min-height đi kèm height vì có theme đặt
+			   height:auto rồi dựng chiều cao bằng padding. */
+			.supership-lookup-form .supership-lookup-row input[type="tel"] {
+				flex: 1; min-width: 0;
+				height: 52px; min-height: 52px;
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0 16px; font-size: 16px; line-height: normal;
 				border: 1.5px solid #e5e7eb; border-radius: 8px;
+				background: #fff;
 				transition: border-color .15s ease, box-shadow .15s ease;
 			}
-			.supership-lookup-row input:focus {
+			.supership-lookup-form .supership-lookup-row input[type="tel"]:focus {
 				outline: none; border-color: #c8102e;
 				box-shadow: 0 0 0 3px rgba(200, 16, 46, .12);
 			}
-			.supership-lookup-row button {
-				height: 48px; box-sizing: border-box; flex-shrink: 0;
+			.supership-lookup-form .supership-lookup-row button {
+				height: 52px; min-height: 52px; box-sizing: border-box; flex-shrink: 0;
+				margin: 0;
 				padding: 0 26px; border: 0; border-radius: 8px;
-				background: #c8102e; color: #fff; font-size: 15px; font-weight: 700;
+				background: #c8102e; color: #fff; font-size: 16px; font-weight: 700;
 				line-height: normal; cursor: pointer; transition: background-color .15s ease;
 				white-space: nowrap;
 			}
@@ -659,14 +668,21 @@ class SuperShip_Order_Lookup {
 			.supership-lookup-timeline__place { font-size: 13px; color: #374151; }
 			.supership-lookup-timeline__note { font-size: 12.5px; color: #6b7280; }
 
-			@media (max-width: 480px) {
-				/* Trên điện thoại ô nhập và nút xếp dọc, nên cho cả hai cao hơn
-				   (56px) cho dễ bấm bằng ngón tay. Cỡ chữ ô nhập để 16px là cố ý:
-				   iOS Safari tự phóng to cả trang khi focus vào input có chữ nhỏ
-				   hơn 16px. */
+			/* Ngưỡng 600px chứ không phải 480px: nhiều điện thoại màn to (và
+			   trình duyệt trong app Zalo/Facebook) báo bề rộng 481-599px, trước
+			   đây rơi ra ngoài media query nên vẫn hiển thị kiểu desktop chật. */
+			@media (max-width: 600px) {
+				/* Ô nhập và nút xếp dọc, cả hai cao 58px cho dễ bấm bằng ngón tay.
+				   Cỡ chữ 16px là cố ý: iOS Safari tự phóng to cả trang khi focus
+				   vào input có chữ nhỏ hơn 16px. */
 				.supership-lookup-row { flex-direction: column; }
-				.supership-lookup-row input,
-				.supership-lookup-row button { width: 100%; height: 56px; font-size: 16px; }
+				.supership-lookup-form .supership-lookup-row input[type="tel"],
+				.supership-lookup-form .supership-lookup-row button {
+					width: 100%;
+					height: 58px;
+					min-height: 58px;
+					font-size: 16px;
+				}
 			}
 		</style>
 		<?php

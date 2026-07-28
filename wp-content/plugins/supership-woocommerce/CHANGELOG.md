@@ -1,5 +1,11 @@
 # Changelog — SuperShip for WooCommerce
 
+## 1.2.1 — Ô nhập số điện thoại to đúng trên mọi theme
+
+- **Sửa ô nhập số điện thoại vẫn bị bóp thấp hơn nút "Tra cứu" trên điện thoại.** Bản trước đã đặt chiều cao nhưng selector chỉ 1 lớp nên bị CSS của theme thương mại (Flatsome...) đè. Nay dùng selector cụ thể hơn (`form > row > input[type=tel]`) kèm `min-height`, để theme không ghi đè được — kể cả theme dựng chiều cao bằng padding thay vì height.
+- **Nới ngưỡng mobile từ 480px lên 600px:** nhiều điện thoại màn lớn và trình duyệt trong ứng dụng (Zalo, Facebook) báo bề rộng 481–599px, trước đây rơi ra ngoài media query nên vẫn hiển thị kiểu desktop chật.
+- Ô nhập và nút nay cùng cao 58px trên điện thoại (đã đo thực tế), chữ 16px để iOS Safari không tự phóng to trang.
+
 ## 1.0.10 — Ô nhập số điện thoại to hơn trên điện thoại
 
 - **Ô nhập số điện thoại ở trang tra cứu nay cao 56px trên màn hình nhỏ** (bằng nút "Tra cứu"), dễ bấm bằng ngón tay. Cỡ chữ để 16px để iOS Safari không tự phóng to cả trang khi khách bấm vào ô.
