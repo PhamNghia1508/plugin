@@ -74,28 +74,44 @@ final class WC_Affiliate_Product_Meta {
 	}
 
 	/**
+	 * Meta query selecting products that actually pay commission.
+	 *
+	 * @return array
+	 */
+	private static function commission_meta_query(): array {
+		return array(
+			array(
+				'key'     => self::META_KEY,
+				'value'   => 0,
+				'compare' => '>',
+				'type'    => 'NUMERIC',
+			),
+		);
+	}
+
+	/**
 	 * Published products that currently pay commission - the list the affiliate
 	 * dashboard turns into referral links.
 	 *
+	 * Paginated rather than capped: a shop with hundreds of commissionable
+	 * products would otherwise silently hide everything past the cap, leaving
+	 * affiliates unable to get links for those products at all.
+	 *
+	 * @param int $per_page Products per page.
+	 * @param int $page     1-based page number.
 	 * @return WC_Product[]
 	 */
-	public static function get_commissionable_products(): array {
+	public static function get_commissionable_products( int $per_page = 20, int $page = 1 ): array {
 		$ids = get_posts(
 			array(
 				'post_type'      => 'product',
 				'post_status'    => 'publish',
-				'posts_per_page' => 200,
+				'posts_per_page' => max( 1, $per_page ),
+				'paged'          => max( 1, $page ),
 				'fields'         => 'ids',
 				'orderby'        => 'title',
 				'order'          => 'ASC',
-				'meta_query'     => array(
-					array(
-						'key'     => self::META_KEY,
-						'value'   => 0,
-						'compare' => '>',
-						'type'    => 'NUMERIC',
-					),
-				),
+				'meta_query'     => self::commission_meta_query(),
 			)
 		);
 
@@ -108,5 +124,25 @@ final class WC_Affiliate_Product_Meta {
 		}
 
 		return $products;
+	}
+
+	/**
+	 * How many products pay commission (for the dashboard pager).
+	 *
+	 * @return int
+	 */
+	public static function count_commissionable_products(): int {
+		$query = new WP_Query(
+			array(
+				'post_type'      => 'product',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'no_found_rows'  => false,
+				'meta_query'     => self::commission_meta_query(),
+			)
+		);
+
+		return (int) $query->found_posts;
 	}
 }

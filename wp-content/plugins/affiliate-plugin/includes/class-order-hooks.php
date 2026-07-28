@@ -60,6 +60,12 @@ final class WC_Affiliate_Order_Hooks {
 	 * clearing cookies or clicking someone else's link afterwards can't move the
 	 * commission to a different affiliate.
 	 *
+	 * The referral is only consumed when this order actually contains the
+	 * referred product. Otherwise the cookie is left intact for the rest of its
+	 * 30 days: a visitor who clicks a link for product A, buys product B today
+	 * and comes back for A next week must still earn the affiliate their
+	 * commission.
+	 *
 	 * @param WC_Order $order Order object.
 	 */
 	private static function store_referral_on_order( WC_Order $order ): void {
@@ -72,10 +78,35 @@ final class WC_Affiliate_Order_Hooks {
 			return;
 		}
 
+		if ( ! self::order_contains_product( $order, (int) $referral['product_id'] ) ) {
+			return;
+		}
+
 		$order->update_meta_data( self::ORDER_META, $referral );
 		$order->save();
 
 		WC_Affiliate_Tracking::clear_cookie();
+	}
+
+	/**
+	 * Whether an order contains a given product.
+	 *
+	 * Uses get_product_id(), which resolves to the parent for variations - the
+	 * referral link points at the parent product page, so buying any variation
+	 * of it counts.
+	 *
+	 * @param WC_Order $order      Order object.
+	 * @param int      $product_id Product to look for.
+	 * @return bool
+	 */
+	private static function order_contains_product( WC_Order $order, int $product_id ): bool {
+		foreach ( $order->get_items() as $item ) {
+			if ( (int) $item->get_product_id() === $product_id ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -118,16 +149,7 @@ final class WC_Affiliate_Order_Hooks {
 			return;
 		}
 
-		// Is the referred product actually in the order?
-		$found = false;
-		foreach ( $order->get_items() as $item ) {
-			if ( (int) $item->get_product_id() === $product_id ) {
-				$found = true;
-				break;
-			}
-		}
-
-		if ( ! $found ) {
+		if ( ! self::order_contains_product( $order, $product_id ) ) {
 			return;
 		}
 

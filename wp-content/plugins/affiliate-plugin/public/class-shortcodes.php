@@ -139,6 +139,12 @@ final class WC_Affiliate_Shortcodes {
 		$affiliate_id = WC_Affiliate_Repo::create( (int) $user_id );
 
 		if ( is_wp_error( $affiliate_id ) ) {
+			// Roll the user back. Without this the account exists but has no
+			// affiliate profile, and because the email is now taken the person
+			// can never complete registration - they'd be stuck for good.
+			require_once ABSPATH . 'wp-admin/includes/user.php';
+			wp_delete_user( (int) $user_id );
+
 			self::$errors = $affiliate_id;
 			return;
 		}
@@ -182,21 +188,40 @@ final class WC_Affiliate_Shortcodes {
 			return;
 		}
 
-		$user = wp_signon(
-			array(
-				'user_login'    => isset( $_POST['aff_login'] ) ? sanitize_text_field( wp_unslash( $_POST['aff_login'] ) ) : '',
-				'user_password' => isset( $_POST['aff_password'] ) ? (string) wp_unslash( $_POST['aff_password'] ) : '',
-				'remember'      => true,
-			),
-			is_ssl()
-		);
+		$login    = isset( $_POST['aff_login'] ) ? sanitize_text_field( wp_unslash( $_POST['aff_login'] ) ) : '';
+		$password = isset( $_POST['aff_password'] ) ? (string) wp_unslash( $_POST['aff_password'] ) : '';
+
+		// Validate the credentials WITHOUT signing anybody in yet.
+		// wp_signon() would set the auth cookie for any valid WordPress account -
+		// customers, shop managers, administrators - turning this public form
+		// into a second login endpoint for the whole site, outside whatever
+		// protection wp-login.php has. Authenticate first, authorise second.
+		$user = wp_authenticate( $login, $password );
 
 		if ( is_wp_error( $user ) ) {
-			// WordPress's own message is HTML with links into wp-login.php, which
+			// WordPress's own message is HTML linking into wp-login.php, which
 			// affiliates can't use - replace it with something plain.
 			self::$errors = new WP_Error( 'login', __( 'Email hoặc mật khẩu không đúng.', 'wc-affiliate' ) );
 			return;
 		}
+
+		$affiliate = WC_Affiliate_Repo::get_by_user_id( (int) $user->ID );
+
+		if ( ! $affiliate ) {
+			self::$errors = new WP_Error(
+				'not_affiliate',
+				__( 'Tài khoản này chưa đăng ký chương trình cộng tác viên. Vui lòng dùng trang đăng ký cộng tác viên.', 'wc-affiliate' )
+			);
+			return;
+		}
+
+		// Pending and disabled affiliates are allowed in: the dashboard shows
+		// them why they can't earn yet, which is friendlier than a dead end.
+		wp_set_auth_cookie( (int) $user->ID, true, is_ssl() );
+		wp_set_current_user( (int) $user->ID );
+
+		/** This action is documented in wp-includes/user.php */
+		do_action( 'wp_login', $user->user_login, $user );
 
 		$dashboard = WC_Affiliate_Activator::get_page_url( 'wc_affiliate_page_dashboard' );
 		wp_safe_redirect( $dashboard ? $dashboard : home_url() );
@@ -336,7 +361,15 @@ final class WC_Affiliate_Shortcodes {
 			</form>
 
 			<p class="wc-aff-foot">
-				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Quên mật khẩu?', 'wc-affiliate' ); ?></a>
+				<?php
+				// Password reset deliberately reuses WordPress's own flow: it is
+				// security-sensitive (token generation, expiry, rate limiting) and
+				// rebuilding it would risk introducing holes. The redirect brings
+				// the affiliate straight back here afterwards rather than leaving
+				// them stranded on wp-login.php.
+				$login_page = WC_Affiliate_Activator::get_page_url( 'wc_affiliate_page_login' );
+				?>
+				<a href="<?php echo esc_url( wp_lostpassword_url( $login_page ? $login_page : home_url() ) ); ?>"><?php esc_html_e( 'Quên mật khẩu?', 'wc-affiliate' ); ?></a>
 				<?php if ( $register_url ) : ?>
 					· <a href="<?php echo esc_url( $register_url ); ?>"><?php esc_html_e( 'Đăng ký cộng tác viên', 'wc-affiliate' ); ?></a>
 				<?php endif; ?>
@@ -404,9 +437,37 @@ final class WC_Affiliate_Shortcodes {
 			return (string) ob_get_clean();
 		}
 
-		$totals    = WC_Affiliate_Referral_Repo::totals( (int) $affiliate['id'] );
-		$referrals = WC_Affiliate_Referral_Repo::query( array( 'affiliate_id' => (int) $affiliate['id'] ) );
-		$products  = WC_Affiliate_Product_Meta::get_commissionable_products();
+		$totals = WC_Affiliate_Referral_Repo::totals( (int) $affiliate['id'] );
+
+		// Both lists are paginated so the dashboard stays fast for a long-running
+		// affiliate with thousands of commissions.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only pagers.
+		$ref_page  = isset( $_GET['hh'] ) ? max( 1, absint( $_GET['hh'] ) ) : 1;
+		$prod_page = isset( $_GET['sp'] ) ? max( 1, absint( $_GET['sp'] ) ) : 1;
+		// phpcs:enable
+
+		$ref_per_page  = 20;
+		$prod_per_page = 20;
+
+		$ref_total       = WC_Affiliate_Referral_Repo::count( array( 'affiliate_id' => (int) $affiliate['id'] ) );
+		$ref_total_pages = max( 1, (int) ceil( $ref_total / $ref_per_page ) );
+		$ref_page        = min( $ref_page, $ref_total_pages );
+
+		$referrals = WC_Affiliate_Referral_Repo::query(
+			array(
+				'affiliate_id' => (int) $affiliate['id'],
+				'per_page'     => $ref_per_page,
+				'page'         => $ref_page,
+			)
+		);
+
+		$prod_total       = WC_Affiliate_Product_Meta::count_commissionable_products();
+		$prod_total_pages = max( 1, (int) ceil( $prod_total / $prod_per_page ) );
+		$prod_page        = min( $prod_page, $prod_total_pages );
+
+		$products = WC_Affiliate_Product_Meta::get_commissionable_products( $prod_per_page, $prod_page );
+
+		$base_url = self::current_url();
 		?>
 		<div class="wc-aff-dashboard">
 			<div class="wc-aff-header">
@@ -466,6 +527,7 @@ final class WC_Affiliate_Shortcodes {
 						</li>
 					<?php endforeach; ?>
 				</ul>
+				<?php self::render_pager( $base_url, 'sp', $prod_page, $prod_total_pages, $prod_page ); ?>
 			<?php endif; ?>
 
 			<h4 class="wc-aff-subtitle"><?php esc_html_e( 'Lịch sử hoa hồng', 'wc-affiliate' ); ?></h4>
@@ -480,6 +542,7 @@ final class WC_Affiliate_Shortcodes {
 						<thead>
 							<tr>
 								<th><?php esc_html_e( 'Ngày', 'wc-affiliate' ); ?></th>
+								<th><?php esc_html_e( 'Mã đơn', 'wc-affiliate' ); ?></th>
 								<th><?php esc_html_e( 'Sản phẩm', 'wc-affiliate' ); ?></th>
 								<th><?php esc_html_e( 'Hoa hồng', 'wc-affiliate' ); ?></th>
 								<th><?php esc_html_e( 'Trạng thái', 'wc-affiliate' ); ?></th>
@@ -487,9 +550,19 @@ final class WC_Affiliate_Shortcodes {
 						</thead>
 						<tbody>
 							<?php foreach ( $referrals as $referral ) : ?>
-								<?php $product = wc_get_product( (int) $referral['product_id'] ); ?>
+								<?php
+								$product = wc_get_product( (int) $referral['product_id'] );
+								$order   = wc_get_order( (int) $referral['order_id'] );
+								?>
 								<tr>
 									<td><?php echo esc_html( mysql2date( 'd/m/Y', $referral['created_at'] ) ); ?></td>
+									<td>
+										<?php
+										// Order number only - an affiliate must never see the
+										// buyer's name, address or contact details.
+										echo esc_html( $order ? '#' . $order->get_order_number() : '—' );
+										?>
+									</td>
 									<td><?php echo esc_html( $product ? $product->get_name() : '—' ); ?></td>
 									<td><?php echo wp_kses_post( wc_price( (float) $referral['commission_amount'] ) ); ?></td>
 									<td>
@@ -502,9 +575,63 @@ final class WC_Affiliate_Shortcodes {
 						</tbody>
 					</table>
 				</div>
+				<?php self::render_pager( $base_url, 'hh', $ref_page, $ref_total_pages, $prod_page ); ?>
 			<?php endif; ?>
 		</div>
 		<?php
 		return (string) ob_get_clean();
+	}
+
+	/**
+	 * Simple prev/next pager for the dashboard lists.
+	 *
+	 * The two lists page independently, so each link carries the other list's
+	 * current page - otherwise paging the commission history would silently
+	 * reset the product list back to page 1.
+	 *
+	 * @param string $base_url    Page permalink.
+	 * @param string $param       Query arg this pager controls ('hh' or 'sp').
+	 * @param int    $current     Current page.
+	 * @param int    $total_pages Total pages.
+	 * @param int    $other_page  Current page of the other list.
+	 */
+	private static function render_pager( string $base_url, string $param, int $current, int $total_pages, int $other_page ): void {
+		if ( $total_pages <= 1 ) {
+			return;
+		}
+
+		$other_param = 'hh' === $param ? 'sp' : 'hh';
+
+		$url = static function ( $page ) use ( $base_url, $param, $other_param, $other_page ) {
+			return add_query_arg(
+				array(
+					$param       => $page,
+					$other_param => $other_page,
+				),
+				$base_url
+			);
+		};
+		?>
+		<div class="wc-aff-pager">
+			<?php if ( $current > 1 ) : ?>
+				<a class="wc-aff-pager__link" href="<?php echo esc_url( $url( $current - 1 ) ); ?>">&laquo; <?php esc_html_e( 'Trước', 'wc-affiliate' ); ?></a>
+			<?php endif; ?>
+
+			<span class="wc-aff-pager__info">
+				<?php
+				printf(
+					/* translators: 1: current page, 2: total pages */
+					esc_html__( 'Trang %1$d / %2$d', 'wc-affiliate' ),
+					(int) $current,
+					(int) $total_pages
+				);
+				?>
+			</span>
+
+			<?php if ( $current < $total_pages ) : ?>
+				<a class="wc-aff-pager__link" href="<?php echo esc_url( $url( $current + 1 ) ); ?>"><?php esc_html_e( 'Sau', 'wc-affiliate' ); ?> &raquo;</a>
+			<?php endif; ?>
+		</div>
+		<?php
 	}
 }

@@ -216,6 +216,19 @@
 .wc-aff-badge--paid { background: #e9f7ee; color: #1e7e34; }
 .wc-aff-badge--void { background: #f0f0f1; color: #6b7280; }
 
+/* ── Pager ──────────────────────────────────────────────────────────── */
+.wc-aff-pager {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	margin: 14px 0 4px;
+	font-size: 13.5px;
+}
+.wc-aff-pager__link { color: var(--wc-aff-brand-dark); font-weight: 600; text-decoration: none; }
+.wc-aff-pager__link:hover { text-decoration: underline; }
+.wc-aff-pager__info { color: var(--wc-aff-muted); }
+
 /* ── Mobile ─────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
 	.wc-aff-box { padding: 22px 18px; }

@@ -99,9 +99,12 @@ final class WC_Affiliate_Admin_Menu {
 
 			case 'mark_paid':
 				$id = isset( $_GET['affiliate'] ) ? absint( $_GET['affiliate'] ) : 0;
+				// Only settle the rows that were on screen when the owner looked
+				// at the total - see mark_affiliate_paid().
+				$cutoff = isset( $_GET['cutoff'] ) ? absint( $_GET['cutoff'] ) : 0;
 
-				if ( $id ) {
-					WC_Affiliate_Referral_Repo::mark_affiliate_paid( $id );
+				if ( $id && $cutoff ) {
+					WC_Affiliate_Referral_Repo::mark_affiliate_paid( $id, $cutoff );
 				}
 
 				wp_safe_redirect( admin_url( 'admin.php?page=' . self::SLUG_PAY . '&paid=1' ) );
@@ -111,6 +114,30 @@ final class WC_Affiliate_Admin_Menu {
 				self::export_csv();
 				exit;
 		}
+	}
+
+	/**
+	 * Neutralise a value that spreadsheet software might execute as a formula.
+	 *
+	 * Affiliate names are user-supplied, and Excel/LibreOffice treat a cell
+	 * beginning with = + - @ (or a leading tab/CR) as a formula - which is how
+	 * CSV injection turns an innocent export into code execution on the shop
+	 * owner's machine. Prefixing with an apostrophe forces the cell to be read
+	 * as text; the apostrophe itself isn't displayed.
+	 *
+	 * @param mixed $value Cell value.
+	 * @return mixed
+	 */
+	private static function csv_safe( $value ) {
+		if ( ! is_string( $value ) || '' === $value ) {
+			return $value;
+		}
+
+		if ( in_array( $value[0], array( '=', '+', '-', '@', "\t", "\r" ), true ) ) {
+			return "'" . $value;
+		}
+
+		return $value;
 	}
 
 	/**
@@ -149,12 +176,15 @@ final class WC_Affiliate_Admin_Menu {
 
 			fputcsv(
 				$out,
-				array(
-					WC_Affiliate_Repo::display_name( $affiliate ),
-					$user ? $user->user_email : '',
-					$affiliate['ref_code'],
-					(int) $row['referral_count'],
-					(int) $row['total'],
+				array_map(
+					array( __CLASS__, 'csv_safe' ),
+					array(
+						WC_Affiliate_Repo::display_name( $affiliate ),
+						$user ? $user->user_email : '',
+						$affiliate['ref_code'],
+						(int) $row['referral_count'],
+						(int) $row['total'],
+					)
 				)
 			);
 		}
@@ -292,14 +322,31 @@ final class WC_Affiliate_Admin_Menu {
 		$filter_to        = isset( $_GET['date_to'] ) ? sanitize_text_field( wp_unslash( $_GET['date_to'] ) ) : '';
 		// phpcs:enable
 
-		$referrals  = WC_Affiliate_Referral_Repo::query(
-			array(
-				'affiliate_id' => $filter_affiliate,
-				'status'       => $filter_status,
-				'date_from'    => $filter_from,
-				'date_to'      => $filter_to,
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only pager.
+		$paged    = isset( $_GET['paged'] ) ? max( 1, absint( $_GET['paged'] ) ) : 1;
+		$per_page = 30;
+
+		$filters = array(
+			'affiliate_id' => $filter_affiliate,
+			'status'       => $filter_status,
+			'date_from'    => $filter_from,
+			'date_to'      => $filter_to,
+		);
+
+		$total       = WC_Affiliate_Referral_Repo::count( $filters );
+		$total_pages = max( 1, (int) ceil( $total / $per_page ) );
+		$paged       = min( $paged, $total_pages );
+
+		$referrals = WC_Affiliate_Referral_Repo::query(
+			array_merge(
+				$filters,
+				array(
+					'per_page' => $per_page,
+					'page'     => $paged,
+				)
 			)
 		);
+
 		$affiliates = WC_Affiliate_Repo::get_all();
 		?>
 		<div class="wrap">
@@ -383,6 +430,38 @@ final class WC_Affiliate_Admin_Menu {
 						<?php endforeach; ?>
 					</tbody>
 				</table>
+
+				<div class="tablenav bottom">
+					<div class="tablenav-pages">
+						<span class="displaying-num">
+							<?php
+							printf(
+								/* translators: %s: number of commissions */
+								esc_html( _n( '%s hoa hồng', '%s hoa hồng', $total, 'wc-affiliate' ) ),
+								esc_html( number_format_i18n( $total ) )
+							);
+							?>
+						</span>
+						<?php if ( $total_pages > 1 ) : ?>
+							<span class="pagination-links">
+								<?php
+								echo wp_kses_post(
+									paginate_links(
+										array(
+											'base'      => add_query_arg( 'paged', '%#%' ),
+											'format'    => '',
+											'prev_text' => '&laquo;',
+											'next_text' => '&raquo;',
+											'total'     => $total_pages,
+											'current'   => $paged,
+										)
+									)
+								);
+								?>
+							</span>
+						<?php endif; ?>
+					</div>
+				</div>
 			<?php endif; ?>
 		</div>
 		<?php
@@ -446,7 +525,19 @@ final class WC_Affiliate_Admin_Menu {
 								<td><strong><?php echo wp_kses_post( wc_price( (float) $payout['total'] ) ); ?></strong></td>
 								<td>
 									<a class="button button-primary button-small"
-										href="<?php echo esc_url( self::action_url( 'mark_paid', array( 'affiliate' => $affiliate['id'] ) ) ); ?>"
+										href="
+										<?php
+										echo esc_url(
+											self::action_url(
+												'mark_paid',
+												array(
+													'affiliate' => $affiliate['id'],
+													'cutoff'    => (int) $payout['max_referral_id'],
+												)
+											)
+										);
+										?>
+										"
 										onclick="return confirm('<?php echo esc_js( __( 'Xác nhận đã chuyển tiền cho cộng tác viên này?', 'wc-affiliate' ) ); ?>');">
 										<?php esc_html_e( 'Đã trả', 'wc-affiliate' ); ?>
 									</a>

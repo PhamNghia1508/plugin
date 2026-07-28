@@ -69,12 +69,28 @@ final class WC_Affiliate_Tracking {
 	}
 
 	/**
-	 * Write the referral cookie.
+	 * HMAC of a cookie payload, keyed with this site's auth salt.
+	 *
+	 * The cookie is stored client-side, so without a signature a visitor could
+	 * simply edit it in DevTools and credit any affiliate for any product -
+	 * commission is money, so the payload has to be tamper-evident. The salt
+	 * never leaves the server, so a forged payload can't be signed.
+	 *
+	 * @param string $payload JSON payload.
+	 * @return string
+	 */
+	private static function sign( string $payload ): string {
+		return hash_hmac( 'sha256', $payload, wp_salt( 'auth' ) );
+	}
+
+	/**
+	 * Write the referral cookie as `payload.signature`.
 	 *
 	 * @param array $data affiliate_id + product_id.
 	 */
 	private static function set_cookie( array $data ): void {
-		$value   = wp_json_encode( $data );
+		$payload = wp_json_encode( $data );
+		$value   = $payload . '.' . self::sign( $payload );
 		$expires = time() + ( self::cookie_days() * DAY_IN_SECONDS );
 
 		// Keep the in-memory copy in sync so the same request can read it back.
@@ -101,6 +117,10 @@ final class WC_Affiliate_Tracking {
 	/**
 	 * Read the stored referral, if any and still valid.
 	 *
+	 * Rejects anything whose signature doesn't match, so a hand-edited cookie is
+	 * simply ignored rather than trusted. hash_equals() is used to compare in
+	 * constant time.
+	 *
 	 * @return array{affiliate_id:int, product_id:int}|null
 	 */
 	public static function get_referral(): ?array {
@@ -108,8 +128,21 @@ final class WC_Affiliate_Tracking {
 			return null;
 		}
 
-		$raw  = sanitize_text_field( wp_unslash( $_COOKIE[ self::COOKIE ] ) );
-		$data = json_decode( $raw, true );
+		$raw = sanitize_text_field( wp_unslash( $_COOKIE[ self::COOKIE ] ) );
+
+		$split = strrpos( $raw, '.' );
+		if ( false === $split ) {
+			return null;
+		}
+
+		$payload   = substr( $raw, 0, $split );
+		$signature = substr( $raw, $split + 1 );
+
+		if ( ! hash_equals( self::sign( $payload ), $signature ) ) {
+			return null;
+		}
+
+		$data = json_decode( $payload, true );
 
 		if ( ! is_array( $data ) || empty( $data['affiliate_id'] ) || empty( $data['product_id'] ) ) {
 			return null;
